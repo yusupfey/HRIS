@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\jadwalkerjaController;
+use App\Http\Controllers\shiftController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +34,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employees/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
     Route::post('/employees/{id}', [EmployeeController::class, 'update'])->name('employees.update');
     Route::post('/employees/{id}/delete', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+    Route::get('/shift',[shiftController::class,'index']);
+    Route::get('/tambahshift',[shiftController::class,'tambahshift']);
+    Route::get('/formupdate/{id}',[shiftController::class,'formupdate']);
+    Route::post('/shift/proses/input',[shiftController::class,'input']);
+    Route::get('/shift/delete/{id}', [ShiftController::class, 'hapus'])->name('shift.destroy');
+    Route::post('/shift/proses/update',[shiftController::class,'update']);
+    
+    // work schedule //
+    Route::get('/jadwalkerja',[jadwalkerjaController::class,'index']);
+    Route::get('/pilihjamkerja',[jadwalkerjaController::class,'pilihjamkerja']);
+    Route::post('/jamkerja/proses/input',[jadwalkerjaController::class,'input']);
+
 });
 
 require __DIR__.'/auth.php';
