@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="container">
+            <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
@@ -19,10 +19,10 @@
                 </div>
             </div>
 
-            <div class="p-6 bg-white border-b border-gray-200">
+            <div class="p-3 bg-white border-bottom border-gray-200">
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <ul>
+                        <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -32,35 +32,31 @@
 
                 <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
                     @csrf
-                    <div>
-                        <label for="uuid">UUID</label>
-                        <input id="uuid" class="block mt-1 w-full" type="text" name="uuid" required autofocus>
+                    <div class="mb-2">
+                        <label for="name" class="form-label">Name</label>
+                        <input id="name" class="form-control form-control-lg" type="text" name="name" value="{{ old('name') }}" required>
                     </div>
-                    <div class="mt-4">
-                        <label for="name">Name</label>
-                        <input id="name" class="block mt-1 w-full" type="text" name="name" required>
+                    <div class="mb-2">
+                        <label for="DOB" class="form-label">Tanggal lahir</label>
+                        <input id="DOB" class="form-control form-control-lg" type="date" name="DOB" value="{{ old('DOB') }}" required>
                     </div>
-                    <div class="mt-4">
-                        <label for="DOB">Date of Birth</label>
-                        <input id="DOB" class="block mt-1 w-full" type="date" name="DOB" required>
+                    <div class="mb-2">
+                        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                        <input id="tempat_lahir" class="form-control form-control-lg" type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
                     </div>
-                    <div class="mt-4">
-                        <label for="tempat_lahir">Tempat Lahir</label>
-                        <input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir" required>
+                    <div class="mb-2">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea id="alamat" name="alamat" class="form-control form-control-lg" rows="3" required>{{ old('alamat') }}</textarea>
                     </div>
-                    <div class="mt-4">
-                        <label for="alamat">Alamat</label>
-                        <textarea id="alamat" name="alamat" class="block mt-1 w-full" required></textarea>
-                    </div>
-                    <div class="mt-4">
-                        <label for="jenis_kelamin">Jenis Kelamin</label>
-                        <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full" required>
-                            <option value="1">Laki-laki</option>
-                            <option value="2">Perempuan</option>
+                    <div class="mb-2">
+                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                        <select id="jenis_kelamin" name="jenis_kelamin" class="form-select form-select-lg" required>
+                            <option value="1" {{ old('jenis_kelamin') == 1 ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="2" {{ old('jenis_kelamin') == 2 ? 'selected' : '' }}>Perempuan</option>
                         </select>
                     </div>
-                    <div class="flex items-center justify-end mt-4">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmSaveModal">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#confirmSaveModal">
                             {{ __('Create') }}
                         </button>
                     </div>
@@ -87,6 +83,23 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .form-control-lg, .form-select-lg {
+            border-width: 1px;
+            border-color: #e3e3e3; /* Lighter border color for minimalistic look */
+            border-radius: 0.2rem; /* Smaller border-radius for a sharper look */
+            padding: 0.5rem 1rem; /* Larger padding for bigger input fields */
+            font-size: 1.25rem; /* Larger font size for better readability */
+        }
+        .form-control-lg {
+            height: calc(1.5em + 1rem + 2px); /* Adjust height for larger input fields */
+        }
+        .btn-lg {
+            padding: 0.5rem 1rem; /* Larger padding for bigger buttons */
+            font-size: 1.25rem; /* Larger font size for better readability */
+        }
+    </style>
 
     <script>
         document.getElementById('confirmSaveButton').addEventListener('click', function() {
