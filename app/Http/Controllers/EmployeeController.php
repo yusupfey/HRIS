@@ -21,7 +21,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'uuid' => 'required|string|max:16|unique:employees',
             'name' => 'required|string|max:255',
             'DOB' => 'required|date',
             'tempat_lahir' => 'required|string|max:100',
@@ -43,7 +42,7 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'uuid' => 'required|string|max:16|unique:employees,uuid,' . $id,
+
             'name' => 'required|string|max:255',
             'DOB' => 'required|date',
             'tempat_lahir' => 'required|string|max:100',

@@ -3,20 +3,20 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-
-
                 <section class="section">
                     <div class="row">
                       <div class="col-lg-12">
 
-                        <div class="card">
+                        <div class="card" style="border-radius:10px;">
+                           <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom:20px;">
+            <h5>
+                <a href="{{ route('employees.create') }}" class="btn btn-success" style="margin-top: 10px">New Employee</a>
+            </h5>
+            <h5 class="card-title" style="margin-right: 20px;">Data Table Karyawan</h5>
+        </div>
                           <div class="card-body">
-                            <div class="p-6 border-b border-gray-200 d-flex justify-content-end mt-1">
-                                <a href="{{ route('employees.create') }}" class="btn btn-success">New Employee</a>
-                            </div>
-                            <h5 class="card-title">Data Karyawan</h5>
                             <!-- Table with stripped rows -->
-                            <table class="table datatable">
+                            <table class="table datatable table-hover table-striped" style="margin-top: 20px;">
 
                                 <thead>
                                     <tr>
@@ -47,14 +47,14 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $employee->id }}">
                                                         <li>
-                                                            <a href="{{ route('employees.edit', $employee->id) }}" class="dropdown-item">
+                                                            <a href="{{ route('employees.edit', $employee->id) }}" class="dropdown-item" style="font-weight: bold">
                                                                 Edit
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
                                                                 @csrf
-                                                                <button type="submit" class="dropdown-item" onclick="return confirm('Anda yakin hapus data ini?');">
+                                                                <button type="submit" class="dropdown-item" style="font-weight: bold" onclick="return confirm('Anda yakin hapus data ini?');">
                                                                     Delete
                                                                 </button>
                                                             </form>

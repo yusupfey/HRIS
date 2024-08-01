@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name','100');
             $table->time('jam')->nullable();
             $table->datetime('inactive_date')->nullable();
-            $table->time('checkin_time');
+            $table->time('checkin_time')->nullable();
             $table->timestamps();
         });
     }
