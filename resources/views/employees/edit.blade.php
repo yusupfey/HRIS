@@ -18,7 +18,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="p-4 bg-white border-bottom border-gray-200">
                 @if ($errors->any())
                     <div class="alert alert-danger">

@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{asset('assets/img/favicon.png"')}}' rel="icon">
-  <link href="{{asset('assets/img/apple-touch-icon.png"')}}' rel="apple-touch-icon">
+  {{-- <link href="{{asset('assets/img/favicon.png"')}}" rel="icon">
+  <link href="{{asset('assets/img/apple-touch-icon.png"')}}" rel="apple-touch-icon"> --}}
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -29,7 +29,19 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playwrite+BE+WAL:wght@100..400&display=swap" rel="stylesheet">
+  <!-- Scripts -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @stack('css')
+  <style>
+      .oclock {
+        font-family: "Playwrite BE WAL", cursive;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
 
+      }
+  </style>
   <!-- Scripts -->
   {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
@@ -53,7 +65,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="{{asset('assets/img/logo.png')}}" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <span class="d-none d-lg-block">HRIS</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -267,8 +279,35 @@
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
+      @foreach (getMenus() as $item)
+            @if (count(getSubMenu($item->id)) > 0)
+                <li class="nav-item">
+                  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="{{$item->icon}}"></i><span>{{$item->name}}</span><i class="bi bi-chevron-down ms-auto"></i>
+                  </a>
+                  <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    @foreach (getSubMenu($item->id) as $itemD)
+                        <li>
+                          <a href="{{$itemD->href}}" class="{{'/'.Request::path() == $itemD->href ? 'active':''}}">
+                            <i class="bi bi-circle"></i><span>{{$itemD->name}}</span>
+                          </a>
+                        </li>
+                    @endforeach
+                    
+                  </ul>
+                </li>
+                
+            @else
+              <li class="nav-item">
+                <a class="nav-link " href="{{$item->href}}">
+                  <i class="{{$item->icon}}"></i>
+                  <span>{{$item->name}}</span>
+                </a>
+              </li>
+            @endif
+        @endforeach
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
@@ -494,7 +533,7 @@
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
-      </li><!-- End Blank Page Nav -->
+      </li><!-- End Blank Page Nav --> --}}
 
     </ul>
 
@@ -1174,6 +1213,7 @@
   <script src="{{asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
 
+  @yield('js')
   <!-- Template Main JS File -->
   <script src="{{asset('assets/js/main.js')}}"></script>
 
