@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-weight-bold text-xl leading-tight">
             {{ __('Create Employee') }}
         </h2>
     </x-slot>
@@ -34,32 +34,32 @@
                     @csrf
                     <div>
                         <label for="uuid">UUID</label>
-                        <input id="uuid" class="block mt-1 w-full" type="text" name="uuid" required autofocus>
+                        <input id="uuid" class="form-control" type="text" name="uuid" required autofocus>
                     </div>
                     <div class="mt-4">
                         <label for="name">Name</label>
-                        <input id="name" class="block mt-1 w-full" type="text" name="name" required>
+                        <input id="name" class="form-control" type="text" name="name" required>
                     </div>
                     <div class="mt-4">
                         <label for="DOB">Date of Birth</label>
-                        <input id="DOB" class="block mt-1 w-full" type="date" name="DOB" required>
+                        <input id="DOB" class="form-control" type="date" name="DOB" required>
                     </div>
                     <div class="mt-4">
                         <label for="tempat_lahir">Tempat Lahir</label>
-                        <input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir" required>
+                        <input id="tempat_lahir" class="form-control" type="text" name="tempat_lahir" required>
                     </div>
                     <div class="mt-4">
                         <label for="alamat">Alamat</label>
-                        <textarea id="alamat" name="alamat" class="block mt-1 w-full" required></textarea>
+                        <textarea id="alamat" name="alamat" class="form-control" required></textarea>
                     </div>
                     <div class="mt-4">
                         <label for="jenis_kelamin">Jenis Kelamin</label>
-                        <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full" required>
+                        <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" required>
                             <option value="1">Laki-laki</option>
                             <option value="2">Perempuan</option>
                         </select>
                     </div>
-                    <div class="flex items-center justify-end mt-4">
+                    <div class="d-flex align-items-center justify-content-end mt-4">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmSaveModal">
                             {{ __('Create') }}
                         </button>
