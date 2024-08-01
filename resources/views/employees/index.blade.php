@@ -12,7 +12,7 @@
                         <div class="card">
                           <div class="card-body">
                             <div class="p-6 border-b border-gray-200 d-flex justify-content-end mt-1">
-                                <a href="{{ route('employees.create') }}" class="btn btn-success">New Employee</a>
+                                {{-- <a href="{{ route('employees.create') }}" class="btn btn-success">New Employee</a> --}}
                             </div>
                             <h5 class="card-title">Data Karyawan</h5>
                             <!-- Table with stripped rows -->
@@ -42,12 +42,12 @@
                                             <td>{{ $employee->jenis_kelamin == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
                                             <td>
                                                 <div class="dropdown">
-                                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton{{ $employee->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton{{ $employee->uuid }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Actions
                                                     </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $employee->id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $employee->uuid }}">
                                                         <li>
-                                                            <a href="{{ route('employees.edit', $employee->id) }}" class="dropdown-item">
+                                                            <a href="{{ route('employees.edit', $employee->uuid) }}" class="dropdown-item">
                                                                 Edit
                                                             </a>
                                                         </li>

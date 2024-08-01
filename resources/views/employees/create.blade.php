@@ -33,6 +33,10 @@
                 <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
                     @csrf
                     <div class="mb-2">
+                        <label for="uuid" class="form-label">UUID</label>
+                        <input id="uuid" class="form-control form-control-lg" type="text" name="uuid" value="{{ Auth::user()->uuid }}" readonly>
+                    </div>
+                    <div class="mb-2">
                         <label for="name" class="form-label">Name</label>
                         <input id="name" class="form-control form-control-lg" type="text" name="name" value="{{ old('name') }}" required>
                     </div>

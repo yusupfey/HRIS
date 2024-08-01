@@ -11,15 +11,15 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date'
+        'uuid', 'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date'
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            $model->uuid = substr((string) Str::uuid(), 0, 16);
-        });
-    }
+    //     static::creating(function ($model) {
+    //         $model->uuid = substr((string) Str::uuid(), 0, 16);
+    //     });
+    // }
 }
