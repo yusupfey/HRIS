@@ -69,4 +69,14 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function showProfileAndEmployeeForm($uuid)
+    {
+        $user = User::where('uuid', $uuid)->firstOrFail();
+        return view('profile.edit_and_create', [
+            'user' => $user,
+            'uuid' => $uuid,
+        ]);
+    }
+
 }

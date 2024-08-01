@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
 
 class EmployeeController extends Controller
 {
@@ -13,15 +14,19 @@ class EmployeeController extends Controller
         return view('employees.index', compact('employees'));
     }
 
-    public function create()
-    {
-        return view('employees.create');
-    }
+    public function create($uuid)
+{
+    // Ambil data user berdasarkan uuid jika diperlukan
+    $user = User::where('uuid', $uuid)->firstOrFail();
+
+    // Lanjutkan dengan logika pembuatan karyawan
+    return view('employees.create', compact('user'));
+}
+
 
     public function store(Request $request)
     {
         $request->validate([
-            'uuid' => 'required|string|max:16|unique:employees',
             'name' => 'required|string|max:255',
             'DOB' => 'required|date',
             'tempat_lahir' => 'required|string|max:100',
@@ -31,19 +36,25 @@ class EmployeeController extends Controller
 
         Employee::create($request->all());
 
-        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+        return view('dashboard2');
     }
 
-    public function edit($id)
-    {
-        $employee = Employee::findOrFail($id);
-        return view('employees.edit', compact('employee'));
-    }
+    public function edit($uuid)
+{
+
+    $employee = Employee::where('uuid', $uuid)->firstOrFail();
+
+    return view('employees.edit', [
+        'employee' => $employee,
+    ]);
+}
+
+
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'uuid' => 'required|string|max:16|unique:employees,uuid,' . $id,
+
             'name' => 'required|string|max:255',
             'DOB' => 'required|date',
             'tempat_lahir' => 'required|string|max:100',
