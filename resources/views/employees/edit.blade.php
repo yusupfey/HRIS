@@ -42,7 +42,7 @@
                         </div>
                         <div class="mt-4">
                             <label for="DOB">Date of Birth</label>
-                            <input id="DOB" class="block mt-1 w-full" type="date" name="DOB" value="{{ $employee->DOB }}" required>
+                            <input id="DOB" class="form-control" type="date" name="DOB" value="{{ $employee->DOB }}" required>
                         </div>
                         <div class="mt-4">
                             <label for="tempat_lahir">Tempat Lahir</label>
