@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-weight-bold text-xl leading-tight">
             {{ __('Create Employee') }}
         </h2>
     </x-slot>
@@ -33,6 +33,10 @@
                 <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
                     @csrf
                     <div class="mb-2">
+                        <label for="uuid" class="form-label">UUID</label>
+                        <input id="uuid" class="form-control form-control-lg" type="text" name="uuid" value="{{ Auth::user()->uuid }}" readonly>
+                    </div>
+                    <div class="mb-2">
                         <label for="name" class="form-label">Name</label>
                         <input id="name" class="form-control form-control-lg" type="text" name="name" value="{{ old('name') }}" required>
                     </div>
@@ -56,7 +60,7 @@
                         </select>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary btn-lg" style="margin-top: 10px" data-bs-toggle="modal" data-bs-target="#confirmSaveModal">
+                        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#confirmSaveModal">
                             {{ __('Create') }}
                         </button>
                     </div>

@@ -18,7 +18,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="p-4 bg-white border-bottom border-gray-200">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -33,9 +32,9 @@
                 <form id="employeeForm" action="{{ route('employees.update', $employee->id) }}" method="POST">
                     @csrf
                     @method('POST')
-                    <div class="mb-3" >
+                    <div class="mb-3">
                         <label for="uuid" class="form-label">UUID</label>
-                        <input id="uuid" class="form-control form-control-lg"  type="text" name="uuid" value="{{ old('uuid', $employee->uuid) }}" required autofocus disabled>
+                        <input id="uuid" class="form-control form-control-lg" type="text" name="uuid" value="{{ old('uuid', $employee->uuid) }}" required autofocus disabled>
                     </div>
 
                     <div class="mb-3">
