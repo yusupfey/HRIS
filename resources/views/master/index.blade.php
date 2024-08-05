@@ -26,8 +26,8 @@
                 @case('reference')
                     @include('master/MasterFormComponent/ReferenceForm')
                 @break
-                @case('color')
-                    @include('master/MasterFormComponent/ColorForm')
+                @case('unit')
+                    @include('master/MasterFormComponent/UnitForm')
                 @break
                 @case('section')
                     @include('master/MasterFormComponent/SectionForm')
@@ -51,8 +51,8 @@
                     @case('reference')
                         @include('master/MasterComponent/Reference')
                     @break
-                    @case('color')
-                        @include('master/MasterComponent/Color')
+                    @case('unit')
+                        @include('master/MasterComponent/Unit')
                     @break
                     @case('section')
                         @include('master/MasterComponent/Section')
@@ -69,7 +69,6 @@
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous"></script>
-{{-- <script src="{{asset('plugins/datatables/datatables.js')}}"></script> --}}
 {{-- <script src="{{asset('plugins/datatables/datatables.min.js')}}"></script>
 <script src="{{asset('plugins/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}" type="text/javascript"></script>
