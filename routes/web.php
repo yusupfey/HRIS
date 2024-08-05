@@ -6,8 +6,8 @@ use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use App\Http\Controllers\menuController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserProfileController;
+use Illuminate\Support\Facades\Route;
 use Stevebauman\Location\Facades\Location;
 use Stevebauman\Location\Request;
 use Torann\GeoIP\Facades\GeoIP;
@@ -59,11 +59,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/jadwalkerja',[jadwalkerjaController::class,'index']);
     Route::get('/pilihjamkerja',[jadwalkerjaController::class,'pilihjamkerja']);
     Route::post('/jamkerja/proses/input',[jadwalkerjaController::class,'input']);
+    Route::get('/jamkerja/delete/{name}',[jadwalkerjaController::class,'hapus'])->name('jadwalkerja.destroy');
 
-
-
-
-    Route::get('/profile2', [UserProfileController::class, 'index'])->name('profile2.index');
+    Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 
     Route::prefix('master')->group(function(){
         Route::get('menu', [menuController::class, 'index']);

@@ -5,8 +5,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-body"> 
-                                    <h5 class="card-title" style="margin-top: 5px; margin-bottom: 5px;">Pilih Jam Kerja</h5>
+                                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px; "> 
+                                    <h5 class="card-title">Pilih Jam Kerja</h5>
+                                <button onclick="window.history.back()" class="btn btn-warning"><i class="bx bx-arrow-back"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -20,13 +21,13 @@
                             @for ($i = 0; $i < $calculate_date; $i++)
                             <?php $date = $i+1;?>
                             <div class="col-6">
-                                <input type="date" style="margin-top:5px"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="<?=$date > 9 ? date("Y-m-$date"):date("Y-m-0$date");?>" style="border-width: 3px;">
+                                <input type="date" style=""class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="<?=$date > 9 ? date("Y-m-$date"):date("Y-m-0$date");?>" >
                                     @if($errors->has('tanggal'))
                                         <div class="error">{{ $errors->first('tanggal') }}</div>
                                     @endif
                             </div>
                             <div class="col-6">
-                                <select class="form-control form-control-lg" name="shift[]" id="shift" style="border-width: 3px; margin-top:5px ">
+                                <select class="form-control form-control-lg" name="shift[]" id="shift">
                                     @foreach ($shift as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach

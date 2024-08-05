@@ -11,8 +11,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; padding-top:20px; ">
                                 <h5 class="card-title">Edit Data Karyawan</h5>
+                                <button onclick="window.history.back()" class="btn btn-warning"><i class="bx bx-arrow-back"></i></button>
+                                {{-- <button onclick="window.location.href='/path/to/your/page';" class="btn btn-warning"><i class="bx bx-arrow-back"></i>
+                                  </button> --}}
+
                             </div>
                         </div>
                     </div>

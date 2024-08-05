@@ -11,14 +11,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title" style="margin-top: 5px; margin-bottom:5px;">New Shift</h5>
+                            <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px; ">
+                                <h5 class="card-title">New Shift</h5>
+                                <button onclick="window.history.back()" class="btn btn-warning"><i class="bx bx-arrow-back bx-sm"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="p-3 bg-white border-bottom border-gray-200">
                 <form action="/shift/proses/input" method="post" style="max-width: 100%; margin-left:35px;margin-right:30px;">
                     @csrf
@@ -32,7 +32,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="jam" style="font-weight: bold; display: block; margin-bottom: 8px;">Jam</label>
@@ -43,7 +42,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row justify-content-start mb-3">
                         <div class="col-md-6">
                             <label for="checkin_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckIn Time</label>
@@ -53,10 +51,7 @@
                             @endif
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-success btn-lg" name="submit" style="margin-top: 10px;margin-bottom:15px">
-                        Submit
-                    </button>
+                    <button type="submit" class="btn btn-success " name="submit" style="margin-top: 10px;margin-bottom:15px">Submit</button>
                 </form>
             </div> 
         </div> 

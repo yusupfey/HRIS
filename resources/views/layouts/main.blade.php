@@ -227,7 +227,7 @@
 
         </li><!-- End Messages Nav -->
 
-        {{-- <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{asset('assets/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
@@ -268,7 +268,7 @@
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav --> --}}
+        </li><!-- End Profile Nav -->
 
       </ul>
     </nav><!-- End Icons Navigation -->
@@ -282,28 +282,26 @@
       @foreach (getMenus() as $item)
             @if (count(getSubMenu($item->id)) > 0)
                 <li class="nav-item">
-                  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="{{$item->icon}}"></i><span>{{$item->name}}</span><i class="bi bi-chevron-down ms-auto"></i>
-                  </a>
-                  <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    @foreach (getSubMenu($item->id) as $itemD)
-                        <li>
-                          <a href="{{$itemD->href}}" class="{{'/'.Request::path() == $itemD->href ? 'active':''}}">
-                            <i class="bi bi-circle"></i><span>{{$itemD->name}}</span>
-                          </a>
-                        </li>
-                    @endforeach
-                    
-                  </ul>
+                    <a class="nav-link collapsed" data-bs-target="#submenu-{{$item->id}}" data-bs-toggle="collapse" href="#">
+                        <i class="{{$item->icon}}"></i><span>{{$item->name}}</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="submenu-{{$item->id}}" class="nav-content collapsed" data-bs-parent="#sidebar-nav">
+                        @foreach (getSubMenu($item->id) as $itemD)
+                            <li>
+                                <a href="{{$itemD->href}}" class="{{ '/' . Request::path() == $itemD->href ? 'active' : '' }}">
+                                    <i class="bi bi-circle"></i><span>{{$itemD->name}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
-                
             @else
-              <li class="nav-item">
-                <a class="nav-link " href="{{$item->href}}">
-                  <i class="{{$item->icon}}"></i>
-                  <span>{{$item->name}}</span>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{$item->href}}">
+                        <i class="{{$item->icon}}"></i>
+                        <span>{{$item->name}}</span>
+                    </a>
+                </li>
             @endif
         @endforeach
 
@@ -534,7 +532,7 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav --> --}}
-
+      
     </ul>
 
   </aside><!-- End Sidebar-->
