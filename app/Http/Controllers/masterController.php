@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Menu;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Termwind\Components\Dd;
 use Yajra\DataTables\Facades\DataTables;
 
 class masterController extends Controller
@@ -76,6 +79,13 @@ class masterController extends Controller
                     return view('master/index', compact('data'));
                     
                     break;
+                case 'unit':
+                    $data['title'] = 'Master Unit';
+                    $data['employe'] = Employee::get();
+                    // dd($data['employe']);
+                    return view('master/index', compact('data'));
+                    
+                    break;
                 case 'reference':
                     $data['title'] = 'Master Reference';
                     $data['satuan'] = DB::table('references')->get();;
@@ -126,6 +136,11 @@ class masterController extends Controller
             case 'reference':
                 $query = DB::table('references')->get();
                 return DataTables::of($query)->toJson();
+
+                break;
+            case 'unit':
+                $query = Unit::get();
+                return response()->json($query);
 
                 break;
                 
@@ -186,6 +201,17 @@ class masterController extends Controller
                     return response()->json(['code'=>200,'error'=>$th]);
                 }
             }
+            if($section ==='unit'){
+                $validation = Validator::make($req->all(), [
+                    'name' => ['Required'],
+                    'kepala_unit' => ['Required'],
+                ]);
+                if($validation->fails()){
+                    return response()->json(['code'=>422,'errors'=>$validation->errors()]);
+                }
+                Unit::create($req->all());
+            }
+            
         }else{
             if($section ==='menu_d'){
                 try {
@@ -221,6 +247,35 @@ class masterController extends Controller
                 } catch (\Throwable $th) {
                     return response()->json($th);
                 }
+            }
+            if($section ==='head-unit'){
+                $data = json_decode($req->data);
+                // dd($data);
+                $val='';
+
+                function setChild($id,$children){
+                    foreach ($children as $key => $item) {
+                        // dd($item->id);
+                        Unit::where('id', $item->id)->update(['id_head_unit'=>$id]);
+                        if(isset($item->children)){
+                            setChild($item->id,$item->children);
+                        }
+                    }
+                }
+                foreach ($data as $key => $value) {
+                    // dd($value->children);
+                    if(count($value->children)>0){
+                        // var_dump($value->children);
+                        // dd('masuk sini');
+                        setChild($value->id,$value->children);
+                        
+                    }else{
+                        Unit::where('id', $value->id)->update(['id_head_unit'=>null]);
+                    }
+                    # code...
+                }
+                return response()->json(['code'=>200,'messege'=>'Berhasil', 'data'=>$data],200);
+
             }
         }
 

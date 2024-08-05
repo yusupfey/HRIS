@@ -2,7 +2,7 @@
 <hr>
 <div class="alert alert-primary">List Colors</div>
 <div class="card">
-    <form id="color">
+    <form id="unit">
         <div class="card-body">
                 @csrf
                 <div class="row">
@@ -11,14 +11,18 @@
                             <input type="hidden" readonly name="mode" class="form-control" value="{{Request::segment(4) == null ? 'input' : 'update'}}">
                             <input type="hidden" name="id" class="form-control" value="">
                             
-                            <label for="">Warna</label>
+                            <label for="">Unit</label>
                             <input type="text" name="name" class="form-control" value="">
                             <span class="text-danger" id="name"></span>
                         </div>
                         <div class="form-group">
-                            <label for="">Hex Color</label>
-                            <input type="text" name="hexcolor" class="form-control" value="" placeholder="#ffffff">
-                            <span class="text-danger" id="hexcolor"></span>
+                            <label for="">Kepala Ruangan</label>
+                            <select name="kepala_unit" class="form-control select2">
+                                <option value="">Pilih Karu</option>
+                                @foreach ($data['employe'] as $item)
+                                    <option value="{{$item->uuid}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -36,7 +40,7 @@
         </div>
     </div>
 </div>
-@section('jsComponent')
+@section('jsMaster')
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -44,19 +48,19 @@
             $(".select2").select2();
         })
         function submit() {
-            let data = $('#color').serializeArray();
+            let data = $('#unit').serializeArray();
             // set loading
             $('#modal_bahan').find('#footer-button').html(`
             <div class="spinner-border spinner-border-sm text-info" role="status">
             </div>`)
             console.log(data)
             $.ajax({
-                url: "/master/process/color",
+                url: "/master/process/unit",
                 method: 'post',
                 data:data,
                 success:function(res){
                     console.log(res)
-                    window.location.href = '/master/color';
+                    window.location.href = '/master/unit';
                     valdiateReset(data);
                 },
                 error:function(res){
