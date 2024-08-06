@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class RegisteredUserController extends Controller
 {
@@ -41,10 +42,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // event(new Registered($user));
+
+        // Auth::login($user);
+        // $data = User::latest()->first();
+        // Session::get('uuid', $data->uuid);
+        // return redirect(route('dashboard', absolute: false));
+
         event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        Auth::logout();
+        return redirect()->route('login')->with('status', 'Registration successful. Please login.');
     }
 }
