@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_STORE', 'database'),
+    'default' => env('CACHE_STORE', 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,16 @@ return [
         ],
 
     ],
-
+    'connections' => [
+        'cache' => [
+            'driver' => 'redis',
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => 0,
+        ],
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Cache Key Prefix

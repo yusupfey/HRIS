@@ -10,8 +10,9 @@ class Employee extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
-        'uuid', 'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date'
+        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date'
     ];
 
     // protected static function boot()

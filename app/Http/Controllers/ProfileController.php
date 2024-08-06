@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Stevebauman\Location\Facades\Location;
+use Stevebauman\Location\Request as LocationRequest;
+use Torann\GeoIP\Facades\GeoIP;
 
 class ProfileController extends Controller
 {
@@ -24,6 +28,15 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
+
+    public function testLokasi(Request $request){
+        // $ip = Location::get();
+        // $position = Location::get('192.168.103.81');
+        // $position = $request->getIp();
+        $ip = $request->ip();
+        dd($ip);
+    }
+
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());

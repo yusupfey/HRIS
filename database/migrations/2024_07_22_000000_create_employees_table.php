@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid', 16)->unique();
+            $table->uuid('uuid',16)->unique();
             $table->string('name');
             $table->date('DOB');
             $table->string('tempat_lahir', 100);
