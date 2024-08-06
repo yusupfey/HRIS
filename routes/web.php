@@ -3,11 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserProfileController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/session', function () {
+    $data=Session::all();
+    return $data;
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard2');
@@ -18,7 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 
 Route::middleware(['auth'])->group(function () {
@@ -33,7 +38,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile2', [UserProfileController::class, 'index'])->name('profile2.index');
 
+    route::get('/logout-akun', function(){
 
+        Session::flush(); // removes all session data
+
+        return redirect('/');
+    });
+
+});
+Route::get('test', function(){
+    return User::latest()->first();
 
 });
 
