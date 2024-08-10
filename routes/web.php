@@ -6,6 +6,7 @@ use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use App\Http\Controllers\menuController;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Stevebauman\Location\Facades\Location;
@@ -15,6 +16,11 @@ use Torann\GeoIP\Facades\GeoIP;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/session', function () {
+    $data=Session::all();
+    return $data;
+    });
+
 Route::get('/getlocation', function(){
     // $position = Location::get('192.168.103.81');
     // $position = $request->getIp();
@@ -23,6 +29,7 @@ Route::get('/getlocation', function(){
     dd($position);
 });
 Route::get('/getlokasi', [ProfileController::class, 'testLokasi']);
+
 
 
 Route::get('/dashboard', function () {
@@ -34,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 
 Route::middleware(['auth'])->group(function () {
@@ -67,7 +73,16 @@ Route::middleware(['auth'])->group(function () {
     
 
 
+    route::get('/logout-akun', function(){
 
+        Session::flush(); // removes all session data
+
+        return redirect('/');
+    });
+
+});
+Route::get('test', function(){
+    return User::latest()->first();
 
     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 

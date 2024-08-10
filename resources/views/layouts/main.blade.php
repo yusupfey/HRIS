@@ -244,32 +244,60 @@
             </li>
 
             <li>
-                @php
-    $employeeExists = \App\Models\Employee::where('uuid', Auth::user()->uuid)->exists();
-@endphp
+                            {{-- @php
+                $employeeExists = \App\Models\Employee::where('uuid', Auth::user()->uuid)->exists();
+            @endphp
 
-<a class="dropdown-item d-flex align-items-center"
-   href="{{ $employeeExists ? route('employees.edit', ['uuid' => Auth::user()->uuid]) : route('employees.create', ['uuid' => Auth::user()->uuid]) }}">
-    <i class="bi bi-person"></i>
-    <span>My Profile</span>
-</a>
+            <a class="dropdown-item d-flex align-items-center"
+            href="{{ $employeeExists ? route('employees.edit', ['uuid' => Auth::user()->uuid]) : route('employees.create', ['uuid' => Auth::user()->uuid]) }}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+            </a> --}}
+
+
+                @php
+                    $uuid = Session::get('uuid');
+                    $employeeExists =  \App\Models\Employee::where('uuid', $uuid)->exists();;
+
+                @endphp
+
+                {{-- <a class="dropdown-item d-flex align-items-center" ref="{{ $employeeExists ? route('employees.edit', ['uuid' => $uuid]) : route('employees.create', ['uuid' => $uuid]) }}">
+                    <i class="bi bi-person"></i>
+                    <span>My Profile</span>
+                </a> --}}
+                @if (Session::has('uuid'))
+                    <a class="dropdown-item d-flex align-items-center" href="{{ $employeeExists ? route('employees.edit', ['uuid' => $uuid]) : route('employees.create', ['uuid' => $uuid]) }}">
+                        <i class="bi bi-person"></i>
+                        <span>My Profile</span>
+                    </a>
+
+
+                @endif
 
 
             </li>
             <li>
-                <form class="dropdown-item d-flex align-items-center" method="POST" action="{{ route('logout') }}">
+                <a class="dropdown-item d-flex align-items-center" href="/logout-akun">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            {{-- <li>
+                <a href="/logout-akun">Logout</a> --}}
+                {{-- <form class="dropdown-item d-flex align-items-center" method="POST" action="{{ route('logout') }}">
                     @csrf
                     <i class="bi bi-box-arrow-right"></i>
                     <span :href="route('logout')"
                             onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                    this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </span>
-                </form>
-            </li>
+                </form> --}}
+            {{-- </li> --}}
 
           </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+
+        </li><!-- End Profile Nav --> 
 
       </ul>
     </nav><!-- End Icons Navigation -->
