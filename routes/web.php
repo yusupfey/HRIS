@@ -48,18 +48,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employees/{uuid}', [EmployeeController::class, 'show'])->name('employees.show');
     Route::post('/employees/{id}/delete', [EmployeeController::class, 'destroy'])->name('employees.destroy');
     // shift
+    
     Route::get('/shift',[shiftController::class,'index']);
     Route::get('/tambahshift',[shiftController::class,'tambahshift']);
     Route::get('/formupdate/{id}',[shiftController::class,'formupdate']);
     Route::post('/shift/proses/input',[shiftController::class,'input']);
     Route::get('/shift/delete/{id}', [ShiftController::class, 'hapus'])->name('shift.destroy');
     Route::post('/shift/proses/update',[shiftController::class,'update']);
-    
+
     // work schedule //
     Route::get('/jadwalkerja',[jadwalkerjaController::class,'index']);
-    Route::get('/pilihjamkerja',[jadwalkerjaController::class,'pilihjamkerja']);
-    Route::post('/jamkerja/proses/input',[jadwalkerjaController::class,'input']);
-    Route::get('/jamkerja/delete/{name}',[jadwalkerjaController::class,'hapus'])->name('jadwalkerja.destroy');
+    Route::get('/pilihjamkerja/{uuid}',[jadwalkerjaController::class,'pilihjamkerja']);
+    Route::post('/getjamkerja',[jadwalkerjaController::class,'getjamkerja']);
+    Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
+    Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
+    
+
+    
+
+
+
 
     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 

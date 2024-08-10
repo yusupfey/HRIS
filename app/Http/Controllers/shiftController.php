@@ -33,6 +33,9 @@ class shiftController extends Controller
         ]);
         $shift['jam'] = $request->jam;
         $shift['checkin_time'] = $request->checkin_time;
+        $shift['checkout_time'] = $request->checkout_time;
+
+
         
         shift::insert($shift);
         session::flash('success','berhasil menambah data');
@@ -51,6 +54,7 @@ class shiftController extends Controller
       ]);
     $shift['jam'] = $request->jam;
     $shift['checkin_time'] = $request->checkin_time;
+    $shift['checkout_time'] = $request->checkout_time;
 
     $shift = shift::where('id',$request->id)->update($shift);
     return redirect('/shift');

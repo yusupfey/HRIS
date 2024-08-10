@@ -22,7 +22,7 @@
             <div class="p-3 bg-white border-bottom border-gray-200">
                 <form action="/shift/proses/input" method="post" style="max-width: 100%; margin-left:35px;margin-right:30px;">
                     @csrf
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="name" style="font-weight: bold; display: block; margin-bottom: 8px;">Shift</label>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-start mb-3">
+                    <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="checkin_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckIn Time</label>
                             <input class="form-control form-control-lg" type="time" placeholder="Check-in" aria-label="default input example" name="checkin_time" id="checkin_time" style="border-width: 3px;">
@@ -50,8 +50,16 @@
                                 <div class="error text-danger">{{ $errors->first('checkin_time') }}</div>
                             @endif
                         </div>
+                        <div class="col-md-6">
+                            <label for="checkout_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckOut Time</label>
+                            <input class="form-control form-control-lg" type="time" placeholder="Check-Out" aria-label="default input example" name="checkout_time" id="checkout_time" style="border-width: 3px;">
+                            @if ($errors->has('checkout_time'))
+                                <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
+                            @endif
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success " name="submit" style="margin-top: 10px;margin-bottom:15px">Submit</button>
+                    
+                    <button type="submit"  class="btn btn-success " name="submit" style="margin-top: 10px;margin-bottom:15px">Submit</button>
                 </form>
             </div> 
         </div> 

@@ -50,7 +50,16 @@
                                 <div class="error text-danger">{{ $errors->first('checkin_time') }}</div>
                             @endif
                         </div>
+                        <div class="col-md-6">
+                            <label for="checkout_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckOut Time</label>
+                            <input class="form-control form-control-lg" type="time" placeholder="Check-Out" aria-label="default input example" name="checkout_time" id="checkout_time" style="border-width: 3px;">
+                            @if ($errors->has('checkout_time'))
+                                <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
+                            @endif
+                        </div>
                     </div>
+                    </div>
+                    
                     <button type="submit" class="btn btn-success btn-lg" name="submit" style="margin-top: 18px; ">Submit</button>
                 </form>
             </div>
