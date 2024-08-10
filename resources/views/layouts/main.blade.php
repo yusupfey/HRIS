@@ -32,7 +32,7 @@
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playwrite+BE+WAL:wght@100..400&display=swap" rel="stylesheet">
   <!-- Scripts -->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
   @stack('css')
   <style>
       .oclock {
@@ -296,6 +296,7 @@
             {{-- </li> --}}
 
           </ul><!-- End Profile Dropdown Items -->
+
         </li><!-- End Profile Nav --> 
 
       </ul>
@@ -310,28 +311,26 @@
       @foreach (getMenus() as $item)
             @if (count(getSubMenu($item->id)) > 0)
                 <li class="nav-item">
-                  <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="{{$item->icon}}"></i><span>{{$item->name}}</span><i class="bi bi-chevron-down ms-auto"></i>
-                  </a>
-                  <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    @foreach (getSubMenu($item->id) as $itemD)
-                        <li>
-                          <a href="{{$itemD->href}}" class="{{'/'.Request::path() == $itemD->href ? 'active':''}}">
-                            <i class="bi bi-circle"></i><span>{{$itemD->name}}</span>
-                          </a>
-                        </li>
-                    @endforeach
-                    
-                  </ul>
+                    <a class="nav-link collapsed" data-bs-target="#submenu-{{$item->id}}" data-bs-toggle="collapse" href="#">
+                        <i class="{{$item->icon}}"></i><span>{{$item->name}}</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="submenu-{{$item->id}}" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        @foreach (getSubMenu($item->id) as $itemD)
+                            <li>
+                                <a href="{{$itemD->href}}" class="{{ '/' . Request::path() == $itemD->href ? 'active' : '' }}">
+                                    <i class="bi bi-circle"></i><span>{{$itemD->name}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
-                
             @else
-              <li class="nav-item">
-                <a class="nav-link " href="{{$item->href}}">
-                  <i class="{{$item->icon}}"></i>
-                  <span>{{$item->name}}</span>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{$item->href}}">
+                        <i class="{{$item->icon}}"></i>
+                        <span>{{$item->name}}</span>
+                    </a>
+                </li>
             @endif
         @endforeach
 
@@ -562,7 +561,7 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav --> --}}
-
+      
     </ul>
 
   </aside><!-- End Sidebar-->
