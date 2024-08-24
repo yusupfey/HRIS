@@ -17,10 +17,9 @@ class jadwalkerjaController extends Controller
     public function index()
     {
         $worksheadules = DB::select("SELECT employees.*, units.name as Unit
-         FROM employees
-          INNER JOIN units ON units.id = employees.id_unit
-          WHERE employees.id_unit = 2");
-         
+        FROM employees
+        INNER JOIN units ON units.id = employees.id_unit
+        WHERE employees.id_unit = 1");
         return view('pages.shift.jadwalkerja', compact('worksheadules'));
     }
 

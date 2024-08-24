@@ -80,12 +80,6 @@ Route::middleware(['auth'])->group(function () {
         return redirect('/');
     });
 
-});
-Route::get('test', function(){
-    return User::latest()->first();
-
-    Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
-
     Route::prefix('master')->group(function(){
         Route::get('menu', [menuController::class, 'index']);
         Route::get('{data}', [masterController::class,'index']);
@@ -95,5 +89,11 @@ Route::get('test', function(){
         Route::post('check/item', [masterController::class,'check_item']);
     });
 });
+// Route::get('test', function(){
+//     return User::latest()->first();
+
+//     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
+
+// });
 
 require __DIR__.'/auth.php';

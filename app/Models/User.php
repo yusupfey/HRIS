@@ -36,7 +36,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function ($model) {
-            $model->uuid = substr((string) Str::uuid(), 0, 16);
+            $model->uuid = Str::uuid(36);
         });
     }
 

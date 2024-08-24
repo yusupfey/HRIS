@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('worksheadules', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid_employees',16);
+            $table->string('uuid_employees',36);
             $table->integer('shift_id');
             $table->date('tanggal');
             $table->timestamps();

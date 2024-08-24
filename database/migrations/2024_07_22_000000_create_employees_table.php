@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->char('uuid',16)->unique();
+            $table->char('uuid',36)->unique();
             $table->string('name');
             $table->date('DOB');
             $table->string('tempat_lahir', 100);
