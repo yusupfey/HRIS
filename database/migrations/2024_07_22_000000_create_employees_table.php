@@ -14,8 +14,10 @@ return new class extends Migration
             $table->string('name');
             $table->date('DOB');
             $table->string('tempat_lahir', 100);
-            $table->text('alamat');
             $table->integer('jenis_kelamin');
+            $table->text('alamat');
+            $table->char('no_telp');
+            $table->char('id_unit');
             $table->timestamps();
         });
     }
