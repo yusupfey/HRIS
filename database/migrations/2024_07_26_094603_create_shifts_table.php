@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
             $table->string('name','100');
-            $table->time('jam')->nullable();
-            $table->datetime('inactive_date')->nullable();
             $table->time('checkin_time')->nullable();
+            $table->time('checkout_time')->nullable();
+            $table->datetime('inactive_date')->nullable();
             $table->timestamps();
         });
     }
