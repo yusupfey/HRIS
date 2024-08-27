@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\cutiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\jadwalkerjaController;
@@ -70,6 +71,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
     
+    Route::get('/cuti',[cutiController::class,'index']);
+    Route::get('/ajukancuti',[cutiController::class,'ajukancuti']);
+    Route::post('/ajukancuti/proses/input',[cutiController::class,'input']);
+
+    // Route::get('/form', [cutiController::class, 'create']);
+    // Route::get('/getEmployeesByUnit/{unit_id}', [cutiController::class,'getEmployeesByUnit']);
+
     // reference
     Route::prefix('reference')->group(function(){
         Route::get('{id}', [ReferenceController::class,'index']);

@@ -22,35 +22,38 @@
                                 </div>
                                 <div class="card-body">
                                     <div id="section" style="display: none;">{{Request::segment(2)}}</div>
-                                    <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
-                                        <thead class="table-primary">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Id</th>
-                                                <th>Shift</th>
-                                                <th>Jam</th>
-                                                <th>CheckIn Time</th>
-                                                <th>ChekOut Time</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-light">
-                                            @foreach ($shift as $x => $item)
+                                    <div style="overflow-x: auto; white-space: nowrap;">
+
+                                        <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+                                            <thead class="table-primary">
                                                 <tr>
-                                                    <td>{{ $x + 1 }}</td>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->jam }}</td>
-                                                    <td>{{ $item->checkin_time }}</td>
-                                                    <td>{{$item->checkout_time}}</td>
-                                                    <td> 
-                                                        <a href="/formupdate/{{ $item->id }}"class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
-                                                        <a href="/shift/delete/{{ $item->id }}"class="btn btn-danger"><i class="tf-icons bx bx-trash"></i></a>
-                                                    </td>
+                                                    <th>No</th>
+                                                    <th>Id</th>
+                                                    <th>Shift</th>
+                                                    <th>Jam</th>
+                                                    <th>CheckIn Time</th>
+                                                    <th>ChekOut Time</th>
+                                                    <th>Actions</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody class="table-light">
+                                                @foreach ($shift as $x => $item)
+                                                    <tr>
+                                                        <td>{{ $x + 1 }}</td>
+                                                        <td>{{ $item->id }}</td>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->jam }}</td>
+                                                        <td>{{ $item->checkin_time }}</td>
+                                                        <td>{{$item->checkout_time}}</td>
+                                                        <td> 
+                                                            <a href="/formupdate/{{ $item->id }}"class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
+                                                            <a href="/shift/delete/{{ $item->id }}"class="btn btn-danger"><i class="tf-icons bx bx-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

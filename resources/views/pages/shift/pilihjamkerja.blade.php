@@ -110,10 +110,10 @@
                                             Option += `<option value="${ value.id }" ${item.shift_id===value.id ? 'selected':''}>${value.name}</option>`;
                                         })
                                             form += `
-                                                <div class="col-6">
-                                                    <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${item.tanggal}">
+                                                <div class="col-6" style="margin-bottom:10px;">
+                                                    <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${item.tanggal}"readonly>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-6" style="margin-bottom:10px;">
                                                     <select class="form-control form-control-lg" name="shift[]" id="shift">
                                                         ${Option}
                                                     </select>
@@ -124,8 +124,8 @@
                                     for (let index = 0; index < days; index++) {
                                         date = index +1;
                                         form += `
-                                            <div class="col-6">
-                                                <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${date < 10 ? year+'-'+month+'-0'+date:year+'-'+month+'-'+date}">
+                                            <div class="col-6" style="padding-bottom:10px;">
+                                                <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${date < 10 ? year+'-'+month+'-0'+date:year+'-'+month+'-'+date}" readonly>
                                                     @if($errors->has('tanggal'))
                                                         <div class="error">{{ $errors->first('tanggal') }}</div>
                                                     @endif

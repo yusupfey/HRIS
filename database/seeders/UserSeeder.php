@@ -22,7 +22,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
         ]);
-
         $getuuid=User::latest()->first();
         $data = [
             'uuid' => $getuuid->uuid,
