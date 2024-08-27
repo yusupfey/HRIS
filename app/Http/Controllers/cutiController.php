@@ -46,7 +46,31 @@ public function input(Request $request){
         // dd($cuti);
         session::flash('success','berhasil menambah data');
         return redirect('/cuti');
-}
+    }
+    public function formupdatee($uuid_karyawan){
+        $cuti = cuti::where('uuid_karyawan',$uuid_karyawan)->first();
+        
+        dd($cuti);
+        return view('/cuti.updatecuti',compact('cuti'));
+      }
+    public function update(Request $request){
+        $cuti =$request->validate([
+            "uuid_karyawan"=>"Required",
+            "jenis_cuti"=>"Required",
+            "jumlah"=>"Required",
+            "karyawan_pengganti"=>"Required",
+            "keterangan"=>"Required",
+            
+            ]);
+            $cuti['approved_pengganti'] = null;
+            $cuti['status'] = 0;
+            $cuti['tanggal'] = date('Y-m-d');
+            $cuti = cuti::where('uuid_karyawan',$request->uuid_karyawan)->update($cuti);
 
+            // dd($cuti);
+            session::flash('success','berhasil menambah data');
+            return redirect('/cuti');
+        }
+        
 
 }

@@ -21,6 +21,7 @@
                                                     <th>No</th>
                                                     <th>Uuid</th>
                                                     <th>Jenis Cuti</th>
+                                                    <th>keterangan</th>
                                                     <th>Jumlah</th>
                                                     <th>Tanggal pengajuan</th>
                                                     <th>Karyawan Pengganti</th>
@@ -36,14 +37,17 @@
                                                     <td>{{ $x + 1 }}</td>
                                                     <td>{{ $item->uuid_karyawan }}</td>
                                                     <td>{{ $item->jenis_cuti }}</td>
+                                                    <td>{{ $item->keterangan }}</td>
                                                     <td>{{ $item->jumlah }}</td>
                                                     <td>{{ $item->tanggal }}</td>
                                                     <td>{{ $item->karyawan_pengganti }}</td>
-                                                    <td>{{$item->approved_pengganti}}</td>
-                                                    <td>{{$item->status}}</td>
+                                                    <td>{{ $item->approved_pengganti}}</td>
+                                                    <td>{{ $item->status}}</td>
                                                     <td>
-                                                        <a href="" class="btn btn-danger"><i class="tf-icons bx bx-edit"></i></a>
-                                                        <a href=""></a>
+                                                        @if ($item->status ==0)    
+                                                        <a href="/formupdatee/{{$item->uuid_karyawan}}" class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
+                                                        @endif 
+                                                        <a href="" class="btn btn-info"><i class="tf-icons bx bx-info-circle"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

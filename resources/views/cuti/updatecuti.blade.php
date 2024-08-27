@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="p-3 bg-white border-bottom border-gray-200">
-                <form action="/ajukancuti/proses/input" method="post">
+                <form action="/cuti/proses/update" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="uuid_karyawan" >Nama</label>
@@ -28,28 +28,28 @@
                     
             <div class="mb-3">
               <label for="jenis_cuti">jenis cuti</label>
-              <input type="text" class="form-control" id="jenis_cuti" placeholder="jenis_cuti" name="jenis_cuti" required>
+              <input type="text" class="form-control" id="jenis_cuti" value="{{ old('jenis_cuti') }}" placeholder="jenis_cuti" name="jenis_cuti" required>
                 @if ($errors->has('jenis_cuti'))
                     <div class="error text-danger">{{ $errors->first('jenis_cuti') }}</div>
                 @endif
             </div>
             <div class="mb-3">
                 <label for="keterangan">keterangan</label>
-                <input type="text" class="form-control" id="keterangan" placeholder="keterangan" name="keterangan" required>
+                <input type="text" class="form-control" id="keterangan" value="{{ old('keterangan') }}" placeholder="keterangan" name="keterangan" required>
                   @if ($errors->has('keterangan'))
                       <div class="error text-danger">{{ $errors->first('keterangan') }}</div>
                   @endif
               </div>
             <div class="mb-3">
                 <label for="jumlah">jumlah</label>
-                <input type="number" class="form-control" id="jumlah" placeholder="jumlah" name="jumlah" required>
+                <input type="number" class="form-control" id="jumlah" value="{{ old('jumlah') }}"  placeholder="jumlah" name="jumlah" required>
                   @if ($errors->has('jumlah'))
                       <div class="error text-danger">{{ $errors->first('jumlah') }}</div>
                   @endif
               </div>
               <div class="mb-3">
                 <label for="tanggal">tanggal pengajuan</label>
-                <input type="date" class="form-control" id="tanggal" placeholder="tanggal" name="tanggal" required>
+                <input type="date" class="form-control" id="tanggal" value="{{ old('tanggal') }}" placeholder="tanggal name="tanggal" required>
                   @if ($errors->has('tanggal'))
                       <div class="error text-danger">{{ $errors->first('tanggal') }}</div>
                   @endif
@@ -58,7 +58,7 @@
                 <label for="karyawan_pengganti">Karyawan Pengganti</label>
                 <select class="form-control custom-select" name="karyawan_pengganti" id="karyawan_pengganti">
                             @foreach($employees as $employee)                                           
-                                    <option value="{{ $employee->name }}" data-unit="{{ $employee->id_unit }}">{{ $employee->uuid }}</option>
+                                    <option value="{{ $employee->name }}" data-unit="{{ $employee->id_unit }}">{{ $employee->name }}</option>
                             @endforeach
                 </select>
             </div>  
@@ -68,34 +68,4 @@
             </div>
         </div>
     </div>
-    
-    {{-- @section('js')
-    <script>
-         document.getElementById('unit').addEventListener('change',function(){
-            var unitId =this.value;
-            var karyawanPenggantiWrapper = document.getElementById ('karyawan_pengganti_Wrapper')
-            var karyawanPenggantiSelect= document.getElementById ('karyawan_pengganti')
-            
-                if('unitId'){
-                    karyawanPenggantiWrapper = 'block';
-                    karyawanPenggantiselect.value ='';
-                    for(var i = 0;i < karyawanpenggantiselect.options.lenght; i++){
-                        var option = karyawanpenggantiselect.options[i];
-                        if(option.getAttribute('data-unit')=='unitId'){
-                            option.style.display ='block';
-                }else{ 
-                      option.style.display ='none';
-                }
-            }
-                }else{
-                    karyawanpenggantiwrapper.style.display ='none' ;
-                    karyawanpenggantiselect.value ='';
-                }
-
-         });
-    </script>    
-    @endsection --}}
-    
-    
-    
 </x-main-layout>
