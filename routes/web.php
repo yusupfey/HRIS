@@ -6,6 +6,7 @@ use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use App\Http\Controllers\menuController;
+use App\Http\Controllers\ReferenceController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -69,7 +70,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
     
-
+    // reference
+    Route::prefix('reference')->group(function(){
+        Route::get('{id}', [ReferenceController::class,'index']);
+    });
     
 
 
