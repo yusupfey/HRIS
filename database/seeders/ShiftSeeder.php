@@ -14,21 +14,18 @@ class ShiftSeeder extends Seeder
     protected $shift = [
         [
             'name'=>"Pagi (Poli)",
-            "jam"=>"08:00:00",
             "inactive_date"=>null,
             "checkin_time"=>"08:00:00",
             "checkout_time"=>"15:00:00"
         ],
         [
             'name'=>"Middle Jam 10 (Poli)",
-            "jam"=>"10:00:00",
             "inactive_date"=>null,
             "checkin_time"=>"10:00:00",
             "checkout_time"=>"05:00:00"
         ],
         [
             'name'=>"Sore (Poli)",
-            "jam"=>"14:00:00",
             "inactive_date"=>null,
             "checkin_time"=>"14:00:00",
             "checkout_time"=>"21:00:00"
