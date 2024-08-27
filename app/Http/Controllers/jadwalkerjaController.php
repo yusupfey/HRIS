@@ -11,15 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class jadwalkerjaController extends Controller
 {
     public function index()
     {
+        $data = Employee::where('uuid', Session::get('uuid'))->first();
         $worksheadules = DB::select("SELECT employees.*, units.name as Unit
         FROM employees
         INNER JOIN units ON units.id = employees.id_unit
-        WHERE employees.id_unit = 1");
+        WHERE employees.id_unit = $data->id_unit");
         return view('pages.shift.jadwalkerja', compact('worksheadules'));
     }
 
