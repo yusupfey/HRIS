@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApproveController;
 use App\Http\Controllers\cutiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use App\Http\Controllers\menuController;
+use App\Http\Controllers\ReferenceController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -79,6 +81,16 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/form', [cutiController::class, 'create']);
     // Route::get('/getEmployeesByUnit/{unit_id}', [cutiController::class,'getEmployeesByUnit']);
+
+    // reference
+    Route::prefix('reference')->group(function(){
+        Route::get('{id}', [ReferenceController::class,'index']);
+    });
+    Route::prefix('approve')->group(function(){
+        Route::get('/', [ApproveController::class,'index']);
+        Route::post('/data/{get}', [ApproveController::class,'data']);
+        Route::post('/store/{answer}', [ApproveController::class,'store']);
+    });
     
 
 

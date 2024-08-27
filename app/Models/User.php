@@ -34,7 +34,7 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-
+        // matikan ini kalo mau nge seeder bundel
         static::creating(function ($model) {
             $model->uuid = Str::uuid(36);
         });
