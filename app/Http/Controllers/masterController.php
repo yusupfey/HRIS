@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Menu;
+use App\Models\Reference;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -88,7 +89,7 @@ class masterController extends Controller
                     break;
                 case 'reference':
                     $data['title'] = 'Master Reference';
-                    $data['satuan'] = DB::table('references')->get();;
+                    $data['reference'] = Reference::get();
                     return view('master/index', compact('data'));
                     break;
             }
@@ -104,7 +105,7 @@ class masterController extends Controller
                     break;
                 case 'reference':
                     $data['title'] = 'Master Reference';
-                    $data['satuan'] = DB::select('select * from T_reference');
+                    $data['satuan'] = Reference::get();
                     return view('master/index', compact('data'));
                     break;
                 default:
@@ -134,8 +135,14 @@ class masterController extends Controller
 
                 break;
             case 'reference':
-                $query = DB::table('references')->get();
-                return DataTables::of($query)->toJson();
+                $query = Reference::get();
+                return DataTables::of($query)->addColumn('Action', function($val){
+                    return '<div>
+                    <button onclick="modalReference(`update`, {id:'.$val->id.', reference:`'.$val->reference.'`})" class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></button>
+                    <a href="/reference/'.$val->id.'" class="btn btn-info"><i class="tf-icons bx bx-info-circle"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="tf-icons bx bx-trash"></i></a>
+                    </div>';
+                })->rawColumns(['Action'])->make(true);
 
                 break;
             case 'unit':
@@ -195,6 +202,42 @@ class masterController extends Controller
                 }
                 try {
                     Menu::create($req->all());
+
+                    return response()->json(['code'=>200,'messege'=>'Berhasil'],200);
+                } catch (\Throwable $th) {
+                    return response()->json(['code'=>200,'error'=>$th]);
+                }
+            }
+            if($section ==='reference'){
+                $validation = Validator::make($req->all(), [
+                    'reference' => ['Required'],
+                ]);
+                if($validation->fails()){
+                    return response()->json(['code'=>422,'errors'=>$validation->errors()], 422);
+                }
+                try {
+                    Reference::create($req->all());
+
+                    return response()->json(['code'=>200,'messege'=>'Berhasil'],200);
+                } catch (\Throwable $th) {
+                    return response()->json(['code'=>200,'error'=>$th]);
+                }
+            }
+            if($section ==='reference_d'){
+                $validation = Validator::make($req->all(), [
+                    'reference_id' => ['Required'],
+                    'val_name' => ['Required'],
+                    'val' => ['Required'],
+                ]);
+                if($validation->fails()){
+                    return response()->json(['code'=>422,'errors'=>$validation->errors()], 422);
+                }
+                try {
+                    DB::table('d_references')->insert([
+                        'reference_id' => $req->reference_id,
+                        'val_name' => $req->val_name,
+                        'val' => $req->val,
+                    ]);
 
                     return response()->json(['code'=>200,'messege'=>'Berhasil'],200);
                 } catch (\Throwable $th) {
@@ -276,6 +319,40 @@ class masterController extends Controller
                 }
                 return response()->json(['code'=>200,'messege'=>'Berhasil', 'data'=>$data],200);
 
+            }
+            if($section ==='reference'){
+                $validation = Validator::make($req->all(), [
+                    'reference' => ['Required'],
+                ]);
+                if($validation->fails()){
+                    return response()->json(['code'=>422,'errors'=>$validation->errors()], 422);
+                }
+                try {
+
+                    return response()->json(['code'=>200,'messege'=>'Berhasil'],200);
+                } catch (\Throwable $th) {
+                    return response()->json(['code'=>200,'error'=>$th]);
+                }
+            }
+            if($section ==='reference_d'){
+                $validation = Validator::make($req->all(), [
+                    'reference_id' => ['Required'],
+                    'val_name' => ['Required'],
+                    'val' => ['Required'],
+                ]);
+                if($validation->fails()){
+                    return response()->json(['code'=>422,'errors'=>$validation->errors()], 422);
+                }
+                try {
+                    DB::table('d_references')->where('id', $req->id)->update([
+                        'val_name' => $req->val_name,
+                        'val' => $req->val,
+                    ]);
+
+                    return response()->json(['code'=>200,'messege'=>'Berhasil'],200);
+                } catch (\Throwable $th) {
+                    return response()->json(['code'=>200,'error'=>$th]);
+                }
             }
         }
 
