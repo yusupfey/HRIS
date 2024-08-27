@@ -16,6 +16,7 @@ class MenuSeeder extends Seeder
         ['header_id'=>null,'name'=>"Master",'href'=>"#",'icon'=>'bi bi-menu-button-wide','order'=>'0'],
         ['header_id'=>"2",'name'=>"Karyawan",'href'=>"employees",'icon'=>'menu-link','order'=>'1'],
         ['header_id'=>"2",'name'=>"Menu",'href'=>"/master/menu",'icon'=>'menu-link','order'=>'1'],
+        ['header_id'=>"2",'name'=>"Master",'href'=>"/master/reference",'icon'=>'menu-link','order'=>'1'],
         ['header_id'=>"2",'name'=>"shift",'href'=>"/shift",'icon'=>'menu-link','order'=>'1'],
         ['header_id'=>"2",'name'=>"Jadwal karyawan",'href'=>"/jadwalkerja",'icon'=>'menu-link','order'=>'1'],
         ['header_id'=>"2",'name'=>"Unit",'href'=>"/master/unit",'icon'=>'menu-link','order'=>'1'],
