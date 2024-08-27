@@ -5,32 +5,35 @@
             
         </div>
         <div class="card-body">
-            <table class="table datatable table-hover table-responsive" style="margin-top: 20px;">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Unit</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    @foreach ($worksheadules as $x => $item)
+            <div style="overflow-x: auto; white-space: nowrap;">
+
+                <table class="table datatable table-hover table-responsive" style="margin-top: 20px;">
+                    <thead>
                         <tr>
-                            <td>{{ $x + 1 }}</td>
-                            <td>{{ $item->name}}</td>
-                            <td>{{ $item->Unit}}</td>
-                            <td>
-                                
-                                <a href="/pilihjamkerja/{{$item->uuid}}" class="btn btn-success"><i class="bx bx-plus-circle"></i></a>
-                               
-                            </td>
-                        
-                            
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Unit</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody >
+                        @foreach ($worksheadules as $x => $item)
+                            <tr>
+                                <td>{{ $x + 1 }}</td>
+                                <td>{{ $item->name}}</td>
+                                <td>{{ $item->Unit}}</td>
+                                <td>
+                                    
+                                    <a href="/pilihjamkerja/{{$item->uuid}}" class="btn btn-success"><i class="bx bx-plus-circle"></i></a>
+                                   
+                                </td>
+                            
+                                
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-main-layout>
