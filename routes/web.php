@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApproveController;
 use App\Http\Controllers\cutiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
@@ -81,6 +82,11 @@ Route::middleware(['auth'])->group(function () {
     // reference
     Route::prefix('reference')->group(function(){
         Route::get('{id}', [ReferenceController::class,'index']);
+    });
+    Route::prefix('approve')->group(function(){
+        Route::get('/', [ApproveController::class,'index']);
+        Route::post('/data/{get}', [ApproveController::class,'data']);
+        Route::post('/store/{answer}', [ApproveController::class,'store']);
     });
     
 
