@@ -9,55 +9,277 @@
     @endif
     <div class="py-12" >
         <div >
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <section class="section" style="margin-top: 1px;">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card" style="border-radius:10px;">
-                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                    <h5 class="card-title" style="margin-right: 20px;">Data Table Shift</h5>
-                                    <div class="col-md-4" style="text-align: right;">
-                                        <a href="/tambahshift" class="btn btn-success"><i class="bx bx-plus-circle bx-sm"></i></a>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div id="section" style="display: none;">{{Request::segment(2)}}</div>
-                                    <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
-                                        <thead class="table-primary">
+            <section class="section" style="margin-top: 1px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" style="border-radius:10px;">
+                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h5 class="card-title" style="margin-right: 20px;">Approved</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="section" style="display: none;">{{Request::segment(2)}}</div>
+                                <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID_Permohonan</th>
+                                            <th>Jenis_Permohonan</th>
+                                            <th>Nama</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-light">
+                                        @foreach ($data['data'] as $x => $item)
                                             <tr>
-                                                <th>No</th>
-                                                <th>Id</th>
-                                                <th>Shift</th>
-                                                <th>Jam</th>
-                                                <th>CheckIn Time</th>
-                                                <th>ChekOut Time</th>
-                                                <th>Actions</th>
+                                                <td>{{ $x + 1 }}</td>
+                                                <td>{{ $item->id_permohonan }}</td>
+                                                <td>
+                                                    @switch($item->jenis_permohonan)
+                                                        @case(1)
+                                                            <b>Cuti</b>
+                                                            @break
+                                                        @case(2)
+                                                            <b>Izin</b>
+                                                            @break
+                                                        @default
+                                                            
+                                                    @endswitch
+                                                </td>
+                                                <td>{{ $item->name }}</td>
+                                                <td> 
+                                                    <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}})" class="btn btn-primary"><i class="tf-icons bx bxs-calendar-check"></i></a>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody class="table-light">
-                                            @foreach ($shift as $x => $item)
-                                                <tr>
-                                                    <td>{{ $x + 1 }}</td>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->jam }}</td>
-                                                    <td>{{ $item->checkin_time }}</td>
-                                                    <td>{{$item->checkout_time}}</td>
-                                                    <td> 
-                                                        <a href="/formupdate/{{ $item->id }}"class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
-                                                        <a href="/shift/delete/{{ $item->id }}"class="btn btn-danger"><i class="tf-icons bx bx-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card" style="border-radius:10px;">
+                            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h5 class="card-title" style="margin-right: 20px;">History</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="section" style="display: none;">{{Request::segment(2)}}</div>
+                                <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>ID_Permohonan</th>
+                                            <th>Jenis_Permohonan</th>
+                                            <th>Nama</th>
+                                            <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-light">
+                                        @foreach ($data['history'] as $x => $item)
+                                            <tr>
+                                                <td>{{ $x + 1 }}</td>
+                                                <td>{{ $item->id_permohonan }}</td>
+                                                <td>
+                                                    @switch($item->jenis_permohonan)
+                                                        @case(1)
+                                                            <b>Cuti</b>
+                                                            @break
+                                                        @case(2)
+                                                            <b>Izin</b>
+                                                            @break
+                                                        @default
+                                                            
+                                                    @endswitch
+                                                </td>
+                                                <td>{{ $item->name }}</td>
+                                                <td> 
+                                                    <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}}, 'info')" class="btn btn-info"><i class="tf-icons bx bxs-calendar-check"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
     </div>
     
+<div class="modal fade" id="modalApprove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Persetujuan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only"></span>
+                  </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="submit('approved')">Approve</button>
+            <button type="button" class="btn btn-danger" onclick="submit('reject')">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section('js')
+        <script
+        src="{{asset('/jquery-3.7.1.min.js')}}"></script>
+
+        <script>
+            function modalApprove(id, type, mode=null) {
+                // if(data !==null){
+                //     $('#form_Reference .form-group').append(`<input type="hidden" name="id" value="${data.id}">`)
+                //     $('input[name="mode"]').val(mode)
+                //     $('input[name="val_name"]').val(data.val_name)
+                //     $('input[name="val"]').val(data.val)
+                //     $('#modaReference').modal('show')
+                // }else{
+                //     $('input[name="mode"]').val(mode)
+                //     $('#modaReference').modal('show')
+                // }
+                switch (type) {
+                    case 1://cuti
+                        dataCuti(id, function(response){
+
+                            let cuti = '';
+                            $.each(response.cuti, function(x, val){
+                                cuti = `
+                                    <input type="hidden" readonly name="id_permohonan" value="${val.id}">
+                                    <input type="hidden" readonly name="jenis_permohonan" value="1">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Name</div>
+                                            <div style="font-size:10px;">${val.name}</div>
+                                        </div>
+                                         <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Unit</div>
+                                            <div style="font-size:10px;">${val.unit}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Jenis Cuti</div>
+                                            <div style="font-size:10px;">${val.val_name}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Jumlah Cuti</div>
+                                            <div style="font-size:10px;">${val.jumlah}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Pengganti</div>
+                                            <div style="font-size:10px;">${val.pengganti_name}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div style="font-size:12px; font-weight:bold">Approve_Pengganti</div>
+                                            <div style="font-size:10px;">${val.approve_pengganti === undefined ? 'Belum disetujui': 'Telah disetujui'+val.approve_pengganti}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            })
+                            let approve='<div class="row">';
+                            $.each(response.approve, function(x, val){
+                                approve += `
+                                        <div class="col-4">
+                                            <div style="font-size:12px; font-weight:bold">${val.name}</div>
+                                            <div style="font-size:10px;">${val.unit}</div>
+                                            <div style="font-size:10px;">${val.approve_date === null ? 'Belum disetujui': 'Telah disetujui '+val.approve_date}</div>
+
+                                        </div>
+                                    
+                                `;
+                            })
+                            approve +='</div>';
+                            $('#modalApprove .modal-body').html(`
+                                ${cuti}
+                                <hr/>
+                                Persetujuan
+                                <hr>
+                                ${approve}
+                            `)
+                        })
+                        break;
+                
+                    default:
+                        break;
+                }
+                $('#modalApprove').modal('show')
+                if(mode==='info'){
+                    $('#modalApprove .modal-footer').css('display', 'none')
+
+                }else{
+                    $('#modalApprove .modal-footer').css('display', 'block')
+
+                }
+
+            }
+            function dataCuti(id, callback){
+                $.ajax({
+                    url: "/approve/data/cuti",
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    
+                    },
+                    method: 'post',
+                    data:{'id':id},
+                    success:function(res){
+                        callback(res)
+                    },
+                })
+            }
+            function submit(answer) {
+                $.ajax({
+                    url: "/approve/store/"+answer,
+                    method: 'post',
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    
+                    },
+                    data:{
+                        id_permohonan:$('input[name="id_permohonan"]').val(),
+                        jenis_permohonan:$('input[name="jenis_permohonan"]').val(),
+                    },
+                    success:function(res){
+                        console.log(res)
+                        if(res.metadata.code==200){
+                            window.location.href = '/approve';
+                        }
+                        // valdiateReset(data);
+                    },
+                    error:function(res){
+                        // console.log(res)
+
+                        validateError(data,res.responseJSON)
+                    }
+                })
+
+            }
+            function valdiateReset(data){
+                $.each(data,function(x,v){
+                    $(`#${v.name}`).html('');
+                })
+            }
+            function validateError(data, response){
+                console.log(data,response.errors)
+                valdiateReset(data);
+                $.each(data,function(x,v){
+                    console.log(v.name)
+                    $(`#${v.name}`).html();
+
+
+                    $.each(Object.keys(response.errors),function(x,resval){
+                        if(v.name === resval){
+                            let result = response.errors[resval];
+                            $(`#${v.name}`).html('<i class="text-danger">'+result+'</i>');
+                        }
+                    })
+
+                })
+
+            
+            }
+
+            
+        </script>
+    @endsection
 </x-main-layout>

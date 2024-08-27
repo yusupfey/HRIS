@@ -62,7 +62,7 @@ class UserUnitEmploySeeder extends Seeder
             'alamat' => 'New York',
             'jenis_kelamin' => '0',
             'no_telp' => '00010101',
-            'id_unit' => '3'
+            'id_unit' => '4'
         ];
 
         Employee::create($data);
@@ -103,7 +103,7 @@ class UserUnitEmploySeeder extends Seeder
             'alamat' => 'New York',
             'jenis_kelamin' => '1',
             'no_telp' => '00010101',
-            'id_unit' => '3'
+            'id_unit' => '4'
         ];
 
         Employee::create($data);
@@ -125,7 +125,7 @@ class UserUnitEmploySeeder extends Seeder
             'alamat' => 'New York',
             'jenis_kelamin' => '1',
             'no_telp' => '00010101',
-            'id_unit' => '3'
+            'id_unit' => '4'
         ];
     
         Employee::create($data);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_permohonan');
             $table->integer('jenis_permohonan'); //1. cuti, 2, izin, 3, tuker dines
-            $table->char('uuid_atasan'. 36);
+            $table->char('uuid_atasan', 36);
             $table->integer('approve')->nullable(); //1 yes, 2.no
             $table->dateTime('approve_date')->nullable();
             $table->text('keterangan')->nullable();
