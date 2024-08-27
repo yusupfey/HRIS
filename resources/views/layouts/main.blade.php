@@ -244,16 +244,6 @@
             </li>
 
             <li>
-                            {{-- @php
-                $employeeExists = \App\Models\Employee::where('uuid', Auth::user()->uuid)->exists();
-            @endphp
-
-            <a class="dropdown-item d-flex align-items-center"
-            href="{{ $employeeExists ? route('employees.edit', ['uuid' => Auth::user()->uuid]) : route('employees.create', ['uuid' => Auth::user()->uuid]) }}">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-            </a> --}}
-
 
                 @php
                     $uuid = Session::get('uuid');
@@ -261,10 +251,7 @@
 
                 @endphp
 
-                {{-- <a class="dropdown-item d-flex align-items-center" ref="{{ $employeeExists ? route('employees.edit', ['uuid' => $uuid]) : route('employees.create', ['uuid' => $uuid]) }}">
-                    <i class="bi bi-person"></i>
-                    <span>My Profile</span>
-                </a> --}}
+
                 @if (Session::has('uuid'))
                     <a class="dropdown-item d-flex align-items-center" href="{{ $employeeExists ? route('employees.edit', ['uuid' => $uuid]) : route('employees.create', ['uuid' => $uuid]) }}">
                         <i class="bi bi-person"></i>
@@ -297,7 +284,7 @@
 
           </ul><!-- End Profile Dropdown Items -->
 
-        </li><!-- End Profile Nav --> 
+        </li><!-- End Profile Nav -->
 
       </ul>
     </nav><!-- End Icons Navigation -->
@@ -561,7 +548,7 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav --> --}}
-      
+
     </ul>
 
   </aside><!-- End Sidebar-->

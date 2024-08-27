@@ -15,13 +15,13 @@ class EmployeeController extends Controller
     }
 
     public function create($uuid)
-{
-    // Ambil data user berdasarkan uuid jika diperlukan
-    $user = User::where('uuid', $uuid)->firstOrFail();
+    {
+        // Ambil data user berdasarkan uuid jika diperlukan
+        $user = User::where('uuid', $uuid)->firstOrFail();
 
-    // Lanjutkan dengan logika pembuatan karyawan
-    return view('employees.create', compact('user'));
-}
+        // Lanjutkan dengan logika pembuatan karyawan
+        return view('employees.create', compact('user'));
+    }
 
 
     public function store(Request $request)
@@ -40,14 +40,14 @@ class EmployeeController extends Controller
     }
 
     public function edit($uuid)
-{
+    {
 
-    $employee = Employee::where('uuid', $uuid)->firstOrFail();
+        $employee = Employee::where('uuid', $uuid)->firstOrFail();
 
-    return view('employees.edit', [
-        'employee' => $employee,
-    ]);
-}
+        return view('employees.edit', [
+            'employee' => $employee,
+        ]);
+    }
 
 
 

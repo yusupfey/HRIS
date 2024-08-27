@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\IzinController;
 use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
@@ -45,6 +46,12 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    // izin
+    Route::get('/izin', [IzinController::class, 'index'])->name('izin.index');
+    Route::get('/newform', [IzinController::class, 'newform'])->name('izin.form');
+
+
+
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
     Route::get('/employees/{uuid}/create', [EmployeeController::class, 'create'])->name('employees.create');
@@ -55,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employees/{uuid}', [EmployeeController::class, 'show'])->name('employees.show');
     Route::post('/employees/{id}/delete', [EmployeeController::class, 'destroy'])->name('employees.destroy');
     // shift
-    
+
     Route::get('/shift',[shiftController::class,'index']);
     Route::get('/tambahshift',[shiftController::class,'tambahshift']);
     Route::get('/formupdate/{id}',[shiftController::class,'formupdate']);
@@ -69,12 +76,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/getjamkerja',[jadwalkerjaController::class,'getjamkerja']);
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
-    
+
     // reference
     Route::prefix('reference')->group(function(){
         Route::get('{id}', [ReferenceController::class,'index']);
     });
-    
+
 
 
     route::get('/logout-akun', function(){
@@ -99,5 +106,9 @@ Route::middleware(['auth'])->group(function () {
 //     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 
 // });
+
+
+
+
 
 require __DIR__.'/auth.php';
