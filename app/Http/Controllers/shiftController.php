@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\shift;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,7 +16,7 @@ class shiftController extends Controller
         return view('pages.shift.index', compact('shift'));
     }
     public function  tambahshift() {
-        
+
         return view('pages.shift.tambahshift');
     }
     public function formupdate($id){
@@ -28,19 +27,19 @@ class shiftController extends Controller
     }
     public function input(Request $request){
         $shift =$request->validate([
-            "name"=>"Required", 
-            
+            "name"=>"Required",
+
         ]);
         $shift['jam'] = $request->jam;
         $shift['checkin_time'] = $request->checkin_time;
         $shift['checkout_time'] = $request->checkout_time;
 
 
-        
+
         shift::insert($shift);
         session::flash('success','berhasil menambah data');
         return redirect('/shift');
-        
+
     }
     public function hapus($shift){
         $shift = shift::find($shift);
@@ -59,6 +58,6 @@ class shiftController extends Controller
     $shift = shift::where('id',$request->id)->update($shift);
     return redirect('/shift');
     }
-    
-    
+
+
 }

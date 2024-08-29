@@ -12,7 +12,7 @@ class Employee extends Model
 
 
     protected $fillable = [
-        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date'
+        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date','uuid'
     ];
 
     // protected static function boot()

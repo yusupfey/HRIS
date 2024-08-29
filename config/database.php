@@ -112,6 +112,22 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        // Tambahkan koneksi hris2_db
+        'hris2_db' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HRIS2_DB_HOST', '127.0.0.1'),
+            'port' => env('DB_HRIS2_DB_PORT', '3306'),
+            'database' => env('DB_HRIS2_DB_DATABASE', 'hris2_db'),
+            'username' => env('DB_HRIS2_DB_USERNAME', 'root'),
+            'password' => env('DB_HRIS2_DB_PASSWORD', ''),
+            'unix_socket' => env('DB_HRIS2_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
     ],
 
     /*
