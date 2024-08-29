@@ -6,7 +6,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
-                                    <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px;"> 
+                                    <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px;">
                                         <h5 class="card-title">Pilih Jam Kerja</h5>
                                         <div class="col-md-2 col-sm-2 ml-auto">
                                                 <select class="form-control" name="month" onchange="CountDayInMonth(this)" id="month">
@@ -18,7 +18,7 @@
                                                 <div class="error">{{ $errors->first('month') }}</div>
                                             @endif
                                         </div>
-                                        <div class="col-md-1"> 
+                                        <div class="col-md-1">
                                             <select class="form-control" name="year" id="year">
                                                 @for ($data = 0; $data;)
                                                 <option value="{{$data}}">{{ old('year', $item->year) }}</option>
@@ -26,7 +26,7 @@
                                                 </select>
 
                                                 @if($errors->has('year'))
-                                                <div class="error" {{$errors->first('year')}}></div>                                        
+                                                <div class="error" {{$errors->first('year')}}></div>
                                                 @endif
                                         </div>
                                         <button onclick="window.history.back()" class="btn btn-warning ml-3"><i class="bx bx-arrow-back"></i></button>
@@ -60,7 +60,7 @@
             <script>
                 let shift = JSON.stringify(`{!!$shift!!}`)
                 shift = JSON.parse(shift);
-                
+
                 $(document).ready(function(){
                     const startYear = new Date().getFullYear();  // Tahun awal
                     const endYear = new Date().getFullYear() + 1;  // Tahun akhir, yaitu tahun depan
@@ -71,10 +71,10 @@
                     }
                     // jalankan function countdayinmonth
                     setTimeout(() => {
-                        
+
                         CountDayInMonth()
                     }, 100);
-                    
+
 
                 });
                 function daysInMonth (month, year) { // Use 1 for January, 2 for February, etc.
@@ -86,12 +86,12 @@
                     let days = daysInMonth (month, year)
                     // console.log(days);
                     date = 0;
-                    
 
-                    
+
+
                     let uuid=$('input[name="uuid"]').val()
-                    let token=$('meta[name="crsf-token"]').attr('content');
-                    
+                    let token=$('meta[name="csrf-token"]').attr('content');
+
                     let data = {'uuid':uuid,'year':year,'month':month};
                     console.log();
                     $.ajax({
@@ -110,10 +110,10 @@
                                             Option += `<option value="${ value.id }" ${item.shift_id===value.id ? 'selected':''}>${value.name}</option>`;
                                         })
                                             form += `
-                                                <div class="col-6">
-                                                    <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${item.tanggal}">
+                                                <div class="col-6" style="margin-bottom:10px;">
+                                                    <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${item.tanggal}"readonly>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-6" style="margin-bottom:10px;">
                                                     <select class="form-control form-control-lg" name="shift[]" id="shift">
                                                         ${Option}
                                                     </select>
@@ -124,8 +124,8 @@
                                     for (let index = 0; index < days; index++) {
                                         date = index +1;
                                         form += `
-                                            <div class="col-6">
-                                                <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${date < 10 ? year+'-'+month+'-0'+date:year+'-'+month+'-'+date}">
+                                            <div class="col-6" style="padding-bottom:10px;">
+                                                <input type="date"class="form-control form-control-lg" placeholder="Tanggal" name="tanggal[]" id="tanggal" value="${date < 10 ? year+'-'+month+'-0'+date:year+'-'+month+'-'+date}" readonly>
                                                     @if($errors->has('tanggal'))
                                                         <div class="error">{{ $errors->first('tanggal') }}</div>
                                                     @endif
@@ -141,7 +141,7 @@
                                                 @endif
                                             </div>
                                         `;
-                                        
+
                                     }
                                 }
                                 let html = `
@@ -150,16 +150,16 @@
                                     ${form}
                                 `;
                     $('#targetForm').html(html);
-                                
+
                                 console.log(data);
                             },
                             error:function(data){
                             }
-                            
+
                     });
                 }
             </script>
-            
-            
-        @endsection 
+
+
+        @endsection
     </x-main-layout>

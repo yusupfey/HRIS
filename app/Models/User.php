@@ -34,10 +34,10 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            $model->uuid = Str::uuid(36);
-        });
+        // matikan ini kalo mau nge seeder bundel
+        // static::creating(function ($model) {
+        //     $model->uuid = Str::uuid(36);
+        // });
     }
 
     public function employee()

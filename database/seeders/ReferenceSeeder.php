@@ -19,6 +19,9 @@ class ReferenceSeeder extends Seeder
             'reference'=> 'Jenis Cuti'
         ];
 
+        Reference::create($data);
+
+
         $data = Reference::latest()->first();
         $detail = [
             [
@@ -36,6 +39,29 @@ class ReferenceSeeder extends Seeder
                 'val_name' => 'Melahirkan',
                 'val' => 3,
             ]
+        ];
+        DB::table('d_references')->insert($detail);
+
+
+        $data = [
+            'reference'=> 'Jenis Permohonan'
+        ];
+
+        Reference::create($data);
+
+        $data = Reference::latest()->first();
+        $detail = [
+            [
+                'reference_id' => $data->id,
+                'val_name' => 'Cuti',
+                'val' => 1,
+            ],
+            [
+                'reference_id' => $data->id,
+                'val_name' => 'Izin',
+                'val' => 2,
+            ],
+
         ];
         DB::table('d_references')->insert($detail);
     }
