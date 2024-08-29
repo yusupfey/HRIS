@@ -36,10 +36,10 @@
                 </div>
             </div>
             <div class="col-4 text-center">
-                <div class="card card-body p-1" style="width: 100%;">
+                <a href="/myjadwal/{{ session('uuid') }}" class="card card-body p-1" style="width: 100%; text-decoration: none;">
                     <span class="bi bi-calendar2-week"></span>
-                    <div class="text-muted" style="font-size:9px;">Jadwal</div>
-                </div>
+                    <div class="text-muted" style="font-size:9px;">My Jadwal</div>
+                </a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         <script>
             // $(document).ready(function(){
             setTimeout(() => {
-                waktu() 
+                waktu()
             }, 1000);
             // })
             function waktu() {

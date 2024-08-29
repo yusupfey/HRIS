@@ -9,5 +9,5 @@ class Approve extends Model
 {
     use HasFactory;
     protected $table = 'approve';
-    protected $guarder = ['id'];
+    protected $guarded = ['id'];
 }
