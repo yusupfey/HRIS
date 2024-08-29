@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\cutiController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\menuController;
+use App\Http\Controllers\cutiController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use Stevebauman\Location\Facades\Location;
@@ -100,8 +101,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/data/{get}', [ApproveController::class,'data']);
         Route::post('/store/{answer}', [ApproveController::class,'store']);
     });
-
-
 
     route::get('/logout-akun', function(){
 
