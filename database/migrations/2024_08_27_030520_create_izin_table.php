@@ -21,7 +21,7 @@ class CreateIzinTable extends Migration
             $table->text('alasan');
             $table->text('alamat');
             $table->char('notelpon', 255);
-            $table->int('status');
+            $table->integer('status');
             $table->dateTime('inactive_date')->nullable();
             $table->timestamps();
         });

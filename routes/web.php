@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\cutiController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\menuController;
-use App\Http\Controllers\cutiController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use Stevebauman\Location\Facades\Location;

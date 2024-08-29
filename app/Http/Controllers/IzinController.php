@@ -35,8 +35,8 @@ class IzinController extends Controller
         $uuid = Auth::user()->uuid;
 
         // Ambil data karyawan berdasarkan UUID dan join dengan tabel units
-        $employee = DB::table('hris2_db.employees as e')
-            ->join('hris2_db.units as u', 'e.id_unit', '=', 'u.id')
+        $employee = DB::table('employees as e')
+            ->join('units as u', 'e.id_unit', '=', 'u.id')
             ->select('e.id AS employee_id', 'e.uuid', 'e.alamat', 'e.no_telp', 'u.id AS unit_id', 'u.name AS unit_name', 'u.kepala_unit', 'u.id_head_unit')
             ->where('e.uuid', $uuid)
             ->first();
@@ -44,8 +44,8 @@ class IzinController extends Controller
 
         if ($employee) {
             // Ambil unit dengan ID lebih kecil dari unit_id milik employee
-            $units = DB::table('hris2_db.units as u')
-            ->join('hris2_db.employees as e', 'e.uuid', '=', 'u.kepala_unit')
+            $units = DB::table('units as u')
+            ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
             ->select('e.name as nama_karyawan', 'u.*')
             ->where('u.id', '<=', $employee->id_head_unit + 1)
             ->where('u.id', '!=', 1)
@@ -76,7 +76,7 @@ class IzinController extends Controller
         $uuid = Auth::user()->uuid;
 
         // Ambil data karyawan berdasarkan UUID
-        $employee = DB::table('hris2_db.employees')
+        $employee = DB::table('employees')
             ->where('uuid', $uuid)
             ->first();
 
@@ -90,6 +90,7 @@ class IzinController extends Controller
                 'alasan' => $request->input('alasan'),
                 'alamat' => $request->input('alamat'),
                 'notelpon' => $request->input('notelp'),
+                'status' => 0, //Beu
             ]);
 
             $izin = Izin::latest()->first();
@@ -97,7 +98,7 @@ class IzinController extends Controller
 
             // // Simpan data ke tabel approve untuk setiap unit yang dipilih
             // foreach ($request->input('units') as $unit_id) {
-            //     $unit = DB::table('hris2_db.units')->where('id', $unit_id)->first();
+            //     $unit = DB::table('units')->where('id', $unit_id)->first();
 
             //     DB::table('approve')->insert([
             //         'id_permohonan' => $employee->id,

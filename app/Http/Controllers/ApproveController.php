@@ -33,28 +33,33 @@ class ApproveController extends Controller
             where cuti.id=$request->id");
 
 
-            $approve = DB::select("SELECT e1.*, approve.approve_date, units.name as unit FROM `approve` 
+            $approve = DB::select("SELECT e1.*, approve.*, units.name as unit FROM `approve` 
             INNER JOIN employees e1 on e1.uuid=approve.uuid_atasan 
             INNER JOIN units on e1.id_unit=units.id
             where approve.id_permohonan=$request->id and jenis_permohonan=1");
             return response()->json(['cuti'=>$data, 'approve'=>$approve]);
-        }else if($get === 'Izin'){
+        }else if($get === 'izin'){
+            $data = DB::select("SELECT e1.name, units.name as unit, izin.* FROM izin
+            INNER JOIN employees e1 on e1.uuid=izin.uuid_karyawan
+            INNER JOIN units on e1.id_unit=units.id
+            where izin.id=$request->id");
+            $approve = DB::select("SELECT e1.*, approve.*, units.name as unit FROM `approve` 
+            INNER JOIN employees e1 on e1.uuid=approve.uuid_atasan 
+            INNER JOIN units on e1.id_unit=units.id
+            where approve.id_permohonan=$request->id and jenis_permohonan=2");
+            return response()->json(['izin'=>$data, 'approve'=>$approve]);
 
         }
     }
     public function store($get, Request $request){
-        if($request->jenis_permohonan === '1'){
-            //cuti
-
-            if($get ==='approved'){
                 $uuid = Session::get('uuid');
                 try {
-                    $data = Approve::where([
+                    Approve::where([
                         ['id_permohonan','=',$request->id_permohonan],
                         ['jenis_permohonan','=',$request->jenis_permohonan],
                         ['uuid_atasan','=',$uuid]
                     ])->update([
-                        'approve'=>1,
+                        'approve'=>$get === 'Approved' ? 1:0,
                         'approve_date'=>date('Y-m-d h:m:s'),
                     ]);
                     return response()->json(['metadata'=>[
@@ -73,11 +78,6 @@ class ApproveController extends Controller
                     ]);
 
                 }
-
-            }else{
-
-            }
-        }
 
         return $get;
     }
