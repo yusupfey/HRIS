@@ -70,6 +70,7 @@ class IzinController extends Controller
             'alasan' => 'required|string',
             'alamat' => 'nullable|string',
             'notelp' => 'nullable|string',
+            'status' => 0,
         ]);
 
         // Dapatkan UUID dari user yang sedang login
