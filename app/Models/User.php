@@ -35,9 +35,9 @@ class User extends Authenticatable
     {
         parent::boot();
         // matikan ini kalo mau nge seeder bundel
-        static::creating(function ($model) {
-            $model->uuid = Str::uuid(36);
-        });
+        // static::creating(function ($model) {
+        //     $model->uuid = Str::uuid(36);
+        // });
     }
 
     public function employee()

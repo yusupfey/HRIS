@@ -30,7 +30,6 @@
                                                     <th>No</th>
                                                     <th>Id</th>
                                                     <th>Shift</th>
-                                                    <th>Jam</th>
                                                     <th>CheckIn Time</th>
                                                     <th>ChekOut Time</th>
                                                     <th>Actions</th>
@@ -42,7 +41,6 @@
                                                         <td>{{ $x + 1 }}</td>
                                                         <td>{{ $item->id }}</td>
                                                         <td>{{ $item->name }}</td>
-                                                        <td>{{ $item->jam }}</td>
                                                         <td>{{ $item->checkin_time }}</td>
                                                         <td>{{$item->checkout_time}}</td>
                                                         <td> 

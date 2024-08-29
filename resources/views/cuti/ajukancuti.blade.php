@@ -58,10 +58,21 @@
                 <label for="karyawan_pengganti">Karyawan Pengganti</label>
                 <select class="form-control custom-select" name="karyawan_pengganti" id="karyawan_pengganti">
                             @foreach($employees as $employee)                                           
-                                    <option value="{{ $employee->name }}" data-unit="{{ $employee->id_unit }}">{{ $employee->uuid }}</option>
+                                    <option value="{{ $employee->name }}" data-unit="{{ $employee->id_unit }}">{{ $employee->name }}</option>
                             @endforeach
                 </select>
-            </div>  
+            </div> 
+            <div class="row">
+                <div class="col-md-3"></div>
+                 <div class="mb-3">
+                    <select class="form-control custom-select" name="units" id="units">
+                                @foreach($units as $unit)                                           
+                                        <option value="{{ $unit->id_head_unit }}" data-unit="{{ $unit->id_head_unit }}">{{ $unit->name }}</option>
+                                @endforeach
+                    </select>
+                </div>   
+            </div>
+             
                 <button type="submit" name="submit" id="submit"  class="btn btn-success">tes tes</button>
                 </form>
             </div>

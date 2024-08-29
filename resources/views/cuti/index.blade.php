@@ -45,7 +45,7 @@
                                                     <td>{{ $item->status}}</td>
                                                     <td>
                                                         @if ($item->status ==0)    
-                                                        <a href="/formupdatee/{{$item->uuid_karyawan}}" class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
+                                                        <a href="/formupdatee/{{$item->id}}" class="btn btn-warning"><i class="tf-icons bx bx-edit"></i></a>
                                                         @endif 
                                                         <a href="" class="btn btn-info"><i class="tf-icons bx bx-info-circle"></i></a>
                                                     </td>
