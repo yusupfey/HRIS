@@ -90,7 +90,7 @@
 
                     
                     let uuid=$('input[name="uuid"]').val()
-                    let token=$('meta[name="crsf-token"]').attr('content');
+                    let token=$('meta[name="csrf-token"]').attr('content');
                     
                     let data = {'uuid':uuid,'year':year,'month':month};
                     console.log();
