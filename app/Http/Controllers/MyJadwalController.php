@@ -26,20 +26,21 @@ class MyJadwalController extends Controller
 
 
        // dapetin tanggal akhir data yang tersedia
-       $endDate = DB::table('hris2_db.worksheadules')
+       $endDate = DB::table('worksheadules')
                    ->where('uuid_employees', $uuid)
-                   ->max('tanggal'); // Mengambil tanggal terakhir yang tersedia
-
+                   ->max('tanggal'); 
+    // Mengambil tanggal terakhir yang tersedia
+    // dd($endDate);
 
        // Jika tidak ada data tanggal terakhir, set endDate sebagai hari ini
        $endDate = $endDate ?: $today;
 
 
        // ambil data worksheadules berdasarkan uuid employee dan jarak tanggal dengan page
-       $worksheadulesQuery = DB::table('hris2_db.worksheadules as w')
+       $worksheadulesQuery = DB::table('worksheadules as w')
            ->select('w.*', 'e.id_unit', 's.checkout_time', 's.checkin_time')
-           ->join('hris2_db.employees as e', 'w.uuid_employees', '=', 'e.uuid')
-           ->join('hris2_db.shifts as s', 'w.shift_id', '=', 's.id')
+           ->join('employees as e', 'w.uuid_employees', '=', 'e.uuid')
+           ->join('shifts as s', 'w.shift_id', '=', 's.id')
            ->where('w.uuid_employees', $uuid)
            ->whereBetween('w.tanggal', [$today, $endDate]) // Pastikan rentang tanggal konsisten
            ->orderBy('w.tanggal', 'asc');

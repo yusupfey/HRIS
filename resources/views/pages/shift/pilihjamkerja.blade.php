@@ -91,7 +91,7 @@
 
                     let uuid=$('input[name="uuid"]').val()
                     let token=$('meta[name="csrf-token"]').attr('content');
-
+                    
                     let data = {'uuid':uuid,'year':year,'month':month};
                     console.log();
                     $.ajax({

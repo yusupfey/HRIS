@@ -101,8 +101,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store/{answer}', [ApproveController::class,'store']);
     });
 
-
-
     route::get('/logout-akun', function(){
 
         Session::flush(); // removes all session data
