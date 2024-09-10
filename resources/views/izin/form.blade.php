@@ -1,22 +1,26 @@
 <x-main-layout>
+    {{-- <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom:20px;">
+        <h5 class="card-title" style="margin-right: 20px;">Data Table Karyawan</h5>
+        
+    </div> --}}
     <div class="card shadow-sm p-4">
         <h3 class="mb-4">Buat Izin Baru</h3>
         @error('error')
         <div class="alert alert-danger">{{ $message }}</div>
 
         @enderror
-        <form id="izinForm" action="{{ route('izin.store') }}" method="POST">
+        <form id="izinForm" action="{{ route('izin.form') }}" method="POST">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="starttime" class="form-label">Mulai Tanggal</label>
+                        <label for="starttime" class="form-label">Mulai Jam</label>
                         <input type="time" id="starttime" name="starttime" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="endtime" class="form-label">Sampai Tanggal</label>
+                        <label for="endtime" class="form-label">Sampai Jam</label>
                         <input type="time" id="endtime" name="endtime" class="form-control" required>
                     </div>
                 </div>

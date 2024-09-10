@@ -76,7 +76,7 @@ class IzinController extends Controller
         $uuid = Auth::user()->uuid;
 
         // Ambil data karyawan berdasarkan UUID
-        $employee = DB::table('employees')
+        $employee = DB::table(' employees')
             ->where('uuid', $uuid)
             ->first();
 

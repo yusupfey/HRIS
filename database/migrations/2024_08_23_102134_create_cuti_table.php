@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('tanggal');
             $table->char('karyawan_pengganti',36);
             $table->dateTime('approved_pengganti')->nullable();
-            $table->dateTime('keterangan');
+            $table->text('keterangan');
             $table->integer('status');
             $table->timestamps();
         });

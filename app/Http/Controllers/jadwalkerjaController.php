@@ -17,6 +17,7 @@ class jadwalkerjaController extends Controller
 {
     public function index()
     {
+        
         $data = Employee::where('uuid', Session::get('uuid'))->first();
         $worksheadules = DB::select("SELECT employees.*, units.name as Unit
         FROM employees

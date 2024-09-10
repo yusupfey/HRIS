@@ -30,7 +30,7 @@ class shiftController extends Controller
             "name"=>"Required",
 
         ]);
-        $shift['jam'] = $request->jam;
+        
         $shift['checkin_time'] = $request->checkin_time;
         $shift['checkout_time'] = $request->checkout_time;
 

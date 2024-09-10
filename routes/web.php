@@ -4,7 +4,6 @@ use Torann\GeoIP\Facades\GeoIP;
 use Stevebauman\Location\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\cutiController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\menuController;
 use App\Http\Controllers\shiftController;
@@ -16,6 +15,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MyJadwalController;
 use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\jadwalkerjaController;
+use App\Http\Controllers\masukcontroller;
 use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
@@ -57,8 +57,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/myjadwal/{uuid}', [MyJadwalController::class, 'index'])->name('myjadwal.index');
 
+    // cuti route
 
-
+    Route::get('/cuti',[cutiController::class,'index'])->name('cuti.index');
+    Route::get('/newformm',[cutiController::class,'newformm'])->name('cuti.ajukancuti');
+    Route::POST('/store',[cutiController::class,'store'])->name('cuti.store');
+    Route::post('/cuti/proses/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+    Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
     Route::get('/employees/{uuid}/create', [EmployeeController::class, 'create'])->name('employees.create');
@@ -84,9 +89,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
 
-    Route::get('/cuti',[cutiController::class,'index']);
-    Route::get('/ajukancuti',[cutiController::class,'ajukancuti']);
-    Route::post('/ajukancuti/proses/input',[cutiController::class,'input']);
+    //masuk kerja
+     Route::get('/masukkerja',[masukcontroller::class,'index']);
+
+
 
     // Route::get('/form', [cutiController::class, 'create']);
     // Route::get('/getEmployeesByUnit/{unit_id}', [cutiController::class,'getEmployeesByUnit']);
