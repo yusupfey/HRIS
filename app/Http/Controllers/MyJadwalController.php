@@ -28,8 +28,9 @@ class MyJadwalController extends Controller
        // dapetin tanggal akhir data yang tersedia
        $endDate = DB::table('worksheadules')
                    ->where('uuid_employees', $uuid)
-                   ->max('tanggal'); // Mengambil tanggal terakhir yang tersedia
-
+                   ->max('tanggal'); 
+    // Mengambil tanggal terakhir yang tersedia
+    // dd($endDate);
 
        // Jika tidak ada data tanggal terakhir, set endDate sebagai hari ini
        $endDate = $endDate ?: $today;

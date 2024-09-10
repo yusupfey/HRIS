@@ -90,6 +90,7 @@ class IzinController extends Controller
                 'alasan' => $request->input('alasan'),
                 'alamat' => $request->input('alamat'),
                 'notelpon' => $request->input('notelp'),
+                'status' => 0, //Beu
             ]);
 
             $izin = Izin::latest()->first();
@@ -97,7 +98,7 @@ class IzinController extends Controller
 
             // // Simpan data ke tabel approve untuk setiap unit yang dipilih
             // foreach ($request->input('units') as $unit_id) {
-            //     $unit = DB::table('hris2_db.units')->where('id', $unit_id)->first();
+            //     $unit = DB::table('units')->where('id', $unit_id)->first();
 
             //     DB::table('approve')->insert([
             //         'id_permohonan' => $employee->id,
