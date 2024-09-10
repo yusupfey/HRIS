@@ -7,7 +7,7 @@
                         <div class="card">
                             <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                                 <h5 class="card-title">Update Cuti</h5>
-                                <button onclick="window.history.back()" class="btn btn-warning"><i class="bx bx-arrow-back bx-sm"></i></button>
+                                <button onclick="window.history.back()" class="btn btn-warning">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,15 @@
                     
                     <div class="mb-3">
                         <label for="jenis_cuti">Jenis Cuti</label>
-                        <input type="text" class="form-control" id="jenis_cuti" name="jenis_cuti" value="{{ $cuti->jenis_cuti }}" required>
+        <select name="jenis_cuti" id="jenis_cuti" class="form-control">
+            <option value=""disabled>Pilih Jenis Cuti</option>
+            @foreach($reference as $rf)
+                <option value="{{ $rf->id }}" 
+                    {{ $cuti->jenis_cuti == $rf->id ? 'selected' : '' }}>
+                    {{ $rf->reference }}
+                </option>
+            @endforeach
+        </select>
                     </div>
 
                     <div class="mb-3">
@@ -36,9 +44,25 @@
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{ $cuti->jumlah }}" required>
                     </div>
+                    <div class="row mb-3">
+                        @foreach($d_cuti as $index => $cuti_detail)
+                            <div class="col-md-4">
+                                <label for="tanggal_cuti{{ $index }}">Tanggal Cuti:</label>
+                                <input type="date" id="tanggal_cuti" name="tanggal_cuti[{{ $cuti_detail->id }}]" value="{{ old('tanggal_cuti.'.$index, $cuti_detail->tanggal_cuti) }}" class="form-control" aria-label="Pilih Tanggal Cuti">
+                            </div>
+                        @endforeach
+                        @if(count($d_cuti) < 3)
+                            @for($i = count($d_cuti); $i < 3; $i++)
+                            <div class="col-md-4">
+                                <label for="tanggal_cuti{{ $i }}">Tanggal Cuti</label>
+                                <input type="date" name="tanggal_cuti[]" class="form-control" aria-label="Pilih Tanggal Cuti">
+                    </div>
+                            @endfor
+                        @endif
+                    </div>
 
                     <div class="mb-3">
-                        <label for="tanggal">Tanggal </label>
+                        <label for="tanggal">Tanggal pengajuan </label>
                         <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $cuti->tanggal }}" required>
 
                     </div>
@@ -54,7 +78,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <button type="submit" class="btn btn-success">Update</button>
                 </form>
             </div>

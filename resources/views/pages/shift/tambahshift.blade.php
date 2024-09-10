@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px; ">
                                 <h5 class="card-title">New Shift</h5>
-                                <button onclick="window.history.back()" class="btn btn-warning"><i class="bx bx-arrow-back bx-sm"></i></button>
+                                <button onclick="window.history.back()" class="btn btn-warning">Back</button>
                             </div>
                         </div>
                     </div>

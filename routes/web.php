@@ -1,20 +1,23 @@
 <?php
 
-use App\Http\Controllers\ApproveController;
+use Torann\GeoIP\Facades\GeoIP;
+use Stevebauman\Location\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\IzinController;
+use App\Http\Controllers\menuController;
 use App\Http\Controllers\cutiController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
-use App\Http\Controllers\menuController;
-use App\Http\Controllers\ReferenceController;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\UserProfileController;
-use Illuminate\Support\Facades\Route;
 use Stevebauman\Location\Facades\Location;
-use Stevebauman\Location\Request;
-use Torann\GeoIP\Facades\GeoIP;
+use App\Http\Controllers\ApproveController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MyJadwalController;
+use App\Http\Controllers\ReferenceController;
+use App\Http\Controllers\jadwalkerjaController;
+use App\Http\Controllers\masukcontroller;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +50,21 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    // izin
+    Route::get('/izin', [IzinController::class, 'index'])->name('izin.index');
+    Route::get('/newform', [IzinController::class, 'newform'])->name('izin.form');
+    Route::post('/store', [IzinController::class, 'store'])->name('izin.store');
+
+
+    Route::get('/myjadwal/{uuid}', [MyJadwalController::class, 'index'])->name('myjadwal.index');
+
+    // cuti route
+
+    Route::get('/cuti',[cutiController::class,'index'])->name('cuti.index');
+    Route::get('/newformm',[cutiController::class,'newformm'])->name('cuti.ajukancuti');
+    Route::POST('/store',[cutiController::class,'store'])->name('cuti.store');
+    Route::post('/cuti/proses/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+    Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
     Route::get('/employees/{uuid}/create', [EmployeeController::class, 'create'])->name('employees.create');
@@ -57,7 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/employees/{uuid}', [EmployeeController::class, 'show'])->name('employees.show');
     Route::post('/employees/{id}/delete', [EmployeeController::class, 'destroy'])->name('employees.destroy');
     // shift
-    
+
     Route::get('/shift',[shiftController::class,'index']);
     Route::get('/tambahshift',[shiftController::class,'tambahshift']);
     Route::get('/formupdate/{id}',[shiftController::class,'formupdate']);
@@ -71,12 +89,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/getjamkerja',[jadwalkerjaController::class,'getjamkerja']);
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
-    
-    Route::get('/cuti',[cutiController::class,'index']);
-    Route::get('/ajukancuti',[cutiController::class,'ajukancuti']);
-    Route::POST('/ajukancuti/proses/input',[cutiController::class,'input']);
-    Route::post('/cuti/proses/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
-    Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
+
+    //masuk kerja
+     Route::get('/masukkerja',[masukcontroller::class,'index']);
+
 
 
     // Route::get('/form', [cutiController::class, 'create']);
@@ -91,8 +107,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/data/{get}', [ApproveController::class,'data']);
         Route::post('/store/{answer}', [ApproveController::class,'store']);
     });
-    
-
 
     route::get('/logout-akun', function(){
 
@@ -116,5 +130,9 @@ Route::middleware(['auth'])->group(function () {
 //     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 
 // });
+
+
+
+
 
 require __DIR__.'/auth.php';

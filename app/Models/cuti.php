@@ -12,4 +12,15 @@ class cuti extends Model
     protected $guarded = [
         'id',
     ];
+    protected $fillable = [
+        'uuid_karyawan',
+        'jenis_cuti',
+        'jumlah',
+        'tanggal',
+        'karyawan_pengganti',
+        'keterangan',
+        'approved-pengganti',
+        'status',
+        'inactive_date',
+    ];
 }

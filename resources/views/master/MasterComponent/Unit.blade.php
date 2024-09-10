@@ -5,7 +5,7 @@
     <div class="card-body">
         <div class="dd">
             <ol class="dd-list" id="header-dd-list">
-                
+
             </ol>
         </div>
     </div>
@@ -14,16 +14,16 @@
 
 @push('css')
 <link rel="stylesheet" href="{{asset('assets/vendor/nestable/nestable.css')}}"></link>
-    
+
 @endpush
 @section('jsMaster')
 <script src="{{asset('assets/vendor/nestable/jquery.nestable.js')}}"></script>
     <script>
-        let token = $('meta[name="crsf-token"]').attr('content');
+        let token = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
             getData();
             $('.dd').nestable({});
-            
+
         })
         $('.dd').on('change', function() {
             let data =  $('.dd').nestable('serialize');
@@ -66,8 +66,8 @@
                                         <div class="dd-handle">${val.name}</div>
                                         ${getChild(val.id, res)}
                                     </li>
-                                    
-                                
+
+
                         `;
                     }
                 }
@@ -90,11 +90,11 @@
                                 <li class="dd-item" data-id="${element.id}">
                                     <div class="dd-handle">${element.name}</div>
                                         ${getChild(element.id, res)}
-    
+
                                 </li>
                             `
                         }
-                        
+
                     });
                     $('#header-dd-list').html(html)
                     console.log(res);

@@ -5,9 +5,12 @@
             
         </div>
         <div class="card-body">
-            <div style="overflow-x: auto; white-space: nowrap;">
+            <div id="section" style="display: none;">{{Request::segment(2)}}</div>
 
-                <table class="table datatable table-hover table-responsive" style="margin-top: 20px;">
+
+            <div class="table-responsive" style="overflow-x: auto;">
+                <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+
                     <thead>
                         <tr>
                             <th>No</th>
@@ -16,24 +19,22 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                         @foreach ($worksheadules as $x => $item)
                             <tr>
                                 <td>{{ $x + 1 }}</td>
                                 <td>{{ $item->name}}</td>
                                 <td>{{ $item->Unit}}</td>
                                 <td>
-                                    
                                     <a href="/pilihjamkerja/{{$item->uuid}}" class="btn btn-success"><i class="bx bx-plus-circle"></i></a>
-                                   
                                 </td>
-                            
-                                
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            
+            
         </div>
     </div>
 </x-main-layout>
