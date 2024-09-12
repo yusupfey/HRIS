@@ -40,7 +40,8 @@ public function newformm()
     // $employees = Employee::where('id_unit','=',$employees->id_unit)
     // ->where('uuid','!=',$employees->uuid)
     // ->get(); 
-    $reference=DB::table('d_references')->where('reference_id', 1)->get();
+    $reference=DB::table('d_references')->where('reference_id',1)->get();
+
     // dd($d_cuti);
 
     
