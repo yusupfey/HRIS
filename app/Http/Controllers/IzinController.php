@@ -16,14 +16,22 @@ use Carbon\Carbon;
 class IzinController extends Controller
 {
 
-    public function index ()
-    {
-        $izinData = Izin::join('employees', 'izin.uuid_karyawan', '=', 'employees.uuid') // Asumsi kolom uuid_karyawan ada di tabel izin
-        ->select('izin.*', 'employees.name')
-        ->get();
+    public function index()
+{
+    // Mendapatkan UUID dari user yang sedang login
+    $uuid = Auth::user()->uuid;
+
+    // Mengambil data izin yang digabung dengan data karyawan berdasarkan UUID
+    $izinData = Izin::join('employees', 'izin.uuid_karyawan', '=', 'employees.uuid')
+                    ->where('izin.uuid_karyawan', $uuid)
+                    ->select('izin.*', 'employees.name')
+                    ->get();
+
 
     return view('izin.index', compact('izinData'));
-    }
+}
+
+
 
 
 
@@ -70,7 +78,6 @@ class IzinController extends Controller
             'alasan' => 'required|string',
             'alamat' => 'nullable|string',
             'notelp' => 'nullable|string',
-            'status' => 0,
         ]);
 
         // Dapatkan UUID dari user yang sedang login
@@ -91,7 +98,7 @@ class IzinController extends Controller
                 'alasan' => $request->input('alasan'),
                 'alamat' => $request->input('alamat'),
                 'notelpon' => $request->input('notelp'),
-                'status' => 0, //Beu
+                'status' => 0 //Beu
             ]);
 
             $izin = Izin::latest()->first();

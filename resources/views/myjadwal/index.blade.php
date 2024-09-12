@@ -19,22 +19,19 @@
                 <div class="col-md-6">
                     <div class="card" style="border: 1px solid; min-height: 167px;">
                         <div class="card-body d-flex align-items-center">
-                            <img src="{{ asset('assets/img/prof.png') }}" alt="Logo" style="position: relative; top: 10px; width: 100px; height: 100px; border-radius: 10%; margin-right: 50px;">
-
-
-
+                            <i class="bi bi-person-circle" style="position: relative; top: 10px; font-size: 100px; border-radius: 10%; margin-right: 50px; color: #000;"></i>
 
                             <div>
                                 <h5 class="card-title mb-0">{{ $employee->name }}</h5> <!-- mb-0 menghilangkan margin bawah -->
                                 <h5 class="mb-0">
                                     @if ($employee->id_unit == 1)
-                                        HRD
-                                    @elseif ($employee->id_unit == 2)
-                                        Penunjang Medis
-                                    @elseif ($employee->id_unit == 3)
-                                        Komite Medik
-                                    @elseif ($employee->id_unit == 4)
                                         Direktur
+                                    @elseif ($employee->id_unit == 2)
+                                        HRD
+                                    @elseif ($employee->id_unit == 3)
+                                    Manager Keperawatan
+                                    @elseif ($employee->id_unit == 4)
+                                    Instalasi Rawat Jalan
                                     @endif
                                 </h5>
                             </div>
@@ -56,7 +53,7 @@
                             <div class="me-3">
                                 <!-- Elemen untuk jam dinding -->
                                 <div id="clock" style="position: relative; width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: -20px">
-                                    <img src="{{ asset('assets/img/jam.png') }}" alt="Jam Dinding" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <i class="bi bi-clock" style="font-size: 70px; color: #000;"></i>
 
 
                                     <div id="hour-hand" class="hand"></div>

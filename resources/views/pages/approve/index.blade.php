@@ -18,41 +18,43 @@
                             </div>
                             <div class="card-body">
                                 <div id="section" style="display: none;">{{Request::segment(2)}}</div>
-                                <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>ID_Permohonan</th>
-                                            <th>Jenis_Permohonan</th>
-                                            <th>Nama</th>
-                                            <th>#</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-light">
-                                        @foreach ($data['data'] as $x => $item)
+                                <div class="table-responsive">
+                                    <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+                                        <thead class="table-primary">
                                             <tr>
-                                                <td>{{ $x + 1 }}</td>
-                                                <td>{{ $item->id_permohonan }}</td>
-                                                <td>
-                                                    @switch($item->jenis_permohonan)
-                                                        @case(1)
-                                                            <b>Cuti</b>
-                                                            @break
-                                                        @case(2)
-                                                            <b>Izin</b>
-                                                            @break
-                                                        @default
-                                                            
-                                                    @endswitch
-                                                </td>
-                                                <td>{{ $item->name }}</td>
-                                                <td> 
-                                                    <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}})" class="btn btn-primary"><i class="tf-icons bx bxs-calendar-check"></i></a>
-                                                </td>
+                                                <th>No</th>
+                                                <th>ID_Permohonan</th>
+                                                <th>Jenis_Permohonan</th>
+                                                <th>Nama</th>
+                                                <th>#</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody class="table-light">
+                                            @foreach ($data['data'] as $x => $item)
+                                                <tr>
+                                                    <td>{{ $x + 1 }}</td>
+                                                    <td>{{ $item->id_permohonan }}</td>
+                                                    <td>
+                                                        @switch($item->jenis_permohonan)
+                                                            @case(1)
+                                                                <b>Cuti</b>
+                                                                @break
+                                                            @case(2)
+                                                                <b>Izin</b>
+                                                                @break
+                                                            @default
+
+                                                        @endswitch
+                                                    </td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>
+                                                        <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}})" class="btn btn-primary"><i class="tf-icons bx bxs-calendar-check"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="card" style="border-radius:10px;">
@@ -61,41 +63,43 @@
                             </div>
                             <div class="card-body">
                                 <div id="section" style="display: none;">{{Request::segment(2)}}</div>
-                                <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th>No</th>
-                                            <th>ID_Permohonan</th>
-                                            <th>Jenis_Permohonan</th>
-                                            <th>Nama</th>
-                                            <th>#</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-light">
-                                        @foreach ($data['history'] as $x => $item)
+                                <div class="table-responsive">
+                                    <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+                                        <thead class="table-primary">
                                             <tr>
-                                                <td>{{ $x + 1 }}</td>
-                                                <td>{{ $item->id_permohonan }}</td>
-                                                <td>
-                                                    @switch($item->jenis_permohonan)
-                                                        @case(1)
-                                                            <b>Cuti</b>
-                                                            @break
-                                                        @case(2)
-                                                            <b>Izin</b>
-                                                            @break
-                                                        @default
-                                                            
-                                                    @endswitch
-                                                </td>
-                                                <td>{{ $item->name }}</td>
-                                                <td> 
-                                                    <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}}, 'info')" class="btn btn-info"><i class="tf-icons bx bxs-calendar-check"></i></a>
-                                                </td>
+                                                <th>No</th>
+                                                <th>ID_Permohonan</th>
+                                                <th>Jenis_Permohonan</th>
+                                                <th>Nama</th>
+                                                <th>#</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody class="table-light">
+                                            @foreach ($data['history'] as $x => $item)
+                                                <tr>
+                                                    <td>{{ $x + 1 }}</td>
+                                                    <td>{{ $item->id_permohonan }}</td>
+                                                    <td>
+                                                        @switch($item->jenis_permohonan)
+                                                            @case(1)
+                                                                <b>Cuti</b>
+                                                                @break
+                                                            @case(2)
+                                                                <b>Izin</b>
+                                                                @break
+                                                            @default
+
+                                                        @endswitch
+                                                    </td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>
+                                                        <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}}, 'info')" class="btn btn-info"><i class="tf-icons bx bxs-calendar-check"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,7 +107,7 @@
             </section>
         </div>
     </div>
-    
+
 <div class="modal fade" id="modalApprove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -186,7 +190,7 @@
                                             <div style="font-size:10px;">${val.approve_date === null ? 'Belum disetujui': 'Telah disetujui '+val.approve_date}</div>
 
                                         </div>
-                                    
+
                                 `;
                             })
                             approve +='</div>';
@@ -248,7 +252,7 @@
                                                     <div style="font-size:10px;">${val.approve_date === null ? 'Belum disetujui': val.approve == '1' ? 'Telah disetujui '+val.approve_date:'Tidak disetujui '+val.approve_date}</div>
 
                                                 </div>
-                                            
+
                                         `;
                                     })
                                     approve +='</div>';
@@ -279,7 +283,7 @@
                     url: "/approve/data/"+type,
                     headers:{
                         'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                    
+
                     },
                     method: 'post',
                     data:{'id':id},
@@ -294,7 +298,7 @@
                     method: 'post',
                     headers:{
                         'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                    
+
                     },
                     data:{
                         id_permohonan:$('input[name="id_permohonan"]').val(),
@@ -337,10 +341,10 @@
 
                 })
 
-            
+
             }
 
-            
+
         </script>
     @endsection
 </x-main-layout>

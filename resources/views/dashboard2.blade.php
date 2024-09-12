@@ -10,7 +10,7 @@
             <div class="text-white">Senin, 29 Juli 2024</div>
             <div id="selisih"></div>
         </div>
-        <div class="d-flex justify-center mt-4">
+        <div class="d-flex justify-content-center align-items-center mt-4">
             <div class="m-2 text-center text-white">
                 <div>--:--</div>
                 <div class="btn btn-info">Masuk</div>
