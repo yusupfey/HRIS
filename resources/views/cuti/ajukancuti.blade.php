@@ -32,7 +32,7 @@
               <select name="jenis_cuti" id="jenis_cuti" class="form-control">
                 <option value=""disabled>Pilih Jenis Cuti</option>
                 @foreach($reference as $rf)
-                    <option value="{{ $rf->id }}">{{ $rf->reference }}</option>
+                    <option value="{{ $rf->val}}">{{ $rf->val_name }}</option>
                 @endforeach
             </select>
             </div>

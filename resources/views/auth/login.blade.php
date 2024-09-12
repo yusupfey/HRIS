@@ -1,47 +1,51 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Login</title>
+    <style>
+        /* body {
+            background-color: #003366; 
+        } */
+    </style>
+</head>
+<body>
+     <div class="container d-flex justify-content-center align-items-center " style="margin-top: 80px">
+       <div class="row border rounded-5 p-4 bg-white shadow box-area" style="max-width: 900px;">
+       <div class="col-md-6 rounded-6 d-flex justify-content-center align-items-center">
+        <div class="">
+            <img src="http://localhost:8000/assets/img/login.png" alt=""style="width:100%">
         </div>
+       </div>
+       <div class="col-md-6 right-box">
+        <div style="font-size:28px;font-weight:bold">Login In To Your Account</div>
+        <div class="text-muted "style="font-size:14px;">Welcome Back! Human Resource Sistem</div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+          <div class="row align-items-center">
+                <div class="header-text mb-4">
+                </div>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="input-group mb-4">
+                        <input type="email" id="email" name="email" :value="old('email')"  class="form-control form-control-lg bg-light fs-5 mt-3" placeholder="Email address" required autofocus autocomplete="username">
+                    </div>
+                    <div class="input-group mb-4">
+                        <input type="password" name="password" id="password" class="form-control form-control-lg bg-light fs-5" :value="__('Password')" placeholder="Password" 
+                            required autocomplete="current-password">
+                    </div>
+                    <div class="input-group mb-3 mt-3">
+                        <button class="btn btn-lg btn-primary w-100 fs-5"   {{ __('Log in') }}>Login</button>
+                    </div>
+                    <div class="row">
+                        <small class="fs-6">Belum mempunyai akun? <a href="{{ route('register') }}">Register</a></small>
+                    </div>
+          </div>
+       </div> 
+      </div>
+    </div>
+                </form>
+</body>
+</html>

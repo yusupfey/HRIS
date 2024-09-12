@@ -42,6 +42,7 @@ Route::get('/dashboard', function () {
     return view('dashboard2');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -63,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cuti',[cutiController::class,'index'])->name('cuti.index');
     Route::get('/newformm',[cutiController::class,'newformm'])->name('cuti.ajukancuti');
     Route::POST('/store',[cutiController::class,'store'])->name('cuti.store');
-    Route::post('/cuti/proses/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+    Route::post('/cuti/proses/update/{id}', [cutiController::class, 'update'])->name('cuti.update');
     Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
