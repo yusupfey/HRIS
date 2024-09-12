@@ -16,8 +16,8 @@
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                 <h5 class="card-title" style="margin-right: 20px;">Approved</h5>
                             </div>
-                            <div class="card-body">
-                                <div id="section" style="display: none;">{{Request::segment(2)}}</div>
+                            <div class="card-body table-responsive">
+                                <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
                                 <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                     <thead class="table-primary">
                                         <tr>
@@ -59,7 +59,7 @@
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                 <h5 class="card-title" style="margin-right: 20px;">History</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <div id="section" style="display: none;">{{Request::segment(2)}}</div>
                                 <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                     <thead class="table-primary">
@@ -126,7 +126,7 @@
 </div>
 @section('js')
         <script
-        src="{{asset('/jquery-3.7.1.min.js')}}"></script>
+        src="{{secure_asset('/jquery-3.7.1.min.js')}}"></script>
 
         <script>
             function modalApprove(id, type, mode=null) {
