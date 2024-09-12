@@ -45,6 +45,8 @@
      <script>
         let lat = '';
         let long = '';
+        let marker = null;
+
         map()
         function getLocation() {
             console.log('jalan');
@@ -72,26 +74,32 @@
         function map(){
             var popup = L.popup();
             var map = L.map('map');
-            setInterval(() => {
-                getLocation()
+            
                 
                 setTimeout(() => {
-                    map.setView([lat,long], 16);
-                    // var marker = L.marker([51.5, -0.09]).addTo(map);
-        
-                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    }).addTo(map)
-                    let iconImg = L.icon({
-                        iconUrl: 'https://cdn3.iconfinder.com/data/icons/map-14/144/Map-10-512.png',
-                        iconSize:     [30, 30], // size of the icon
-                        shadowSize:   [10, 64], // size of the shadow
-                        // iconAnchor:   [50, 50], // point of the icon which will correspond to marker's location
-                        shadowAnchor: [4, 62],  // the same for the shadow
-                        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                    })
-                    L.marker([lat,long],{icon:iconImg}).addTo(map).bindPopup("Your location.");
+                    setInterval(() => {
+                        getLocation()
+                            map.setView([lat,long], 16);
+                        // var marker = L.marker([51.5, -0.09]).addTo(map);
+            
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map)
+                        let iconImg = L.icon({
+                            iconUrl: 'https://cdn3.iconfinder.com/data/icons/map-14/144/Map-10-512.png',
+                            iconSize:     [30, 30], // size of the icon
+                            shadowSize:   [10, 64], // size of the shadow
+                            // iconAnchor:   [50, 50], // point of the icon which will correspond to marker's location
+                            shadowAnchor: [4, 62],  // the same for the shadow
+                            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                        })
+
+                        if (marker !== null) {
+                            map.removeLayer(marker)
+                        }
+                        marker = L.marker([lat,long],{icon:iconImg}).addTo(map).bindPopup("Your location.");
+                    }, 5000);
         
                     L.marker([-6.410176262551054, 106.96085579133336]).addTo(map).bindPopup('RSIA Kenari Graha Medika');
                     
@@ -103,7 +111,6 @@
                     }).addTo(map).bindPopup("RSIA Kenari Graha Medika Area.")
     
                 }, 300);
-            }, 1000);
         }
      </script>
 

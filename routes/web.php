@@ -10,6 +10,7 @@ use App\Http\Controllers\shiftController;
 use App\Http\Controllers\masterController;
 use Stevebauman\Location\Facades\Location;
 use App\Http\Controllers\ApproveController;
+use App\Http\Controllers\cutiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MyJadwalController;
@@ -62,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cuti',[cutiController::class,'index'])->name('cuti.index');
     Route::get('/newformm',[cutiController::class,'newformm'])->name('cuti.ajukancuti');
     Route::POST('/store',[cutiController::class,'store'])->name('cuti.store');
-    Route::post('/cuti/proses/update/{id}', [CutiController::class, 'update'])->name('cuti.update');
+    Route::post('/cuti/proses/update/{id}', [cutiController::class, 'update'])->name('cuti.update');
     Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
