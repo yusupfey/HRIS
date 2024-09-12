@@ -16,8 +16,8 @@
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                 <h5 class="card-title" style="margin-right: 20px;">Approved</h5>
                             </div>
-                            <div class="card-body">
-                                <div id="section" style="display: none;">{{Request::segment(2)}}</div>
+                            <div class="card-body table-responsive">
+                                <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
                                 <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                     <thead class="table-primary">
                                         <tr>
@@ -59,7 +59,7 @@
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                 <h5 class="card-title" style="margin-right: 20px;">History</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <div id="section" style="display: none;">{{Request::segment(2)}}</div>
                                 <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                     <thead class="table-primary">
@@ -126,7 +126,7 @@
 </div>
 @section('js')
         <script
-        src="{{asset('/jquery-3.7.1.min.js')}}"></script>
+        src="{{secure_asset('/jquery-3.7.1.min.js')}}"></script>
 
         <script>
             function modalApprove(id, type, mode=null) {
@@ -142,7 +142,7 @@
                 // }
                 switch (type) {
                     case 1://cuti
-                        dataCuti(id, function(response){
+                        data(id,'cuti', function(response){
 
                             let cuti = '';
                             $.each(response.cuti, function(x, val){
@@ -199,7 +199,68 @@
                             `)
                         })
                         break;
-                
+                        case 2:
+                            data(id, 'izin', function(res){
+                                let izin = '';
+                                    $.each(res.izin, function(x, val){
+                                        izin = `
+                                            <input type="hidden" readonly name="id_permohonan" value="${val.id}">
+                                            <input type="hidden" readonly name="jenis_permohonan" value="2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Name</div>
+                                                    <div style="font-size:14px;">${val.name}</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Unit</div>
+                                                    <div style="font-size:14px;">${val.unit}</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Dari</div>
+                                                    <div style="font-size:14px;">${val.start_time}</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Sampai</div>
+                                                    <div style="font-size:14px;">${val.end_time}</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Alasan</div>
+                                                    <div style="font-size:14px;">${val.alasan}</div>
+                                                </div>
+                                                <hr>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">No</div>
+                                                    <div style="font-size:14px;">${val.notelpon}</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div style="font-size:12px; font-weight:bold">Alamat</div>
+                                                    <div style="font-size:14px;">${val.alamat}</div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    })
+                                    let approve='<div class="row">';
+                                    $.each(res.approve, function(x, val){
+                                        approve += `
+                                                <div class="col-4">
+                                                    <div style="font-size:12px; font-weight:bold">${val.name}</div>
+                                                    <div style="font-size:10px;">${val.unit}</div>
+                                                    <div style="font-size:10px;">${val.approve_date === null ? 'Belum disetujui': val.approve == '1' ? 'Telah disetujui '+val.approve_date:'Tidak disetujui '+val.approve_date}</div>
+
+                                                </div>
+                                            
+                                        `;
+                                    })
+                                    approve +='</div>';
+                                    $('#modalApprove .modal-body').html(`
+                                        ${izin}
+                                        <hr/>
+                                        Persetujuan
+                                        <hr>
+                                        ${approve}
+                                    `)
+                            })
+                        break;
                     default:
                         break;
                 }
@@ -213,9 +274,9 @@
                 }
 
             }
-            function dataCuti(id, callback){
+            function data(id,type, callback){
                 $.ajax({
-                    url: "/approve/data/cuti",
+                    url: "/approve/data/"+type,
                     headers:{
                         'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     

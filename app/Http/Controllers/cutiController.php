@@ -41,6 +41,7 @@ public function newformm()
     // ->where('uuid','!=',$employees->uuid)
     // ->get(); 
     $reference=DB::table('d_references')->where('reference_id',1)->get();
+
     // dd($d_cuti);
 
     
