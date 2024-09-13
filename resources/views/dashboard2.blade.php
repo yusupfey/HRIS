@@ -16,7 +16,7 @@
                             <div class="d-flex justify-content-center mb-3" style="margin-top:50px;">
                                 <div class="m-1 text-center text-dark">
                                     <div class="display-6">--:--</div>
-                                    <button class="btn btn-primary" style=" color:#ffffff;font-size:20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Masuk</button>
+                                    <button class="btn btn-primary" onclick="absen()" style=" color:#ffffff;font-size:20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Masuk</button>
                                 </div>
                                 <div class="m-1 text-center text-dark">
                                     <div class="display-6">--:--</div>
@@ -53,6 +53,7 @@
             </div>
          </div>
     </div>
+</div>
 @push('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
@@ -82,16 +83,28 @@
             let lat = '';
             let long = '';
             let marker = null;
+            let circle = null;
 
             map()
             function getLocation() {
                 console.log('jalan');
-            
+                
                 if (navigator.geolocation) {
                     console.log(navigator.geolocation);
+                    
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else { 
+                    console.log("Geolocation is not supported by this browser.");
+                    
                 }
             }
             function showPosition(position) {
+                console.log(position);
+                lat = position.coords.latitude;
+                long = position.coords.longitude;
+                // map(position.coords.latitude,position.coords.longitude)
+            }
+            function showError(position) {
                 console.log(position);
                 lat = position.coords.latitude;
                 long = position.coords.longitude;
@@ -126,11 +139,11 @@
                                 map.removeLayer(marker)
                             }
                             marker = L.marker([lat,long],{icon:iconImg}).addTo(map).bindPopup("Your location.");
-                        }, 5000);
+                        }, 10000);
             
                         L.marker([-6.410176262551054, 106.96085579133336]).addTo(map).bindPopup('RSIA Kenari Graha Medika');
                         
-                        L.circle([-6.410176262551054, 106.96085579133336], {
+                        circle = L.circle([-6.410176262551054, 106.96085579133336], {
                             color: 'red',
                             fillColor: '#f03',
                             fillOpacity: 0.5,
@@ -139,6 +152,31 @@
         
                     }, 300);
             }
-     </script>
+            function isOutsideCircle(latlng, circle) {
+                var circleLatLng = circle.getLatLng();
+                var circleRadius = circle.getRadius();
+                var distance = latlng.distanceTo(circleLatLng);
+
+                console.log('circleLatLng', circleLatLng);
+                console.log('circleRadius', circleRadius);
+                console.log('distance', distance);
+                console.log('distance', distance);
+                console.log(distance +'>'+ circleRadius);
+                
+                return distance > circleRadius;
+            }
+
+            function absen(){
+                var markerLatLng = L.latLng([lat, long]);
+                if(isOutsideCircle(markerLatLng,circle)){
+                    alert('diluar');
+                    
+                }else{
+                    alert('didalam');
+
+                }
+                
+            }
+    </script>
     @endsection
 </x-main-layout>
