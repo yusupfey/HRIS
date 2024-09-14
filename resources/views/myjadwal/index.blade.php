@@ -19,7 +19,9 @@
                 <div class="col-md-6">
                     <div class="card" style="border: 1px solid; min-height: 167px;">
                         <div class="card-body d-flex align-items-center">
-                            <i class="bi bi-person-circle" style="position: relative; top: 10px; font-size: 100px; border-radius: 10%; margin-right: 50px; color: #000;"></i>
+                            {{-- <i class="bi bi-person-circle" style="position: relative; top: 10px; font-size: 100px; border-radius: 10%; margin-right: 50px; color: #000;"></i> --}}
+                            <img src="https://img.icons8.com/?size=100&id=HmQQr0jYHZxu&format=png&color=000000" style="margin-right: 50px; margin-bottom: -25px" alt="">
+
 
                             <div>
                                 <h5 class="card-title mb-0">{{ $employee->name }}</h5> <!-- mb-0 menghilangkan margin bawah -->
@@ -53,7 +55,9 @@
                             <div class="me-3">
                                 <!-- Elemen untuk jam dinding -->
                                 <div id="clock" style="position: relative; width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: -20px">
-                                    <i class="bi bi-clock" style="font-size: 70px; color: #000;"></i>
+
+                                    {{-- <i class="bi bi-clock" style="font-size: 70px; color: #000;"></i> --}}
+                                    <img src="https://img.icons8.com/?size=100&id=rKEYSosGdrkP&format=png&color=000000" style="margin-right: 50px; width: 70px; height: 70px; margin-bottom: -70px; border-radius: 50%" alt="">
 
 
                                     <div id="hour-hand" class="hand"></div>

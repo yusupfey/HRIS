@@ -47,8 +47,8 @@ class MyJadwalController extends Controller
     ->join('units as u', 'e.id_unit', '=', 'u.id') // Join dengan tabel units
     ->where('w.uuid_employees', $uuid)
     ->whereBetween('w.tanggal', [$today, $endDate])
-    ->orderBy('w.tanggal', 'asc')
-    ->get(); // Pastikan Anda mengambil data dengan get()
+    ->orderBy('w.tanggal', 'asc');
+     // Pastikan Anda mengambil data dengan get()
 
 
        // Ambil data untuk hari ini terpisah
