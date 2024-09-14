@@ -11,6 +11,7 @@ use App\Http\Controllers\masterController;
 use Stevebauman\Location\Facades\Location;
 use App\Http\Controllers\ApproveController;
 use App\Http\Controllers\cutiController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MyJadwalController;
@@ -38,9 +39,6 @@ Route::get('/getlokasi', [ProfileController::class, 'testLokasi']);
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard2');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -51,6 +49,12 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::post('/absen/store',[DashboardController::class,'absen']);
+
+
+    // Route::post('/absen/masuk', [DashboardController::class, 'masuk'])->name('absen.masuk');
+
     // izin
     Route::get('/izin', [IzinController::class, 'index'])->name('izin.index');
     Route::get('/newform', [IzinController::class, 'newform'])->name('izin.form');
@@ -93,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
 
     //masuk kerja
      Route::get('/masukkerja',[masukcontroller::class,'index']);
-
+     
 
 
     // Route::get('/form', [cutiController::class, 'create']);
