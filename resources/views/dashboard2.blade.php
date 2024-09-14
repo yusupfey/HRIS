@@ -4,23 +4,30 @@
         <div class="col-md-12">
             <div class="box p-4 border rounded-4 bg-white shadow-sm">
                 <div class="row">
+                    <div class="col-12">
+                        <div class="text-left mb-1 mt-3 mt-md-0">
+                            <h5 class="text-muted"style=" font-size:18px; font-weight:bold;">Absensi,</h5>
+                            <div style="font-size: 22px;font-weight:bold">Rsia Kenari graha Medika!</div>
+                         </div>
+                    </div>
                     <div class="col-md-6">
                         <div id="map" class="custom-map"></div>
                     </div>
                     <div class="col-md-6 d-flex flex-column justify-content-center align-items-center mb-4 mb-md-0">
                         <div>
-                         <div class="text-left mb-4 mt-3 mt-md-0">
-                            <h5 class="text-muted"style=" font-size:18px; font-weight:bold;">Absensi,</h5>
-                            <div style="font-size: 22px;font-weight:bold">Rsia Kenari graha Medika!</div>
+                         <div class="text-left mb-1 mt-md-0">
+                            <input type="hidden" id="schd_id" value="{{$data->id}}">
+                            <div class="text-muted" style="font-size: 12px;font-weight:bold">{{$data->name}}</div>
+                             <div style="font-size: 22px;font-weight:bold">{{$data->tanggal}}</div>
                          </div>
                             <div class="d-flex justify-content-center mb-3" style="margin-top:50px;">
                                 <div class="m-1 text-center text-dark">
                                     <div class="display-6">--:--</div>
-                                    <button class="btn btn-primary" onclick="absen()" style=" color:#ffffff;font-size:20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Masuk</button>
+                                    <button class="btn btn-primary" onclick="absen('checkin')" style=" color:#ffffff;font-size:20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Masuk</button>
                                 </div>
                                 <div class="m-1 text-center text-dark">
                                     <div class="display-6">--:--</div>
-                                    <button class="btn btn-danger" style="font-size: 20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Pulang</button>
+                                    <button class="btn btn-danger" onclick="absen('checkout')" style="font-size: 20px;font-family:'Times New Roman', Times, serif;font-weight:bold">Pulang</button>
                                 </div>  
                             </div>
                             <div class="d-flex justify-content-center ">
@@ -78,6 +85,10 @@
         </style>
 @endpush
     @section('js')
+            <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script>
             let lat = '';
@@ -113,7 +124,7 @@
             
             function map(){
                 var popup = L.popup();
-                var map = L.map('map');
+                var map = L.map('map', { zoomControl: false });
                 
                     
                     setTimeout(() => {
@@ -166,17 +177,44 @@
                 return distance > circleRadius;
             }
 
-            function absen(){
+            function absen(type){
                 var markerLatLng = L.latLng([lat, long]);
+
+                
                 if(isOutsideCircle(markerLatLng,circle)){
-                    alert('diluar');
+                    alert('Anda tidak dapat melakukan checkin dikarenakan diluar zona');
                     
                 }else{
-                    alert('didalam');
+                    let token = $('meta[name="csrf-token"]').attr('content');
+
+                    $.ajax({
+                    url:"/absen/store",
+                    method:"post",
+                    headers: {
+                    'X-CSRF-TOKEN': token
+                    },
+                    data:{
+                        schd_id:$('#schd_id').val(),
+                        latlong:`${lat},${long}`,
+                        mode:type
+                    },
+                    success:function(res){
+                        if(res.response.metadata.code == 200){
+                            type == 'checkin' ?
+                            alert('Terimakasih, Kehadiran anda tercatat pada pukul '+res.response.data)
+                            :
+                            alert('Terimakasih, Jam pulang anda tercatat pada pukul '+res.response.data)
+                        }else if(res.response.metadata.code == 400){
+                            alert('Data tidak dapat di proses, Anda telah melakukan absen pukul '+res.response.data)
+                        }
+                        
+                    }
+                })
 
                 }
                 
             }
+        
     </script>
     @endsection
 </x-main-layout>

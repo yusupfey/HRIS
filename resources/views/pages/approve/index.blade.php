@@ -126,7 +126,7 @@
 </div>
 @section('js')
         <script
-        src="{{secure_asset('/jquery-3.7.1.min.js')}}"></script>
+        src="{{asset('/jquery-3.7.1.min.js')}}"></script>
 
         <script>
             function modalApprove(id, type, mode=null) {

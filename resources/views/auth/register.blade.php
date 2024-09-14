@@ -11,9 +11,11 @@
      <div class="container d-flex justify-content-center align-items-center min-vh-100">
        <div class="row border rounded-5 p-4 bg-white shadow box-area" style="max-width: 900px;">
        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box">
-           <img src="http://localhost:8000/assets/img/hris.png" alt="" style="width: 100%">
+           <img src="http://localhost:8000/assets/img/login.png" alt="" style="width: 100%">
        </div>
        <div class="col-md-6 right-box">
+        <div style="font-size:28px;font-weight:bold">Register Yourself</div>
+        <div class="text-muted "style="font-size:14px;">Akses Mudah, Absensi Tanpa Ribet!</div>
           <div class="row align-items-center">
                 <div class="header-text mb-4">
                 </div>
@@ -38,7 +40,7 @@
                         >Register</button>
                     </div>
                     <div class="row">
-                        <small class="fs-6">Sudah Mempunyai Akun <a href="{{ route('login') }}">Login</a></small>
+                        <small class="fs-6">Sudah Mempunyai Akun?<a href="{{ route('login') }}">Login</a></small>
                     </div>
           </div>
        </div> 
