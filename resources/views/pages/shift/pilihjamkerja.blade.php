@@ -62,7 +62,8 @@
 
             $(document).ready(function() {
                 const startYear = new Date().getFullYear();
-                const endYear = startYear + 1;
+                const yearRange = 1;
+                const endYear = startYear + yearRange;
                 const selectYear = $('#year');
 
                 for (let year = startYear; year <= endYear; year++) {
@@ -101,7 +102,7 @@
                                 $.each(shift, function(x, value) {
                                     options += `<option value="${value.id}" ${item.shift_id === value.id ? 'selected' : ''}>${value.name}</option>`;
                                 });
-
+                               
                                 form += `
                                     <div class="col-6" style="margin-bottom:10px;padding-left:5px;">
                                         <input type="date" class="form-control form-control" name="tanggal[]" value="${item.tanggal}" readonly>
@@ -114,20 +115,33 @@
                                 `;
                             });
                         } else {
+                            // set array hari indonesia
+                            let nama_hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                            
                             for (let index = 0; index < days; index++) {
                                 let date = index + 1;
+                                let generateDate = `${year}-${month}-${date < 10 ? '0' + date : date}`;
+                                // console.log(generateDate);
+                                 var d = new Date(generateDate);
+                                 var dayName = nama_hari[d.getDay()];
+                                //  console.log(generateDate+'-'+ dayName);
+
+                                let options = '';
+                                $.each(shift, function(x, value) {
+                                    options += `<option value="${value.id}" ${dayName === 'Minggu' && value.id===4 ? 'selected' : ''}>${value.name}</option>`;
+                                });
+                               
+                                
                                 form += `
                                     <div class="col-6">
-                                        <input type="date"class="form-control" name="tanggal[]" value="${year}-${month}-${date < 10 ? '0' + date : date}" readonly>
+                                        <input type="date"class="form-control" name="tanggal[]" value="${generateDate}" style="margin-top:5px;" readonly>
                                         @if($errors->has('tanggal'))
                                             <div class="error">{{ $errors->first('tanggal') }}</div>
                                         @endif
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6" style="margin-top:5px;">
                                         <select class="form-control form-control" name="shift[]">
-                                            @foreach ($shift as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
+                                            ${options}
                                         </select>
                                         @if($errors->has('shift'))
                                             <div class="error">{{ $errors->first('shift') }}</div>

@@ -7,7 +7,8 @@
                         <div class="card">
                             <div class="card-body "style="display: flex; justify-content: space-between; align-items: center; margin-top:20px;">
                                 <h5 class="card-title">Ajukan Cuti</h5>
-                                <button onclick="window.history.back()" class="btn btn-warning">Back</button>
+                                <button onclick="window.location='{{ route('cuti.index') }}'" class="btn btn-warning">Back</button>
+
                             </div>
                         </div>
 
@@ -16,12 +17,11 @@
             </div>
             <div class="p-3 bg-white border-bottom border-gray-200">
                 <form id="cutiForm" action="{{ route('cuti.store') }}" method="POST">
-
                     @csrf
                     <div class="mb-3">
                         <label for="uuid_karyawan" >Nama</label>
                         <input type="text" class="form-control" id="uuid_karyawan" name="uuid_karyawan" 
-                               value="{{ Auth::user()->uuid}}" readonly>
+                               value="{{ Auth::user()->name}}" readonly>
                         @if ($errors->has('uuid_karyawan'))
                             <div class="error text-danger">{{ $errors->first('uuid_karyawan') }}</div>
                         @endif
@@ -32,9 +32,25 @@
               <select name="jenis_cuti" id="jenis_cuti" class="form-control">
                 <option value=""disabled>Pilih Jenis Cuti</option>
                 @foreach($reference as $rf)
-                    <option value="{{ $rf->val}}">{{ $rf->val_name }}</option>
+                    <option value="{{ $rf->val}}"
+                        {{  $rf->val ? 'selected' : '' }}>
+                        {{ $rf->val_name }}
                 @endforeach
             </select>
+            </div>
+            <div class="mb-3">
+                <label for="jumlah">jumlah Cuti</label>
+                <input type="number" class="form-control" id="jumlah" placeholder="jumlah" name="jumlah" required>
+                  @if ($errors->has('jumlah'))
+                      <div class="error text-danger">{{ $errors->first('jumlah') }}</div>
+                  @endif
+            </div>
+            <div class="mb-3">
+                <label for="tanggal">tanggal pengajuan</label>
+                <input type="date" class="form-control" id="tanggal" placeholder="tanggal" name="tanggal" required>
+                @if ($errors->has('tanggal'))
+                  <div class="error text-danger">{{ $errors->first('tanggal') }}</div>
+                @endif
             </div>
             <div class="mb-3">
                 <label for="keterangan">keterangan</label>
@@ -43,13 +59,7 @@
                       <div class="error text-danger">{{ $errors->first('keterangan') }}</div>
                   @endif
               </div>
-            <div class="mb-3">
-                <label for="jumlah">jumlah Cuti</label>
-                <input type="number" class="form-control" id="jumlah" placeholder="jumlah" name="jumlah" required>
-                  @if ($errors->has('jumlah'))
-                      <div class="error text-danger">{{ $errors->first('jumlah') }}</div>
-                  @endif
-            </div>
+            
               <div class="row mb-3">
                   <div class="col-md-4">
                       <label for="">tanggal Cuti</label>
@@ -65,13 +75,7 @@
                       </div>
               </div>
               
-                <div class="mb-3">
-                    <label for="tanggal">tanggal pengajuan</label>
-                    <input type="date" class="form-control" id="tanggal" placeholder="tanggal" name="tanggal" required>
-                    @if ($errors->has('tanggal'))
-                      <div class="error text-danger">{{ $errors->first('tanggal') }}</div>
-                    @endif
-                </div>
+               
             <div class="mb-3">
                     <label for="karyawan_pengganti">Pilih Karyawan Pengganti:</label>
                 <select name="karyawan_pengganti" id="karyawan_pengganti" class="form-control">
@@ -99,10 +103,32 @@
     
     
 </x-main-layout>
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function submitForm() {
 
         // Submit
         document.getElementById('cutiForm').submit();
     }
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            confirmButtonText: 'OK'
+        });
+    @endif
 </script>
+
+@endsection

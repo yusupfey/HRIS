@@ -30,7 +30,7 @@
                     </div>
                 @endif
 
-                <form id="employeeForm" action="{{ route('employees.store') }}" method="POST">
+                <form id="employeeForm" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-2">
                         <label for="uuid" class="form-label">UUID</label>
@@ -40,9 +40,26 @@
                         <label for="name" class="form-label">Name</label>
                         <input id="name" class="form-control form-control-lg" type="text" name="name" value="{{ old('name') }}" required>
                     </div>
+                    {{-- <div class="mb-2">
+                        <label for="id_unit">Pilih Karyawan Pengganti:</label>
+                        <select name="id_unit" id="id_unit" class="form-control">
+                            <option value=""disabled>Pilih Karyawan Pengganti</option>
+                            @foreach($units as $unit)
+                                <option value="{{ $unit->id}}">{{ $unit->name }}</option>
+                            @endforeach
+                        </select>
+                    </div> --}}
                     <div class="mb-2">
+                        <label for="photo" class="form-label">Photo</label>
+                        <input id="photo" class="form-control form-control-lg" type="file" name="photo" value="{{ old('photo') }}" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="DOB" class="form-label">Tanggal lahir</label>
                         <input id="DOB" class="form-control form-control-lg" type="date" name="DOB" value="{{ old('DOB') }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="no_telp" class="form-label">Tempat Lahir</label>
+                        <input id="no_telp" class="form-control form-control-lg" type="text" name="no_telp" value="{{ old('no_telp') }}" required>
                     </div>
                     <div class="mb-2">
                         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>

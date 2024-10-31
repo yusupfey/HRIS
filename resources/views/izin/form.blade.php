@@ -9,8 +9,14 @@
         <div class="alert alert-danger">{{ $message }}</div>
 
         @enderror
-        <form id="izinForm" action="{{ route('izin.form') }}" method="POST">
+        <form id="izinForm" action="{{ route('izin.store') }}" method="POST">
             @csrf
+            <div class="mb-3">
+                <label for="uuid" class="form-label">UUID</label>
+                <input type="text" class="form-control" id="uuid" name="uuid" disabled
+                value="{{ Auth::user()->name}}" readonly>
+
+            </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -25,22 +31,12 @@
                     </div>
                 </div>
             </div>
-
-            <div class="mb-3">
-                <label for="uuid" class="form-label">UUID</label>
-                <input type="text" class="form-control" id="uuid" name="uuid" disabled
-                       @if(isset($employee)) value="{{ $employee->uuid }}" @endif>
-            </div>
-
             <div class="mb-3">
                 <label for="alasan" class="form-label">Alasan</label>
                 <textarea class="form-control" id="alasan" name="alasan" rows="3" required></textarea>
             </div>
 
-            <div class="mb-3">
-                <label for="alamat" class="form-label">Alamat</label>
-                <textarea class="form-control" id="alamat" name="alamat" rows="3">@if(isset($employee)){{ $employee->alamat }}@endif</textarea>
-            </div>
+           
 
             <div class="mb-3">
                 <label for="notelp" class="form-label">No Telp</label>

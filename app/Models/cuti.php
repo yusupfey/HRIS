@@ -19,7 +19,7 @@ class cuti extends Model
         'tanggal',
         'karyawan_pengganti',
         'keterangan',
-        'approved-pengganti',
+        'approved_pengganti',
         'status',
         'inactive_date',
     ];

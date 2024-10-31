@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\shift;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -12,41 +13,36 @@ use Symfony\Contracts\Service\Attribute\Required;
 class shiftController extends Controller
 {
     public function index(){
-        $shift = shift::get();
-        return view('pages.shift.index', compact('shift'));
+      $shifts = Shift::with('unit')->get();
+      // dd($shifts);
+        return view('pages.shift.index', compact('shifts'));
     }
-    public function  tambahshift() {
+    public function tambahshift() {
+      $units = Unit::all(); 
+      // dd($units);
+      return view('pages.shift.tambahshift', compact('units')); // Kirim data unit ke tampilan
+  }
+   
+  public function input(Request $request) {
+    $shift = $request->validate([
+        "name" => "required",
+    ]);
+    
+    $shift['checkin_time'] = $request->checkin_time;
+    $shift['checkout_time'] = $request->checkout_time;
+    $shift['id_unit'] = $request->id_unit ?? null;
 
-        return view('pages.shift.tambahshift');
-    }
-    public function formupdate($id){
-      // $shift = DB::select("SELECT * FROM shifts WHERE  id=$id");
-      $shift = shift::where('id',$id)->first();
-      // dd($shift);
-      return view('pages.shift.updateshift',compact('shift'));
-    }
-    public function input(Request $request){
-        $shift =$request->validate([
-            "name"=>"Required",
-
-        ]);
-        
-        $shift['checkin_time'] = $request->checkin_time;
-        $shift['checkout_time'] = $request->checkout_time;
-
-
-
-        shift::insert($shift);
-        session::flash('success','berhasil menambah data');
-        return redirect('/shift');
-
-    }
-    public function hapus($shift){
-        $shift = shift::find($shift);
-        $shift->delete();
-        return redirect('/shift')->with('success','berhasil menghapus data');
-
-    }
+    Shift::create($shift); // Simpan data shift
+    Session::flash('success', 'Berhasil menambah data');
+    return redirect('/shift');
+}
+public function formupdate($id){
+    // $shift = DB::select("SELECT * FROM shifts WHERE  id=$id");
+    $shift = shift::where('id',$id)->first();
+    return view('pages.shift.updateshift',compact('shift'));
+  }
+  
+   
     public function update(Request $request){
       $shift =$request->validate([
         "name"=>"Required",
@@ -56,8 +52,19 @@ class shiftController extends Controller
     $shift['checkout_time'] = $request->checkout_time;
 
     $shift = shift::where('id',$request->id)->update($shift);
-    return redirect('/shift');
+    return redirect('/shift')->with('success','Update Success');
     }
+    public function hapus($shift){
+      $shift = shift::find($shift);
+      if($shift){
+
+        $shift->delete();
+        return redirect('/shift')->with('success','berhasil menghapus data');
+      }
+      return redirect()->back()->with('error', 'Data tidak ditemukan!');
+
+  }
+  
 
 
 }

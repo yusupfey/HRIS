@@ -1,9 +1,9 @@
 <x-main-layout>  
-    @if (Session::has('gagal'))
+    {{-- @if (Session::has('gagal'))
         <div class="alert alert-danger" style="margin-bottom: 20px;">
             {{ Session::get('gagal') }}
         </div>
-    @endif
+    @endif --}}
     
     <div class="py-12">
         <div class="container" style="max-width: 90%;padding:16px" >
@@ -33,29 +33,31 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="jam" style="font-weight: bold; display: block; margin-bottom: 8px;">Jam</label>
-                                <input class="form-control form-control-lg" type="time" placeholder="Jam Masuk" aria-label="default input example" name="jam" id="jam" style="border-width: 3px;">
-                                @if ($errors->has('jam'))
-                                    <div class="error text-danger">{{ $errors->first('jam') }}</div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
                             <label for="checkin_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckIn Time</label>
                             <input class="form-control form-control-lg" type="time" placeholder="Check-in" aria-label="default input example" name="checkin_time" id="checkin_time" style="border-width: 3px;">
                             @if ($errors->has('checkin_time'))
                                 <div class="error text-danger">{{ $errors->first('checkin_time') }}</div>
                             @endif
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="checkout_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckOut Time</label>
                             <input class="form-control form-control-lg" type="time" placeholder="Check-Out" aria-label="default input example" name="checkout_time" id="checkout_time" style="border-width: 3px;">
                             @if ($errors->has('checkout_time'))
                                 <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
                             @endif
+                        </div>
+                        <div>
+                            <div class="col-md-6">
+                                <label for="id_unit">Pilih Unit:</label>
+                                <select name="id_unit" id="id_unit" class="form-control">
+                                    <option value="">Pilih Unit</option> <!-- Opsi kosong yang mengizinkan tidak ada pilihan -->
+                                    @foreach($units as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     
@@ -64,4 +66,10 @@
             </div> 
         </div> 
     </div>
+    @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+</script>
+    @endsection
 </x-main-layout>
