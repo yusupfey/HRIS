@@ -20,7 +20,13 @@ class cutiController extends Controller
     public function index ()
     {
         $user= Auth::user()->uuid;//nyokot data nu login//
-        $cuti = cuti::where('uuid_karyawan', $user)->get();
+        $cuti = DB::select("SELECT e1.name,dr.val_name as cuti, units.name as unit, cuti.*, e2.name as pengganti_name, dr.val_name FROM cuti
+            LEFT JOIN employees e1 on e1.uuid=cuti.uuid_karyawan
+            LEFT JOIN units on e1.id_unit=units.id
+            LEFT JOIN d_references dr on dr.val=cuti.jenis_cuti and reference_id=1
+            LEFT JOIN employees e2 on e2.uuid=cuti.karyawan_pengganti 
+            where cuti.uuid_karyawan='$user'");
+        // dd($cuti);
         // $cuti = cuti::join('employees', 'cuti.uuid_karyawan', '=', 'employees.uuid') // Asumsi kolom uuid_karyawan ada di tabel izin
         // ->select('employees.name','cuti.*')
         // ->get();
@@ -28,13 +34,14 @@ class cutiController extends Controller
 
     return view('cuti.index', compact('cuti','user'));
     }
-public function newformm()
+public function getcuti()
 {
     $uuid = Auth::user()->uuid;  
     $employees = Employee::where('uuid','=',Session::get('uuid'))->first(); 
     $karyawan_pengganti = Employee::where('id_unit','=',$employees->id_unit)
     ->where('uuid','!=',$employees->uuid)
     ->get(); 
+    // dd($karyawan_pengganti);
     // $approve = Approve::where('uuid_atasan')->get();
     // $units = Unit::where('id', '>', 1)->get();
     // $employees = Employee::where('id_unit','=',$employees->id_unit)
@@ -42,7 +49,7 @@ public function newformm()
     // ->get(); 
     $reference=DB::table('d_references')->where('reference_id',1)->get();
 
-    // dd($d_cuti);
+    // dd(vars: $reference);
 
     
     $employees= DB::table('employees as e')
@@ -50,7 +57,6 @@ public function newformm()
     ->select('e.id AS employee_id', 'e.uuid', 'u.id AS unit_id', 'u.name AS unit_name', 'u.kepala_unit', 'u.id_head_unit')
     ->where('e.uuid', $uuid)
     ->first();
-
     // dd($employees);
     if ($employees) {
         // dd($employees);
@@ -121,9 +127,11 @@ public function store(Request $request){
                             ]);
                         }
                      }
+                        // $cuti->status = 1;
+                        // $cuti->save();
 
                     
-                     return redirect()->route('cuti.index')->with('success', 'Izin berhasil dibuat.');
+                     return redirect()->route('cuti.index')->with('success', 'Cuti berhasil diajukan.');
                     }else {
                         return redirect()->back()->with('error', 'Data karyawan tidak ditemukan.');
                         
@@ -133,23 +141,27 @@ public function formupdatee($id)
 {
    
     $cuti = Cuti::find($id);
-    $d_cuti = d_cuti::where('id_cuti', $id)->get();
-    $reference= DB::table('references')->get();
-    $employee = Employee::where('uuid', '=', Session::get('uuid'))->first();
     $cuti->tanggal = Carbon::parse($cuti->tanggal)->format('Y-m-d');
 
+    $d_cuti = d_cuti::where('id_cuti', $id)->get();
+    $reference=DB::table('d_references')->where('reference_id',1)->get();
+    // dd($reference);
+
+    $employee = Employee::where('uuid', '=', Session::get('uuid'))->first();
+//karyawan pengganti
     $employees = Employee::where('id_unit', '=', $employee->id_unit)
                         ->where('uuid', '!=', $employee->uuid)
                         ->get();  
-    return view('cuti.updatecuti', compact('cuti', 'employees', 'd_cuti','reference'));
+                        // dd($employees);
+    return view('cuti.updatecuti', compact('cuti', 'employees', 'd_cuti','reference','employee'));
 }
 
 public function update(Request $request, $id)
 {
     
     $request->validate([
-        'jenis_cuti' => 'required|string',
-        'keterangan' => 'required|string',
+        'jenis_cuti' => 'required',
+        'keterangan' => 'required',
         'jumlah' => 'required|integer',
         'tanggal' => 'required|date',
         'karyawan_pengganti' => 'required|string',
@@ -158,11 +170,11 @@ public function update(Request $request, $id)
     ]);
 
     // Update data cuti
-    $cuti = Cuti::findOrFail($id);
+    $cuti = Cuti::find($id);
     $cuti->jenis_cuti = $request->jenis_cuti;
+    $cuti->tanggal = $request->tanggal;
     $cuti->keterangan = $request->keterangan;
     $cuti->jumlah = $request->jumlah;
-    $cuti->tanggal = $request->tanggal;
     $cuti->karyawan_pengganti = $request->karyawan_pengganti;
     $cuti->save();
     d_cuti::where('id_cuti', $id)->delete();
@@ -175,8 +187,25 @@ public function update(Request $request, $id)
             ]);
         }
     }
-    return redirect('/cuti')->with('success', 'Data cuti berhasil diperbarui!');
+    return redirect()->route('cuti.index')->with('success', 'Data cuti berhasil diperbarui!');
 }
+public function hapus($cuti)
+{
+    // Temukan data cuti berdasarkan ID
+    $cuti = Cuti::find($cuti);
+    if ($cuti) {
+        
+        Approve::where('id_permohonan', $cuti->id)->delete();
+        DB::table('d_cuti')->where('id_cuti', $cuti->id)->delete();
+
+        $cuti->delete();
+
+        return redirect('/cuti')
+            ->with('success', 'Pengajuan berhasil di Cancel');
+    }
+}
+
+
 
 
         

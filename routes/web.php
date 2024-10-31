@@ -18,10 +18,12 @@ use App\Http\Controllers\MyJadwalController;
 use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\masukcontroller;
+use App\Http\Controllers\SakitController;
+use App\Http\Controllers\UbahJadwalController;
 use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 Route::get('/session', function () {
     $data=Session::all();
@@ -49,7 +51,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('dashboard2', [DashboardController::class, 'index'])->name('dashboard2');
     Route::post('/absen/store',[DashboardController::class,'absen']);
 
 
@@ -57,8 +59,13 @@ Route::middleware(['auth'])->group(function () {
 
     // izin
     Route::get('/izin', [IzinController::class, 'index'])->name('izin.index');
-    Route::get('/newform', [IzinController::class, 'newform'])->name('izin.form');
-    Route::post('/store', [IzinController::class, 'store'])->name('izin.store');
+Route::get('/ajukanizin', [IzinController::class, 'getizin'])->name('izin.form');
+Route::post('/izin/store', [IzinController::class, 'store'])->name('izin.store');
+Route::get('/updateizin/{id}',[IzinController::class,'getupdate']);
+Route::post('/izin/proses/update/{id}', [IzinController::class, 'update'])->name('izin.update');
+Route::get('/izin/delete/{id}', [IzinController::class, 'hapus'])->name('izin.destroy');
+
+
 
 
     Route::get('/myjadwal/{uuid}', [MyJadwalController::class, 'index'])->name('myjadwal.index');
@@ -66,13 +73,18 @@ Route::middleware(['auth'])->group(function () {
     // cuti route
 
     Route::get('/cuti',[cutiController::class,'index'])->name('cuti.index');
-    Route::get('/newformm',[cutiController::class,'newformm'])->name('cuti.ajukancuti');
-    Route::POST('/store',[cutiController::class,'store'])->name('cuti.store');
+    Route::get('/ajukancuti',[cutiController::class,'getcuti'])->name('cuti.ajukancuti');
+    Route::post('/store', [cutiController::class, 'store'])->name('cuti.store');
     Route::post('/cuti/proses/update/{id}', [cutiController::class, 'update'])->name('cuti.update');
     Route::get('/formupdatee/{id}',[cutiController::class,'formupdatee']);
+    Route::get('/cuti/delete/{id}', [cutiController::class, 'hapus'])->name('cuti.destroy');
+    Route::get('/cuti/update-status/{id}', [cutiController::class, 'updateStatus'])->name('cuti.updateStatus');
+
+    // Route::get('/approve/data/cuti',[cutiController::class,'formupdatee']);
+
     // employees
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employees/{uuid}/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::get('/employees/create/{uuid}', [EmployeeController::class, 'create'])->name('employees.create');
 
     Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
     Route::get('/employees/{uuid}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
@@ -94,6 +106,36 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/getjamkerja',[jadwalkerjaController::class,'getjamkerja']);
     Route::post('/jadwalkerja/proses/input',[jadwalkerjaController::class,'input']);
     Route::post('/jadwalkerja/proses/update',[jadwalkerjacontroller::class,'update']);
+
+    Route::get('/ubahjadwal/{uuid}', [UbahJadwalController::class, 'index'])->name('ubahjadwal.index');
+    Route::get('/tukarshift',[UbahJadwalController::class,'tukarshift']);
+    Route::post('/tukarshift/store', [UbahJadwalController::class, 'store'])->name('ubahjadwal.store');
+    Route::get('/updateform/{id}',[UbahJadwalController::class,'getform']);
+    Route::post('/ubahjadwal/update/{id}', [UbahjadwalController::class, 'update'])->name('ubhjdwal.update');
+    Route::get('/ubahjadwal/delete/{id}', [UbahJadwalController::class, 'hapus'])->name('ubahjadwal.destroy');
+
+    // Route::get('/ubahjadwal/{uuid}', [UbahJadwalController::class, 'show'])->name('ubahjadwal.show');
+
+    // Route::post('/approve/data/ubahjadwal', [UbahJadwalController::class, 'getUbahJadwalData']);
+
+    //sakit//
+    Route::get('sakit',[SakitController::class,'index'])->name('sakit.index');
+    Route::get('ajukanSakit',[SakitController::class,'getsakit']);
+    Route::post('formsakit/store',[SakitController::class,'store'])->name('sakit.store');
+    Route::get('/update/{id}',[SakitController::class,'edit']);
+    Route::post('/sakit/update/{id}', [SakitController::class, 'update'])->name('sakit.update');
+    Route::get('/sakit/delete/{id}', [SakitController::class, 'hapus'])->name('sakit.destroy');
+
+
+
+
+
+
+
+    
+
+
+
 
     //masuk kerja
      Route::get('/masukkerja',[masukcontroller::class,'index']);

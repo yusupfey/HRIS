@@ -32,8 +32,7 @@
                         </ul>
                     </div>
                 @endif
-
-                <form id="employeeForm" action="{{ route('employees.update', $employee->id) }}" method="POST">
+                <form id="employeeForm" action="{{ route('employees.update', $employee->id) }}" method="POST" enctype="multipart/form-data" >
                     @csrf
                     @method('POST')
                     <div class="mb-3">
@@ -46,9 +45,14 @@
                         <input id="name" class="form-control form-control-lg" type="text" name="name" value="{{ old('name', $employee->name) }}" required>
                     </div>
                     <div class="mb-3">
+                        <label for="photo" class="form-label">Photo</label>
+                        <input id="photo" class="form-control form-control-lg" type="file" name="photo" value="{{ old('photo', $employee->photo) }}" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="DOB" class="form-label">Tanggal lahir</label>
                         <input id="DOB" class="form-control form-control-lg" type="date" name="DOB" value="{{ old('DOB', $employee->DOB) }}" required>
                     </div>
+                   
                     <div class="mb-3">
                         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                         <input id="tempat_lahir" class="form-control form-control-lg" type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $employee->tempat_lahir) }}" required>
@@ -56,7 +60,7 @@
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat</label>
                         <textarea id="alamat" name="alamat" class="form-control form-control-lg" rows="3" required>{{ old('alamat', $employee->alamat) }}</textarea>
-                    </div>
+                    </div>  
                     <div class="mb-3">
                         <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                         <select id="jenis_kelamin" name="jenis_kelamin" class="form-select form-select-lg" required>

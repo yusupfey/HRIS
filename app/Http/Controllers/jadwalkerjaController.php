@@ -16,19 +16,22 @@ use Illuminate\Support\Facades\Session;
 class jadwalkerjaController extends Controller
 {
     public function index()
-    {
-        
-        $data = Employee::where('uuid', Session::get('uuid'))->first();
-        $worksheadules = DB::select("SELECT employees.*, units.name as Unit
-        FROM employees
-        INNER JOIN units ON units.id = employees.id_unit
-        WHERE employees.id_unit = $data->id_unit");
-        return view('pages.shift.jadwalkerja', compact('worksheadules'));
-    }
+{
+    $data = Employee::where('uuid', Session::get('uuid'))->first();
+    $worksheadules = DB::select("SELECT employees.*, units.name as Unit
+    FROM employees
+    INNER JOIN units ON units.id = employees.id_unit
+    WHERE employees.id_unit = $data->id_unit");    
+    return view('pages.shift.jadwalkerja', compact('worksheadules'));
+
+}
+
+
 
     public function getjamkerja(Request $request){
         $data = DB::select("select * from worksheadules where uuid_employees='$request->uuid' and YEAR(tanggal)=$request->year and MONTH(tanggal)=$request->month");
         return $data;
+
     }
 
     public function pilihjamkerja()
@@ -38,6 +41,7 @@ class jadwalkerjaController extends Controller
         $bulan = date('m');
         
         $calculate_date = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun,);
+        // dd($calculate_date);
 
         return view('pages.shift.pilihjamkerja', compact('shift','calculate_date','bulan', 'tahun'));
     }
@@ -64,7 +68,7 @@ class jadwalkerjaController extends Controller
            }
        }
        
-        return redirect('/jadwalkerja');
+        return redirect('/jadwalkerja')->with('success','Update Success');
     }
     
  }

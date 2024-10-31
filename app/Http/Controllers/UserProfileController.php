@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Employee;
 
-class ProfileController extends Controller
+class UserProfileController extends Controller
 {
     public function edit()
     {

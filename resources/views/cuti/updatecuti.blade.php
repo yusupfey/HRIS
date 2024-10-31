@@ -19,31 +19,36 @@
                     <div class="mb-3">
                         <label for="uuid_karyawan">Nama</label>
                         <input type="text" class="form-control" id="uuid_karyawan" name="uuid_karyawan" 
-                               value="{{ Auth::user()->uuid }}" readonly>
+                        value="{{ Auth::user()->name}}" readonly>
                     </div>
                     
                     <div class="mb-3">
                         <label for="jenis_cuti">Jenis Cuti</label>
-        <select name="jenis_cuti" id="jenis_cuti" class="form-control">
-            <option value=""disabled>Pilih Jenis Cuti</option>
-            @foreach($reference as $rf)
-                <option value="{{ $rf->id }}" 
-                    {{ $cuti->jenis_cuti == $rf->id ? 'selected' : '' }}>
-                    {{ $rf->reference }}
-                </option>
-            @endforeach
-        </select>
+                        <select name="jenis_cuti" id="jenis_cuti" class="form-control" required>
+                            <option value="" disabled>Pilih Jenis Cuti</option>
+                            @foreach($reference as $rf)
+                                <option value="{{ $rf->val }}" 
+                                    {{ $cuti->jenis_cuti == $rf->val ? 'selected' : '' }}>
+                                    {{ $rf->val_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jumlah">Jumlah</label>
+                        <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{ $cuti->jumlah }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="keterangan">Keterangan</label>
                         <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ $cuti->keterangan }}" required>
                     </div>
-
                     <div class="mb-3">
-                        <label for="jumlah">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah" value="{{ $cuti->jumlah }}" required>
+                        <label for="tanggal">Tanggal pengajuan </label>
+                        <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $cuti->tanggal }}" required>
+
                     </div>
+                  
                     <div class="row mb-3">
                         @foreach($d_cuti as $index => $cuti_detail)
                             <div class="col-md-4">
@@ -61,17 +66,13 @@
                         @endif
                     </div>
 
-                    <div class="mb-3">
-                        <label for="tanggal">Tanggal pengajuan </label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ $cuti->tanggal }}" required>
-
-                    </div>
+                    
 
                     <div class="mb-3">
                         <label for="karyawan_pengganti">Karyawan Pengganti</label>
                         <select class="form-control custom-select" name="karyawan_pengganti" id="karyawan_pengganti">
                             @foreach($employees as $employee)
-                                <option value="{{ $employee->name }}" data-unit="{{ $employee->id_unit }}" 
+                                <option value="{{ $employee->uuid }}" data-unit="{{ $employee->id_unit }}" 
                                     {{ $employee->name == $cuti->karyawan_pengganti ? 'selected' : '' }}>
                                     {{ $employee->name }}
                                 </option>

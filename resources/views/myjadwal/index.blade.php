@@ -1,175 +1,80 @@
-
-
 <x-main-layout>
-    <x-slot name="test">
-
-
-    </x-slot>
-
-
-    <div class="container" style="border: px solid">
-        <div class="map-container" style="height: 3px; background-color: #f8f9fa;">
-        </div>
-
+    <div class="container" style="border: 1px solid #e0e0e0;">
+        <div class="map-container" style="height: 3px; background-color: #f8f9fa;"></div>
 
         <!-- Informasi Absensi -->
         <div class="container mt-3">
             <div class="row">
                 <!-- Card Kiri -->
-                <div class="col-md-6">
-                    <div class="card" style="border: 1px solid; min-height: 167px;">
-                        <div class="card-body d-flex align-items-center">
-                            <img src="{{ asset('assets/img/prof.png') }}" alt="Logo" style="position: relative; top: 10px; width: 100px; height: 100px; border-radius: 10%; margin-right: 50px;">
-
-
-
-
+                <div class="col-md-6 mb-3">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body d-flex align-items-center"style="padding-top:15px">
+                            <img src="{{ asset('assets/img/business.png') }}" alt="Logo" class="img-fluid rounded-circle me-3" style="width: 100px; height: 100px;">
                             <div>
-                                <h5 class="card-title mb-0">{{ $employee->name }}</h5> <!-- mb-0 menghilangkan margin bawah -->
-                                <h5 class="mb-0">
-                                    @if ($employee->id_unit == 1)
-                                        HRD
-                                    @elseif ($employee->id_unit == 2)
-                                        Penunjang Medis
-                                    @elseif ($employee->id_unit == 3)
-                                        Komite Medik
-                                    @elseif ($employee->id_unit == 4)
-                                        Direktur
-                                    @endif
-                                </h5>
+                                <h5 class="card-title mb-0">{{ $employee->name }}</h5>
+                                <p class="mb-0 text-muted" style="font-family: Times New Roman; font-size: 18px; font-weight: bold;">
+                                    {{ $employee->unit->name ?? 'Tidak Diketahui' }}
+                                </p>
                             </div>
-                        </div>
-
-
+                        </div> 
                     </div>
                 </div>
 
-
-
-
-
-
                 <!-- Card Kanan -->
-                <div class="col-md-6">
-                    <div class="card" style="border: 1px solid;">
+                <div class="col-md-6 mb-3">
+                    <div class="card border-light shadow-sm">
                         <div class="card-body d-flex align-items-center">
-                            <div class="me-3">
-                                <!-- Elemen untuk jam dinding -->
-                                <div id="clock" style="position: relative; width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: -20px">
-                                    <img src="{{ asset('assets/img/jam.png') }}" alt="Jam Dinding" style="width: 100%; height: 100%; object-fit: cover;">
-
-
-                                    <div id="hour-hand" class="hand"></div>
-                                    <div id="minute-hand" class="hand"></div>
-                                    <div id="second-hand" class="hand"></div>
+                            <div class="me-3" style="padding-top: 15px;">
+                                <div style="position: relative; width: 100px; height: 100px;overflow: hidden;">
+                                    <img src="{{ asset('assets/img/offer-up.png') }}"  class="img" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                             </div>
                             <div>
-                                <p class="card-text">
+                                <p class="card-text mb-0"style="padding-top:15px">
                                     @php
-                                        // Setel lokal ke Bahasa Indonesia
-                                        \Carbon\Carbon::setLocale('id');
-
-
-                                        // Ambil tanggal hari ini
-                                        $today = \Carbon\Carbon::today();
-
-
-                                        // Format tanggal dengan nama hari dalam Bahasa Indonesia
-                                        $todayFormatted = $today->translatedFormat('l, d M Y'); // Format: Jumat, 23 Agustus 2024
-
-
-                                        $found = false;
+                                        $today = date('Y-m-d');
+                                        $todayWorks = $worksheadules->filter(function ($work) use ($today) {
+                                            return $work->tanggal == $today;
+                                        });
                                     @endphp
 
-
-                                    @if(count($worksheadules) > 0)
-                                        @foreach ($worksheadules as $work)
-                                            @if(isset($work->tanggal) && \Carbon\Carbon::parse($work->tanggal)->format('Y-m-d') == $today->format('Y-m-d'))
-                                                <li class="list-group-item">
-                                                   <h5> {{ \Carbon\Carbon::parse($work->tanggal)->translatedFormat('l, d M Y') }} </h5>
-                                                </li>
-                                                    <li class="list-group-item">
-                                                            @if($work->shift_id == 1)
-                                                                <h1>Pagi</h1>  <h5>{{ $work->checkin_time }}- {{ $work->checkout_time }}</h5>
-                                                            @elseif($work->shift_id == 2)
-                                                                <h1>Siang</h1> <h2></h2>
-                                                            @elseif($work->shift_id == 3)
-                                                                <h1>Malam</h1> <h2></h2>
-                                                            @else
-                                                                Status tidak tersedia
-                                                            @endif
-                                                    </li>
-                                                @php
-                                                    $found = true;
-                                                @endphp
-                                            @endif
+                                    @if ($todayWorks->isNotEmpty())
+                                        @foreach ($todayWorks as $work)
+                                            <h5 class="mb-0">{{ date('l, d M Y', strtotime($work->tanggal)) }}</h5>
+                                            <h4 class="text-primary">
+                                                {{ $work->shift_name ?? 'Status tidak tersedia' }}: <br>
+                                                 {{ $work->checkin_time }} - {{ $work->checkout_time }}
+                                            </h4>
                                         @endforeach
-                                    @endif
-
-
-                                    @if (!$found)
-                                        <h5>Data hari ini tidak tersedia</h5>
+                                    @else
+                                        <h5 class="mb-0">Data hari ini tidak tersedia</h5>
                                     @endif
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-
-
-
-
-
-
-        <!-- Data Record Absensi -->
         <div class="card mt-3">
             <button class="btn btn-primary">Jadwal Selanjutnya</button>
             <div class="card-body">
                 <div class="overflow-auto" style="max-height: 400px;">
                     <ul class="list-group text-center">
-                        <h6>
-                            @if($worksheadules->count() > 0)
-                                @php
-                                    $firstItem = true; // Variabel untuk menandai item pertama
-                                @endphp
-
-
-                                    @foreach ($worksheadules as $work)
-                                        @if($firstItem)
-                                            @php
-                                            $firstItem = false; // Lewatkan item pertama
-                                            continue; // Lanjutkan ke item berikutnya
-                                            @endphp
-                                        @endif
-                                            <li class="list-group-item">
-                                                {{ isset($work->tanggal) ? \Carbon\Carbon::parse($work->tanggal)->format('d M Y') : 'Tanggal tidak tersedia' }} -
-                                                @if($work->shift_id == 1)
-                                                    Pagi - {{ $work->checkin_time }} - {{ $work->checkout_time }}
-                                                    @elseif($work->shift_id == 2)
-                                                        Siang - {{ $work->checkin_time }} - {{ $work->checkout_time }}
-                                                    @elseif($work->shift_id == 3)
-                                                        Libur - <h5>{{ $work->checkin_time }} - {{ $work->checkout_time }} </h5>
-                                                    @else
-                                                        Status tidak tersedia
-                                                @endif
-                                            </li>
-                                    @endforeach
-                                @else
-                                    <li class="list-group-item">Tidak ada data untuk ditampilkan.</li>
-                            @endif
-
-
-                        </h6>
+                        @if($worksheadules->count() > 0)
+                            @foreach ($worksheadules as $work)
+                                <li class="list-group-item">
+                                    {{ date('d M Y', strtotime($work->tanggal)) }} -
+                                    {{ $work->shift_name ?? 'Status tidak tersedia' }} 
+                                    
+                                    {{ $work->checkin_time }} - {{ $work->checkout_time }}
+                                </li>
+                            @endforeach
+                        @else
+                            <li class="list-group-item">Anda tidak memiliki jadwal.</li>
+                        @endif
                     </ul>
                 </div>
-
-
-                <!-- Tombol Next dan Previous -->
                 <div class="text-center mt-5">
                     <div class="pagination-wrapper">
                         {{ $worksheadules->links('pagination::bootstrap-5') }}
@@ -177,9 +82,5 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
- </x-main-layout>
+    </div>
+</x-main-layout>
