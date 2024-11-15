@@ -26,6 +26,9 @@
                         <input type="text" id="name" name="name" :value="old('name')"  class="form-control form-control-lg bg-light fs-5 mt-3" placeholder="Your Name">
                     </div>
                     <div class="input-group mb-3">
+                        <input type="text" id="username" name="username" :value="old('username')"  class="form-control form-control-lg bg-light fs-5 mt-3" placeholder="Username">
+                    </div>
+                    <div class="input-group mb-3">
                         <input type="email" name="email" id="email" class="form-control form-control-lg bg-light fs-5" :value="old('email')" required autocomplete="username" placeholder="Email">
                     </div>
                     <div class="input-group mb-3">

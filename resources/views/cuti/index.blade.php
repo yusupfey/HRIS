@@ -7,7 +7,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                    <h5 class="card-title">Data Table Cuti</h5>
+                                    <h5 class="card-title">Table Cuti</h5>
                                     <div class="col-md-4" style="text-align: right;">
                                         <a href="/ajukancuti" class="btn btn-success">Ajukan Cuti</a>
                                     </div>
@@ -92,25 +92,29 @@
         </div>
     </div>
     @section('js')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('/jquery-3.7.1.min.js')}}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
-             $('#datatable').DataTable({
-                 pageLength: 10,
-                 language: {
-                     search: "",
-                     lengthMenu: "_MENU_",
-                     info: "showing _START_ To _END_ Of _TOTAL_ entries",
-                     paginate: {
-                          next: "next", previous: "previously"
-                     }
-                 } 
-             });
+            $('#datatable').DataTable({
+                pageLength: 10,
+                language: {
+                    search: "",
+                    lengthMenu: "_MENU_",
+                    info: "showing _START_ To _END_ Of _TOTAL_ entries",
+                    paginate: {
+                        next: "next", previous: "previous"
+                    }
+                }
+            });
         });
         
         function modalApprove(id, mode = null) {
@@ -137,17 +141,17 @@
                         <div style="font-size:13px;">Jumlah Cuti</div>
                         <div style="font-size:13px;font-weight:bold">${val.jumlah}</div>
                     </div>
-                    <div class="col-6">
+                   <div class="col-6">
                         <div style="font-size:13px;">Pengganti</div>
-                        <div style="font-size:13px;font-weight:bold">${val.pengganti_name}</div>
+                        <div style="font-size:13px; font-weight:bold">${val.pengganti_name ?? 'Tanpa Pengganti'}</div>
                     </div>
                     <div class="col-6">
                         <div style="font-size:13px;">keterangan</div>
                         <div style="font-size:13px;font-weight:bold">${val.keterangan}</div>
                     </div>
                     <div class="col-6">
-                        <div style="font-size:13px; font-weight:bold">Approve Pengganti</div>
-                        <div style="font-size:13px;">${val.approve_pengganti === undefined ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_pengganti}</div>
+                        <div style="font-size:13px; ">Approve Pengganti</div>
+                        <div style="font-size:13px;font-weight:bold">${val.approve_pengganti === undefined ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_pengganti}</div>
                     </div>
                 </div>
             `;
@@ -159,7 +163,7 @@
                 <div class="col-4">
                     <div style="font-size:13px; font-weight:bold">${val.name}</div>
                     <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                    <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                   <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                 </div>
             `;
         });

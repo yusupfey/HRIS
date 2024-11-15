@@ -5,7 +5,7 @@
         </div>
     @endif  
     <div class="py-12">
-        <div class="container" style="max-width: 90%;padding:16px">
+        {{-- <div class="container" style="max-width: 90%;padding:16px"> --}}
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="row">
                     <div class="col-lg-12">
@@ -48,13 +48,22 @@
                                 <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
                             @endif
                         </div>
+                        <div class="col-md-6">
+                            <label for="id_unit"style="font-weight: bold; display: block; margin-bottom: 8px;">Pilih Unit:</label>
+                            <select name="id_unit" id="id_unit" class="form-control  form-control-lg"style="border-width: 3px;">
+                                <option value="{{$shift->id_unit}}"></option> 
+                                @foreach($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @endforeach
+                            </select>
+                    </div>
                     </div>
                     </div>
                     
                     <button type="submit" class="btn btn-success btn-lg" name="submit" style="margin-top: 18px; ">Submit</button>
                 </form>
             </div>
-        </div>
+        {{-- </div> --}}
     </div>
 </x-main-layout>
 

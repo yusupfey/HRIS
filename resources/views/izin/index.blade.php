@@ -7,14 +7,15 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                    <h5 class="card-title">Data Table Cuti</h5>
+                                    <h5 class="card-title">Data Izin</h5>
                                     <div class="col-md-4" style="text-align: right;">
                                         <div style="text-align: right;">
-                                            <a href="/ajukanizin" class="btn btn-primary" style="margin-top: 10px">Buat Izin</a>
+                                            <a href="/ajukanizin" class="btn btn-success" style="margin-top: 10px">Ajukan Izin</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <div class="table-responsive" style="overflow-x: auto;">
                                     <table class="table table-striped table-border table-collapse" style="border:none" id="datatable">
                                         <thead>
                                             <tr>
@@ -52,6 +53,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +145,7 @@
                             <div class="col-4">
                                 <div style="font-size:13px; font-weight:bold">${val.name}</div>
                                 <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                              <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                             </div>
                         `;
                     });

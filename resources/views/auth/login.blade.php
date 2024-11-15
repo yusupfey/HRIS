@@ -25,10 +25,10 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="input-group mb-4">
-                            <input type="email" id="email" name="email" class="form-control form-control-lg bg-light fs-5 mt-3" placeholder="Email address" required autofocus>
+                            <input type="username" id="username" name="username" class="form-control form-control-lg bg-light fs-5 mt-3" placeholder="username" required autofocus>
                         </div>
-                        @if ($errors->has('email'))
-                            <div class="error text-danger">{{ $errors->first('email') }}</div>
+                        @if ($errors->has('username'))
+                            <div class="error text-danger">{{ $errors->first('username') }}</div>
                         @endif
                         <div class="input-group mb-4">
                             <input type="password" name="password" id="password" class="form-control form-control-lg bg-light fs-5" placeholder="Password" required>

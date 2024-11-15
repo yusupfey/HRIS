@@ -18,6 +18,7 @@ use App\Http\Controllers\MyJadwalController;
 use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\jadwalkerjaController;
 use App\Http\Controllers\masukcontroller;
+use App\Http\Controllers\newemployeesController;
 use App\Http\Controllers\SakitController;
 use App\Http\Controllers\UbahJadwalController;
 use App\Http\Controllers\UserProfileController;
@@ -171,15 +172,17 @@ Route::get('/izin/delete/{id}', [IzinController::class, 'hapus'])->name('izin.de
         Route::post('check/item', [masterController::class,'check_item']);
     });
 });
+// Route::get('newemployees',[newemployeesController::class,'index'])->name('newemployees.index');
+// Route::post('create/employees',[newemployeesController::class,'create'])->name('create.employees');
+
+
+
+
+
 // Route::get('test', function(){
 //     return User::latest()->first();
 
 //     Route::get('/profile2',[UserProfileController::class,'index'])->name('profile2.index');
 
 // });
-
-
-
-
-
 require __DIR__.'/auth.php';

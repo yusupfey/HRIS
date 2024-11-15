@@ -1,13 +1,14 @@
 <x-main-layout>
     <div class="py-12">
-        <div class="container-fluid">
+        {{-- <div class="container-fluid"> --}}
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                                 <h5 class="card-title">Update Cuti</h5>
-                                <button onclick="window.history.back()" class="btn btn-warning">Cancel</button>
+                                <button onclick="window.location='{{ route('cuti.index') }}'" class="btn btn-warning">Back</button>
+
                             </div>
                         </div>
                     </div>
@@ -81,7 +82,6 @@
                     </div>
                     <button type="submit" class="btn btn-success">Update</button>
                 </form>
-            </div>
+            {{-- </div> --}}
         </div>
-    </div>
 </x-main-layout>

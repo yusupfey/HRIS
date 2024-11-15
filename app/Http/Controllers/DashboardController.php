@@ -15,41 +15,37 @@ class DashboardController extends Controller
 {
     public function index(){
         $data = DB::table('worksheadules')
-            ->join('shifts','shifts.id','=','worksheadules.shift_id')
-            ->select('worksheadules.id','worksheadules.tanggal','shifts.name','shifts.checkin_time','shifts.checkout_time')
+            ->join('shifts', 'shifts.id', '=', 'worksheadules.shift_id')
+            ->select('worksheadules.id', 'worksheadules.tanggal', 'shifts.id as shift_id', 'shifts.name', 'shifts.checkin_time', 'shifts.checkout_time')
             ->where('worksheadules.tanggal', date('Y-m-d'))
             ->where('worksheadules.uuid_employees', Session::get('uuid'))
             ->first();
-            // $libur = DB::table('shifts')
-            // ->select('id')
-            // ->get();
-            // dd($libur);
-
-            // $absensi = DB::table
-
-            $in_date = date('H:i:s');
-            $masuk = DB::table('absen')
-            ->select('in_date','type')
-            // ->where('uuid_karyawan', Session::get('uuid'))
+    
+        $in_date = date('H:i:s');
+        $masuk = DB::table('absen')
+            ->select('in_date', 'type')
             ->where('schd_id', $data->id ?? null)
             ->get();
-            // dd($masuk);
-            $absen = $masuk->firstWhere('type', 1,);
-            $pulang = $masuk->firstWhere('type', 2,);
-
-            //checkin_time
-            date_default_timezone_set('Asia/Jakarta');//mengambil realtime daerah
-            $realtime = date('H:i:s');//format jam dan menit
-            // dd($realtime);
-            $checkin_time = date('H:i:s', strtotime($data->checkin_time ?? null) - 3600);//detik 1jm
-            $checkin = $realtime >= $checkin_time && is_null(value: $absen);//mengecek jam
-            
-            // untuk checkout_time
-            $checkout_time = date('H:i:s', strtotime($data->checkout_time ?? null) - 600);//detik 5mnt
-            $checkout = $realtime >= $checkout_time && is_null($pulang);
-            return view('dashboard2', compact('data','masuk','absen','pulang','checkin','checkout',));
-        }
-        
+    
+        $absen = $masuk->firstWhere('type', 1);
+        $pulang = $masuk->firstWhere('type', 2);
+    
+        date_default_timezone_set('Asia/Jakarta');
+        $realtime = date('H:i:s');
+        // dd($realtime);
+    
+        $checkin_time = date('H:i:s', strtotime($data->checkin_time ?? null) - 3600);//satuan detik dalam 1jm
+        $checkin = $realtime >= $checkin_time && is_null($absen);
+    
+        $checkout_time = date('H:i:s', strtotime($data->checkout_time ?? null) - 600);//satuan detik 10mnit
+        $checkout = $realtime >= $checkout_time && is_null($pulang);
+    
+        // shift yang tidak memerlukan  tombol
+        $noabsen = in_array($data->shift_id ?? null, [4, 7, 8]);
+    
+        return view('dashboard2', compact('data', 'masuk', 'absen', 'pulang', 'checkin', 'checkout', 'noabsen'));
+    }
+    
         public function absen(Request $request){
             
             $schedules = DB::table('worksheadules')
@@ -69,6 +65,19 @@ class DashboardController extends Controller
             case 'checkout':
                 $type = 2;
                 $remark='';
+                if(date('H:i:s') > $schedules->checkout_time){
+                    $code = 400;
+                    $message = 'Anda Tidak bisa absense pulang, waktu pulang pukul'. $schedules->checkout_time;
+                    return response()->json([
+                        'response'=> [
+                            'metadata'=> [
+                                'code'=>$code,
+                                'message'=>$message
+                            ],
+                        ]
+                    ]);
+                }
+                
                 break;
             default:
                 # code.

@@ -29,7 +29,7 @@
                                                 </div>
                                                 
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6" hidden>
                                                 <div class="form-group">
                                                     <label for="path_upload" class="form-label">Upload File</label>
                                                     <input type="text" id="path_upload" name="path_upload" class="form-control" value="{{$sakit->path}}"  required>

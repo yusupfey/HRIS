@@ -39,7 +39,9 @@ class shiftController extends Controller
 public function formupdate($id){
     // $shift = DB::select("SELECT * FROM shifts WHERE  id=$id");
     $shift = shift::where('id',$id)->first();
-    return view('pages.shift.updateshift',compact('shift'));
+    $units = Unit::all(); 
+
+    return view('pages.shift.updateshift',compact('shift','units'));
   }
   
    

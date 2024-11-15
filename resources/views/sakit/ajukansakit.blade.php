@@ -15,7 +15,7 @@
                                 <div class="card-body">
                                     <form action="{{ route('sakit.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
-                                        <div class="mb-3">
+                                        <div class="mb-3" hidden>
                                             <label for="uuid_karyawan" >Nama</label>
                                             <input type="text" class="form-control" id="uuid_karyawan" name="uuid_karyawan" 
                                                    value="{{ Auth::user()->uuid}}" readonly>
@@ -51,18 +51,28 @@
                                             </div>
                                             <div class="col-md-6">
                                                 @foreach ($units as $item)
-                                                    <div class="form-group">
-                                                        <label for="persetujuan{{ $item->id }}">{{ $item->name }}</label>
-                                                        <select name="persetujuan[]" id="persetujuan{{ $item->id }}" class="form-control" required>
+                                                    <div class="col-md-6">
+                                                            <label for="">{{ $item->name }}</label>
+                                                        <select name="persetujuan[]" class="form-control" aria-label="Pilih Unit">
                                                             <option value="{{ $item->kepala_unit }}">{{ $item->nama_karyawan }}</option>
                                                         </select>
                                                     </div>
                                                 @endforeach
+                                                {{-- @foreach ($units as $val)
+                                                <div class="form-group">
+                                                    <label for="persetujuan{{ $val->id }}">{{ $val->name }}</label>
+                                                    <select name="persetujuan[]" id="persetujuan{{ $val->id }}" class="form-control" required>
+                                                        @foreach ($units as $item)
+                                                            @if ($val->id == $item->id_unit)
+                                                                <option value="{{ $item->uuid_pj }}">{{ $item->nama_karyawan }}</option>
+                                                            @endif
+                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                                @endforeach --}}
                                             </div>
                                         </div>
-                                        <div class="text-right">
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
+                                            <button type="submit" class="btn btn-success" style="margin-top: 5px">Submit</button>
                                     </form>
                                 </div>
                             </div>

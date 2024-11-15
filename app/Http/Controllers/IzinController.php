@@ -24,8 +24,33 @@ class IzinController extends Controller
         where izin.uuid_karyawan='$user'");
         // dd($izin);
         // $izin = Izin::where('uuid_karyawan', $user)->get();
-
+        
         return view('izin.index', compact('izin','user'));
+    }
+    public function getunit($getUnit, $arr = []){
+        $array = $arr;
+        $units = DB::table('units as u')
+        ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
+        ->select('e.name as nama_karyawan', 'u.*')
+        ->where('u.id', '=', $getUnit)
+        ->get();
+        // dd($units);
+        if(count($units) > 0){
+            // dd('ada data');
+            foreach ($units as $key => $value) {
+                array_push($array, $value);
+                $return = true;
+            }
+        }else{
+            $return = false;
+        }
+        if(!$return){
+            return $array;
+        }else{
+            return (new Izincontroller)->getunit($value->kepala_unit, $array);
+        }
+    
+    
     }
 
     // Menampilkan form untuk membuat izin baru
@@ -46,13 +71,7 @@ class IzinController extends Controller
 
         if ($employee) {
             // Ambil unit dengan ID lebih kecil dari id_head_unit milik employee
-            $units = DB::table('units as u')
-                ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
-                ->select('e.name as nama_karyawan', 'u.*')
-                ->where('u.id', '<=', $employee->id_head_unit + 1)
-                ->where('u.id', '!=', 1)
-                // ->where('u.id',2)
-                ->get();
+            $units = collect((new izincontroller)->getunit($employee->unit_id))->where('id', '!=', 1);
 
                 // dd($units);
 

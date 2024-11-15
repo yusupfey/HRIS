@@ -7,7 +7,8 @@
                         <div class="card">
                             <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                                 <h5 class="card-title">Update izin</h5>
-                                <button onclick="window.history.back()" class="btn btn-warning">Cancel</button>
+                                <button onclick="window.location='{{ route('izin.index') }}'" class="btn btn-warning">Back</button>
+
                             </div>
                         </div>
                     </div>
