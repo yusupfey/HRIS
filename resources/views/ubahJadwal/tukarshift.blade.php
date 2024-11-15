@@ -69,9 +69,6 @@
                                                     <label for="shift_pengganti" class="form-label">Shift Pengganti</label>
                                                     <select class="form-select" name="shift_pengganti" id="shift_pengganti">
                                                         <option value="" disabled selected>Pilih Shift</option>
-                                                        @foreach($shift as $sh)
-                                                            <option value="{{ $sh->id }}">{{ $sh->name }}</option>
-                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -117,9 +114,14 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Inisialisasi Select2 pada dropdown Karyawan Pengganti
+            $('#uuid_pengganti').select2({
+                placeholder: 'Pilih Karyawan Pengganti',
+                allowClear: true,
+            });
+
             $('.js-example-basic-single').select2();
 
-           
             $('#tanggal_perubahan').change(function() {
                 $('#uuid_pengganti').val(null).trigger('change');
                 $('#shift_pengganti').empty();
@@ -143,19 +145,16 @@
                 var selectedDate = $('#tanggal_perubahan').val();
                 var selectedOption = $(this).find('option:selected');
                 var employeeShifts = selectedOption.data('shift');
-                var shifts = @json($shift);
 
                 // Kosongkan opsi shift sebelumnya
                 $('#shift_pengganti').empty();
 
+                // Tampilkan shift yang hanya sesuai dengan tanggal yang dipilih
                 var shift = $('<optgroup>', { label: 'Shift' });
-                var tukar_shift = $('<optgroup>', { label: 'Tukar Shift' });
 
-                var shiftId;
                 if (employeeShifts) {
                     employeeShifts.forEach(function(shiftData) {
                         if (shiftData.tanggal === selectedDate) {
-                            shiftId = shiftData.shift_id;
                             shift.append(
                                 $('<option>', { value: shiftData.shift_id, text: shiftData.shift.name, selected: true })
                             );
@@ -163,15 +162,10 @@
                     });
                 }
 
-                shifts.forEach(function(shiftData) {
-                    if (shiftData.id !== shiftId) {
-                        tukar_shift.append(
-                            $('<option>', { value: shiftData.id, text: shiftData.name })
-                        );
-                    }
-                });
-
-                $('#shift_pengganti').append(shift).append(tukar_shift);
+                // Menambahkan opsi shift yang sesuai
+                if (shift.children().length > 0) {
+                    $('#shift_pengganti').append(shift);
+                }
             });
         });
     </script>

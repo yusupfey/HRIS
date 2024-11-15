@@ -7,7 +7,7 @@
                         <div class="col-lg-12">
                             <div class="card" style="border-radius:10px;">
                                 <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                    <h5 class="card-title" style="margin-right: 20px;">Data Jadwal karyawan</h5>
+                                    <h5 class="card-title" style="margin-right: 20px;">Jadwal karyawan</h5>
                                     
                                 </div>
                                 <div class="card-body">

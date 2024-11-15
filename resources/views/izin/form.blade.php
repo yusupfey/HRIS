@@ -11,7 +11,7 @@
         @enderror
         <form id="izinForm" action="{{ route('izin.store') }}" method="POST">
             @csrf
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="uuid" class="form-label">UUID</label>
                 <input type="text" class="form-control" id="uuid" name="uuid" disabled
                 value="{{ Auth::user()->name}}" readonly>

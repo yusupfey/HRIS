@@ -39,7 +39,7 @@ class MyJadwalController extends Controller
         $todayWork = $worksheadulesQuery->clone()->where('w.tanggal', $today)->first();
 
         // Paginasi data
-        $worksheadules = $worksheadulesQuery->paginate(20);
+        $worksheadules = $worksheadulesQuery->paginate(15);
 
         // Jika data hari ini tidak ada dalam halaman pertama, tambahkan secara manual
         // if ($todayWork && !$worksheadules->contains('tanggal', $today)) {

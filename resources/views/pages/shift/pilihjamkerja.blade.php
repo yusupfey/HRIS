@@ -1,14 +1,24 @@
 <x-main-layout>
     <div class="py-12">
-        <div class="container-fluid">
+        {{-- <div class="container-fluid">x --}}
             <form action="/jadwalkerja/proses/input" method="post" style="max-width: 100%;">
                 <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; margin-top:20px;">
-                                    <h5 class="card-title">Pilih Jam Kerja</h5>
+                                    <h5 class="card-title">Jadwal Kerja</h5>
                                     <div class="col-md-2 col-sm-2 ml-auto">
+                                        <select class="form-control-sm" name="year" id="year">
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                        @if($errors->has('year'))
+                                            <div class="error">{{ $errors->first('year') }}</div>
+                                        @endif
+                                        
+                                    </div>
+                                    
+                                    <div class="col-md-2">
                                         <select class="form-control-sm"name="month" onchange="CountDayInMonth()" id="month">
                                             @for ($m = 1; $m <= 12; $m++)
                                                 <option value="{{ str_pad($m, 2, '0', STR_PAD_LEFT) }}" 
@@ -21,16 +31,7 @@
                                             <div class="error">{{ $errors->first('month') }}</div>
                                         @endif
                                     </div>
-                                    
-                                    <div class="col-md-2">
-                                        <select class="form-control-sm" name="year" id="year">
-                                            <!-- Options will be populated by JavaScript -->
-                                        </select>
-                                        @if($errors->has('year'))
-                                            <div class="error">{{ $errors->first('year') }}</div>
-                                        @endif
-                                    </div>
-                                    {{-- <button onclick="window.history.back()" class="btn btn-warning sm">Back</button> --}}
+                                    {{-- <button onclick="window.history.back()" class="btn btn-close"></button> --}}
                                 </div>
                             </div>
                         </div>
@@ -47,7 +48,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        {{-- </div> --}}
     </div>
 
     @push('css')

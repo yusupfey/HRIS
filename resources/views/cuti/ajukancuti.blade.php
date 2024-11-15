@@ -1,6 +1,6 @@
 <x-main-layout>
     <div class="py-12">
-        <div class="container-fluid">
+        {{-- <div class="container-fluid"> --}}
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="row">
                     <div class="col-lg-12">
@@ -18,7 +18,7 @@
             <div class="p-3 bg-white border-bottom border-gray-200">
                 <form id="cutiForm" action="{{ route('cuti.store') }}" method="POST">
                     @csrf
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label for="uuid_karyawan" >Nama</label>
                         <input type="text" class="form-control" id="uuid_karyawan" name="uuid_karyawan" 
                                value="{{ Auth::user()->name}}" readonly>
@@ -38,19 +38,20 @@
                 @endforeach
             </select>
             </div>
-            <div class="mb-3">
-                <label for="jumlah">jumlah Cuti</label>
-                <input type="number" class="form-control" id="jumlah" placeholder="jumlah" name="jumlah" required>
-                  @if ($errors->has('jumlah'))
-                      <div class="error text-danger">{{ $errors->first('jumlah') }}</div>
-                  @endif
-            </div>
+            
             <div class="mb-3">
                 <label for="tanggal">tanggal pengajuan</label>
                 <input type="date" class="form-control" id="tanggal" placeholder="tanggal" name="tanggal" required>
                 @if ($errors->has('tanggal'))
                   <div class="error text-danger">{{ $errors->first('tanggal') }}</div>
                 @endif
+            </div>
+            <div class="mb-3">
+                <label for="jumlah">jumlah Cuti</label>
+                <input type="number" class="form-control" id="jumlah" placeholder="jumlah" name="jumlah" required>
+                  @if ($errors->has('jumlah'))
+                      <div class="error text-danger">{{ $errors->first('jumlah') }}</div>
+                  @endif
             </div>
             <div class="mb-3">
                 <label for="keterangan">keterangan</label>
@@ -62,7 +63,7 @@
             
               <div class="row mb-3">
                   <div class="col-md-4">
-                      <label for="">tanggal Cuti</label>
+                      <label for="">Tanggal Cuti</label>
                       <input type="date" name="tanggal_cuti[]" class="form-control" aria-label="Pilih Unit">
                     </div>
                     <div class="col-md-4">
@@ -97,7 +98,7 @@
  <button type="submit" name="submit" id="submit"  class="btn btn-success">submit</button>
                 </form>
             </div>
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
     

@@ -1,12 +1,8 @@
 <x-main-layout>  
-    {{-- @if (Session::has('gagal'))
-        <div class="alert alert-danger" style="margin-bottom: 20px;">
-            {{ Session::get('gagal') }}
-        </div>
-    @endif --}}
+   
     
     <div class="py-12">
-        <div class="container" style="max-width: 90%;padding:16px" >
+        {{-- <div class="container" style="max-width: 100%;" > --}}
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="row">
                     <div class="col-lg-12">
@@ -42,29 +38,29 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="checkout_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckOut Time</label>
-                            <input class="form-control form-control-lg" type="time" placeholder="Check-Out" aria-label="default input example" name="checkout_time" id="checkout_time" style="border-width: 3px;">
-                            @if ($errors->has('checkout_time'))
-                                <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
-                            @endif
-                        </div>
-                        <div>
-                            <div class="col-md-6">
-                                <label for="id_unit">Pilih Unit:</label>
-                                <select name="id_unit" id="id_unit" class="form-control">
-                                    <option value="">Pilih Unit</option> <!-- Opsi kosong yang mengizinkan tidak ada pilihan -->
-                                    @foreach($units as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mb-3">
+                                <label for="checkout_time" style="font-weight: bold; display: block; margin-bottom: 8px;">CheckOut Time</label>
+                                <input class="form-control form-control-lg" type="time" placeholder="Check-Out" aria-label="default input example" name="checkout_time" id="checkout_time" style="border-width: 3px;">
+                                @if ($errors->has('checkout_time'))
+                                    <div class="error text-danger">{{ $errors->first('checkout_time') }}</div>
+                                @endif
                             </div>
                         </div>
+                            <div class="col-md-6">
+                                    <label for="id_unit"style="font-weight: bold; display: block; margin-bottom: 8px;">Pilih Unit:</label>
+                                    <select name="id_unit" id="id_unit" class="form-control  form-control-lg"style="border-width: 3px;">
+                                        <option value="">Pilih Unit</option> 
+                                        @foreach($units as $unit)
+                                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
                     </div>
                     
                     <button type="submit"  class="btn btn-success " name="submit" style="margin-top: 10px;margin-bottom:15px">Submit</button>
                 </form>
             </div> 
-        </div> 
+        {{-- </div>  --}}
     </div>
     @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -13,9 +13,10 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
-        // 'uuid',
+        'uuid',
     ];
 
     protected $hidden = [
@@ -31,14 +32,14 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        // matikan ini kalo mau nge seeder bundel
-        static::creating(function ($model) {
-            $model->uuid = Str::uuid(36);
-        });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     // matikan ini kalo mau nge seeder bundel
+    //     static::creating(function ($model) {
+    //         $model->uuid = Str::uuid(36);
+    //     });
+    // }
 
     public function employee()
     {

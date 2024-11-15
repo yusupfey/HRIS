@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Approve;
 use App\Models\cuti;
+use App\Models\d_cuti;
 use App\Models\Izin;
 use App\Models\Sakit;
 use App\Models\ubahjadwal;
@@ -20,7 +21,7 @@ class ApproveController extends Controller
         $uuid = Session::get('uuid');
         $data['cuti'] = DB::select("SELECT employees.name, dr.val_name, units.name as unit, approve.*
         FROM `approve`
-        INNER JOIN cuti ON cuti.id = approve.id_permohonan 
+         JOIN cuti ON cuti.id = approve.id_permohonan 
         INNER JOIN d_references dr on dr.val=cuti.jenis_cuti and reference_id=1
         INNER JOIN employees ON employees.uuid = cuti.uuid_karyawan 
         INNER JOIN units ON employees.id_unit = units.id
@@ -55,24 +56,42 @@ class ApproveController extends Controller
 
         // dd($data);
         // DB::enableQueryLog(); // Enable query log
-        $data['history'] = DB::select("SELECT e1.name as karyawan_name, approve.*
-                FROM `approve` 
-                        INNER JOIN cuti ON cuti.id = approve.id_permohonan 
-                        INNER JOIN employees as e1 ON e1.uuid = cuti.uuid_karyawan
-                -- INNER JOIN izin ON izin.id = approve.id_permohonan 
-                -- INNER JOIN employees as e2 ON e2.uuid = izin.uuid_karyawan
-                WHERE uuid_atasan = '$uuid' AND approve IS NOT NULL");
-        // dd($data);
-    return view('pages/approve/index', compact('data'));
+        $data1['history'] = DB::select("SELECT 
+        CASE 
+            WHEN approve.jenis_permohonan = 'cuti' THEN e1.name 
+            WHEN approve.jenis_permohonan = 'ubahjadwal' THEN e2.name 
+            WHEN approve.jenis_permohonan = 'izin' THEN e3.name 
+            WHEN approve.jenis_permohonan = 'sakit' THEN e4.name 
+            ELSE NULL END as karyawan_name,
+            e1.name as cuti_karyawan_name,
+            e2.name as ubahjadwal_karyawan_name,
+            e3.name as izin_karyawan_name,
+            e4.name as sakit_karyawan_name,
+        approve.*
+        FROM `approve` 
+        LEFT JOIN cuti ON cuti.id = approve.id_permohonan 
+        LEFT JOIN employees as e1 ON e1.uuid = cuti.uuid_karyawan
+        LEFT JOIN ubahjadwal ON ubahjadwal.id = approve.id_permohonan 
+        LEFT JOIN employees as e2 ON e2.uuid = ubahjadwal.uuid_pemohon
+        LEFT JOIN izin ON izin.id = approve.id_permohonan 
+        LEFT JOIN employees as e3 ON e3.uuid = izin.uuid_karyawan
+        LEFT JOIN sakit ON sakit.id = approve.id_permohonan 
+        LEFT JOIN employees as e4 ON e4.uuid = sakit.uuid_karyawan
+        WHERE uuid_atasan = ? AND approve IS NOT NULL
+", [$uuid]);
+
+// dd($data1);
+       
+    return view('pages/approve/index', compact('data','data1'));
     }
     public function data($get, Request $request)
     {
         if ($get === 'cuti') {
             $data = DB::select("SELECT e1.name, units.name as unit, cuti.*, e2.name as pengganti_name, dr.val_name FROM cuti
-            INNER JOIN employees e1 on e1.uuid=cuti.uuid_karyawan
-            INNER JOIN units on e1.id_unit=units.id
-            INNER JOIN d_references dr on dr.val=cuti.jenis_cuti and reference_id=1
-            INNER JOIN employees e2 on e2.uuid=cuti.karyawan_pengganti 
+            LEFT JOIN employees e1 on e1.uuid=cuti.uuid_karyawan
+            LEFT JOIN units on e1.id_unit=units.id
+            LEFT JOIN d_references dr on dr.val=cuti.jenis_cuti and reference_id=1
+            LEFT JOIN employees e2 on e2.uuid=cuti.karyawan_pengganti 
             where cuti.id=$request->id");
 
             $approve = DB::select("SELECT e1.*, approve.*, units.name as unit FROM `approve` 
@@ -125,49 +144,171 @@ class ApproveController extends Controller
     }
     public function store($get, Request $request){
         $uuid = Session::get('uuid');
+        
+// date_default_timezone_set('Asia/Jakarta');
+// $realtime = date('H:i:s');
+        approve::where([
+            ['id_permohonan','=',$request->id_permohonan],
+            ['jenis_permohonan','=',$request->jenis_permohonan],
+            ['uuid_atasan','=',$uuid]
+        ]);
         try {
             Approve::where([
                 ['id_permohonan','=',$request->id_permohonan],
                 ['jenis_permohonan','=',$request->jenis_permohonan],
                 ['uuid_atasan','=',$uuid]
             ])->update([
-                'approve'=>$get === 'Approved' ? 1:0,
+                'approve'=>$get === 'approved' ? 1:0,
                 'approve_date'=>date('Y-m-d h:m:s'),
             ]);
-            $data = Approve::where(['id_permohonan'=>$request->id_permohonan])->get();
+            $data = Approve::where(['id_permohonan'=>$request->id_permohonan,'jenis_permohonan'=>$request->jenis_permohonan])->get();
             $count = 0;
             foreach ($data as $key => $value) {
-                if($value->approve == 0 && $value->approve_date != null){
+                if($value->approve == 1 && $value->approve_date != null){
                     $count = $count + 1;
                 }
             }
-            // jika counter dan jumlkah data sama maka update pada table permohonan terkait
+            // dd(count($data));
             if($count === count($data)){
                 switch ($request->jenis_permohonan) {
-                    case '1'://cuti
-                            cuti::where('id', '=', $request->id_permohonan)
+                    case '1': // cuti
+                        try {
+                            cuti::where('id', $request->id_permohonan)
                                 ->update([
                                     'status' => 1
                                 ]);
+                                
+                            $cuti = cuti::where('id', '=', $request->id_permohonan)->first();//ambil data cuti
+                    
+                            $tanggal_cuti = d_cuti::where('id_cuti', '=', $request->id_permohonan)->get();//ambil tangl_cti
+                    
+                          
+                            foreach ($tanggal_cuti as $d_cuti) {
+                                $currentDate = new \DateTime($d_cuti->tanggal_cuti);
+                                    //ambil data wc pemohon
+                                $shift_pemohon = workscheadules::where([
+                                    'tanggal' => $currentDate->format('Y-m-d'),
+                                    'uuid_employees' => $cuti->uuid_karyawan
+                                ])->first();
+                    
+                                if ($shift_pemohon->shift_id === 4) {
+                                    continue; 
+                                }
+                    //update jadwal pemohon
+                                workscheadules::where([
+                                    'tanggal' => $currentDate->format('Y-m-d'),
+                                    'uuid_employees' => $cuti->uuid_karyawan
+                                ])->update(['shift_id' => 7]);
+                    
+                    //update jadwal pengganti
+                               
+                                // workscheadules::where([
+                                //     'tanggal' => $currentDate->format('Y-m-d'),
+                                //     'uuid_employees' => $cuti->karyawan_pengganti
+                                // ])->update(['shift_id' => $shift_pemohon->shift_id]);
+                            }
+                        } catch (\Throwable $th) {
+                            dd($th);
+                        }
+                        break;
+                        case '2': // tukar shift
+                            try {
+                                ubahjadwal::where('id', $request->id_permohonan)
+                                    ->update(['status' => 1]);
                         
-                        break;
-                    case '2'://tukar shift
-                        ubahjadwal::where('id', '=', $request->id_permohonan)
-                        ->update([
-                            'status' => 1
-                        ]);
-                        break;
+                                $ubahjadwal = ubahjadwal::find($request->id_permohonan);
+                                // if (!$ubahjadwal) {
+                                // }
+                        
+                                $startDate = new \DateTime($ubahjadwal->tanggal_perubahan);
+                                $endDate = clone $startDate;
+                                $endDate->modify('+1 day');
+                        
+    
+                                $jadwal = workscheadules::whereBetween('tanggal', [
+                                        $startDate->format('Y-m-d'),
+                                        $endDate->format('Y-m-d')
+                                    ])
+                                    ->whereIn('uuid_employees', [$ubahjadwal->uuid_pemohon, $ubahjadwal->uuid_pengganti])
+                                    ->get();
+                        
+                                if ($jadwal->isNotEmpty()) {
+                                    $currentDate = clone $startDate;
+                        
+                        
+                                    while ($currentDate <= $endDate) {
+                                       
+                                        $shiftPemohon = workscheadules::where([
+                                            'tanggal' => $currentDate->format('Y-m-d'),
+                                            'uuid_employees' => $ubahjadwal->uuid_pemohon
+                                        ])->first();
+                        
+                                        $shiftPengganti = workscheadules::where([
+                                            'tanggal' => $currentDate->format('Y-m-d'),
+                                            'uuid_employees' =>  $ubahjadwal->uuid_pengganti
+                                        ])->first();
+                                        if ($shiftPemohon && $shiftPengganti) {
+                                            $tempShiftId = $shiftPemohon->shift_id;
+                                            $shiftPemohon->update(['shift_id' => $shiftPengganti->shift_id]);
+                                            $shiftPengganti->update(['shift_id' => $tempShiftId]);
+                                        }       
+                                        $currentDate->modify('+1 day');
+                                    }
+                                }
+                            } catch (\Throwable $th) {
+                                dd($th);
+                            }
+                            break;
+                                                                    
+                        
                     case '3'://izin
                         Izin::where('id', '=', $request->id_permohonan)
-                        ->update([
-                            'status' => 1
-                        ]);
+                        ->update(['status' => 1]);
                         break;
                     case '4'://sakit
-                        Sakit::where('id', '=', $request->id_permohonan)
-                        ->update([
-                            'status' => 1
-                        ]);
+                        try {
+                            
+                            Sakit::where('id', '=', $request->id_permohonan)
+                                ->update(['status' => 1]);
+                    
+                            $data = Sakit::where('id', '=', $request->id_permohonan)->first();
+                    
+                            // tanggal akhir sakit
+                            $endDate = date('Y-m-d', strtotime('+' . $data->days . ' days', strtotime($data->tanggal)));
+                    
+                            $jadwal = workscheadules::whereBetween('tanggal', [$data->tanggal, $endDate])
+                                ->where(['uuid_employees' => $data->uuid_karyawan])
+                                ->get();
+                    
+                           
+                            if ($jadwal->isNotEmpty()) {
+                                $sickDaysCount = 0; 
+                                $currentDate = new \DateTime($data->tanggal); 
+                    
+                                while ($sickDaysCount < $data->days) {
+                                    // Cek apakah tanggal ini sudah ada dalam jadwal
+                                    $shift = $jadwal->firstWhere('tanggal', $currentDate->format('Y-m-d'));
+                    
+                                   
+                                    // if ($shift && $shift->shift_id === 4) {
+                                    //     $currentDate->modify('+1 day');
+                                    //     continue; 
+                                    // }
+                    
+                                    workscheadules::where(['tanggal' => $currentDate->format('Y-m-d'), 'uuid_employees' => $data->uuid_karyawan])
+                                        ->update(['shift_id' => 8]);
+                    
+                                    // Tambah hitung hari sakit yang ditambahkan
+                                    $sickDaysCount++;
+                    
+                                    // Pindah ke hari berikutnya
+                                    $currentDate->modify('+1 day');
+                                }
+                            }
+                        } catch (\Throwable $th) {
+                            // Tangani error dengan debug
+                            dd($th);
+                        }
                         break;
                     
                     default:

@@ -24,6 +24,28 @@ class SakitController extends Controller
     
         return view('sakit.index', compact('sakit', 'user'));
     }
+    public function getunit($getUnit, $arr = []){
+        $array = $arr;
+        $units = DB::table('units as u')
+        ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
+        ->select('e.name as nama_karyawan', 'u.*')
+        ->where('u.id', '=', $getUnit)
+        ->get();
+        if(count($units) > 0){
+            // dd('ada data');
+            foreach ($units as $key => $value) {
+                array_push($array, $value);
+                $return = true;
+            }
+        }else{
+           $return = false;
+        }
+        if(!$return){
+            return $array;
+        }else{
+            return (new cutiController)->getunit($value->id_head_unit, $array);
+        }
+    }    
 
     public function getsakit(){
         $uuid = Auth::user()->uuid;
@@ -36,14 +58,21 @@ class SakitController extends Controller
         ->first();
     // Ambil unit jika karyawan ditemukan
     if ($karyawan) {
-        $units = DB::table('units as u')
-        ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
-        ->select('e.name as nama_karyawan', 'u.*')
-        ->where('u.id', '<=', $karyawan->id_head_unit + 1)
-        ->where('u.id',2)
-        ->get();
-        
+        // $units_name = DB::table('units as u')
+        // ->select( 'u.*')
+        // ->where('u.id', '<', value: $karyawan->id_head_unit + 1)
+        // ->where('u.id', '!=', 1)
+        // ->get();
+        // $units = DB::table('units as u')
+        // ->join('d_units as du', 'du.id_unit', '=', 'u.id')
+        // ->join('employees as e', 'e.uuid', '=', 'du.uuid_pj')
+        // ->select('e.name as nama_karyawan', 'u.*', 'du.*')
+        // ->where('u.id', '<=', value: 3)//id ini id unit manager keperawatan
+        // ->where('u.id', '!=', 1)
+        // ->get();
+        $units = collect((new SakitController)->getunit($karyawan->unit_id))->where('id', '!=', 1);
             // dd($units);
+            // dd($units_name);
     }
         return view('sakit.ajukansakit',compact('uuid','karyawan','units'));
     }

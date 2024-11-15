@@ -27,12 +27,12 @@ class AuthenticatedSessionController extends Controller
        
         $request->authenticate();
         $request->session()->regenerate();
-        $data = User::where('email', $request->email)->first();
+        $data = User::where('username', $request->username)->first();
         $request->session()->put('uuid', $data->uuid);
         return redirect()->intended(route('dashboard2', absolute: false));
     } catch (\Exception $e) {
        
-        return redirect()->back()->with('error', 'Email atau password salah!');
+        return redirect()->back()->with('error', 'Username atau password salah!');
     }
 }
 

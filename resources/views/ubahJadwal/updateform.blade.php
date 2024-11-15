@@ -9,6 +9,7 @@
                         <div class="col-md-12">
                             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                 <h5 class="card-title">Update Pengajuan</h5>
+                                
                             </div>
                             
                             <div class="row">
@@ -31,7 +32,8 @@
                                                         @foreach($workschedules as $workschedule)
                                                             <option value="{{ $workschedule->tanggal }}" 
                                                                     data-shift-id="{{ $workschedule->shift_id }}" 
-                                                                    data-shift-name="{{ optional($workschedule->shift)->name }}">
+                                                                    data-shift-name="{{ optional($workschedule->shift)->name }}" 
+                                                                    {{ old('tanggal_perubahan', $ubahjadwal->tanggal_perubahan) == $workschedule->tanggal ? 'selected' : '' }} >
                                                                 {{ $workschedule->tanggal }}
                                                             </option>
                                                         @endforeach
@@ -39,14 +41,16 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="shift_awal" class="form-label">Shift Awal</label>
-                                                    <div id="shiftDisplay" class="form-control">Pilih tanggal</div>
-                                                    <input type="hidden" id="shift_awal" name="shift_awal" value="{{ $ubahjadwal->shift_awal }}" required> 
+                                                    <div id="shiftDisplay" class="form-control">
+                                                        {{ old('shift_awal', optional($ubahjadwal->shift)->name) }}
+                                                    </div>
+                                                    <input type="hidden" id="shift_awal" name="shift_awal" value="{{ old('shift_awal', $ubahjadwal->shift_awal) }}" required> 
                                                 </div>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="keterangan">Keterangan</label>
-                                                <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ $ubahjadwal->keterangan }}" required>
+                                                <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $ubahjadwal->keterangan) }}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -64,12 +68,14 @@
                                                     <select id="uuid_pengganti" class="js-example-basic-single" data-shift='@json($karyawan_pengganti)'>
                                                         <option value="" disabled selected>Pilih Karyawan Pengganti</option>
                                                         @foreach ($karyawan_pengganti as $karyawan)
-                                                            <option value="{{ $karyawan->uuid }}" data-shift="{{ json_encode($karyawan->workschedules) }}">
+                                                            <option value="{{ $karyawan->uuid }}" 
+                                                                    data-shift="{{ json_encode($karyawan->workschedules) }}"
+                                                                    {{ old('uuid_pengganti', $ubahjadwal->uuid_pengganti) == $karyawan->uuid ? 'selected' : '' }} >
                                                                 {{ $karyawan->name }}
                                                             </option>
                                                         @endforeach
                                                     </select> 
-                                                    <input type="hidden" id="hidden" name="uuid_pengganti">
+                                                    <input type="hidden" id="hidden" name="uuid_pengganti" value="{{ old('uuid_pengganti', $ubahjadwal->uuid_pengganti) }}">
                                                 </div>
                                                 
                                                 <div class="col-md-6">
@@ -113,12 +119,9 @@
                 var shiftId = $(this).find(':selected').data('shift-id');
                 var shiftName = $(this).find(':selected').data('shift-name');
 
-                console.log('Shift ID:', shiftId);
-                console.log('Shift Name:', shiftName);
-
                 if (shiftId && shiftName) {
                     $('#shiftDisplay').text(shiftName); 
-                    $('#shift_awal').val(shiftId); 
+                    $('#shift_awal').val(shiftId); // Memastikan nilai shift_awal di-update dengan benar
                 } else {
                     $('#shiftDisplay').text('Pilih tanggal'); 
                     $('#shift_awal').val(''); 
@@ -160,7 +163,25 @@
                 });
 
                 $('#shift_pengganti').append(shift).append(tukar_shift);
+
+                // Menetapkan shift yang dipilih sebelumnya
+                var oldShift = '{{ old('shift_pengganti', $ubahjadwal->shift_pengganti) }}';
+                if (oldShift) {
+                    $('#shift_pengganti').val(oldShift).trigger('change');
+                }
             });
+
+            // Inisialisasi shift berdasarkan karyawan pengganti yang sudah dipilih sebelumnya
+            var initialUUID = '{{ old('uuid_pengganti', $ubahjadwal->uuid_pengganti) }}';
+            if (initialUUID) {
+                $('#uuid_pengganti').val(initialUUID).trigger('change');
+            }
+
+            // Inisialisasi shift awal berdasarkan tanggal yang sudah dipilih
+            var initialTanggal = '{{ old('tanggal_perubahan', $ubahjadwal->tanggal_perubahan) }}';
+            if (initialTanggal) {
+                $('#tanggal_perubahan').val(initialTanggal).trigger('change');
+            }
         });
     </script>
     @endsection

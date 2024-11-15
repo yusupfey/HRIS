@@ -13,7 +13,7 @@
                 <div class=" accordion accordion-flush " id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" style="font-size: 20px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne" style="font-size: 16px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
                                 Cuti
                             </button>
                         </h2>
@@ -21,6 +21,7 @@
                       <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
+                            <div class="table-responsive" style="overflow-x: auto;">
                                 <table id="cuti"class="table   table-bordered table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                     <thead class="table-primary">
                                         <tr>
@@ -50,6 +51,7 @@
                                     </tbody>
                             </table>
                         </div>
+                        </div>
                       </div>
                       
                     </div>
@@ -57,13 +59,14 @@
                   <div class="accordion accordion-flush"id="accordion" style="margin-top: 5px">
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 20px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 16px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
                             Izin
                           </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                           <div class="accordion-body">
                               <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
+                              <div class="table-responsive" style="overflow-x: auto;">
                               <table id="izin" class="table  table-bordered table-hover table-striped" id="datatable"style="padding-top: 20px;">
                                   <thead class="table-primary">
                                       <tr>
@@ -92,6 +95,7 @@
                                       @endforeach
                                   </tbody>
                           </table>
+                        </div>
                           </div>
                         </div>
                       </div>
@@ -101,13 +105,14 @@
 
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"  style="font-size: 20px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"  style="font-size: 16px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
                             Tukar Shift
                           </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#cordion">
                           <div class="accordion-body">
                               <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
+                              <div class="table-responsive" style="overflow-x: auto;">
                               <table id="ubahjadwal" class="table  table-bordered table-hover table-striped"style="padding-top: 20px;" id="datatable">
                                   <thead class="table-primary">
                                       <tr>
@@ -136,6 +141,7 @@
                                       @endforeach
                                   </tbody>
                           </table>
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -144,13 +150,14 @@
                   <div class="accordion accordion-flush" id="acordions" style="padding-top: 5px;">
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="sakit">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesakit" aria-expanded="false" aria-controls="collapsesakit" style="font-size: 20px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesakit" aria-expanded="false" aria-controls="collapsesakit" style="font-size: 16px; font-weight: bold; margin-left:5px;font-family:'Times New Roman', Times, serif">
                             Sakit
                           </button>
                         </h2>
                         <div id="collapsesakit" class="accordion-collapse collapse" aria-labelledby="sakit" data-bs-parent="#acordions">
                           <div class="accordion-body">
                             <div id="section table-responsive" style="display: none;">{{Request::segment(2)}}</div>
+                            <div class="table-responsive" style="overflow-x: auto;">
                               <table id="sakit" class="table  table-bordered table-hover table-striped"style="padding-top: 20px;" id="datatable">
                                   <thead class="table-primary">
                                       <tr>
@@ -178,6 +185,7 @@
                                       @endforeach
                                   </tbody>
                           </table>
+                            </div>
                           </div>
                           </div>
                         </div>
@@ -193,11 +201,12 @@
     </div>
      <div class="card" style="border-radius:10px;margin-top:5px">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h5 class="card-title" style="margin-right: 20px;">History</h5>
+            <h5 class="card-title" style="margin-right: 16px;">History</h5>
         </div>
         <div class="card-body table-responsive">
             <div id="section" style="display: none;">{{Request::segment(2)}}</div>
-            <table class="table datatable table-hover table-striped" id="datatable"style="padding-top: 20px;">
+            <div class="table-responsive" style="overflow-x: auto;">
+            <table class="table table-hover table-striped" id="datatable"style="padding-top: 20px;">
                 <thead class="table-primary">
                     <tr>
                         <th>No</th>
@@ -208,15 +217,15 @@
                     </tr>
                 </thead>
                 <tbody class="table-light">
-                    @foreach ($data['history'] as $x => $item)
+                    @foreach ($data1['history'] as $x => $item)
                         <tr>
                             <td>{{ $x + 1 }}</td>
                             <td>{{$item->id_permohonan}}</td>
-
-                            <td>
-                                {!! '<b>' . ($item->val_name ?? '') . '</b>' !!}
+                            <td>{!! '<b>' . ($item->jenis_permohonan ?? '') . '</b>' !!}
                             </td>
-                             <td>{{ $item->karyawan_name }}</td>
+                             
+                            <td>{{ $item->karyawan_name ?? $item->cuti_karyawan_name ?? $item->ubahjadwal_karyawan_name ?? $item->izin_karyawan_name ?? $item->sakit_karyawan_name }}</td>
+                            
                             <td> 
                                 <button onclick="modalApprove({{$item->id_permohonan}}, {{$item->jenis_permohonan}}, 'info')" class="btn btn-info"><i class="tf-icons bx bxs-calendar-check"></i></a>
                             </td>
@@ -224,6 +233,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div> 
            
@@ -286,29 +296,31 @@
 </div>
 @section('js')
 
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"/>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-        <script src="{{asset('/jquery-3.7.1.min.js')}}"></script>
+        {{-- <script src="{{asset('/jquery-3.7.1.min.js')}}"></script> --}}
         <script>
-    //         $(document).ready(function() {
-    //       $('#datatable').DataTable({
-    //           pageLength: 10,
-    //           language: {
-    //               search: "",
-    //               lengthMenu: "_MENU_",
-    //               info: "showing _START_ to _END_ of _TOTAL_ entries",
-    //               paginate: {
-    //                   next: "Next",
-    //                   previous: "Previous"
-    //               }
-    //           }
-    //       });
+            $(document).ready(function() {
+          $('#datatable').DataTable({
+              pageLength: 10,
+              language: {
+                  search: "",
+                  lengthMenu: "_MENU_",
+                  info: "showing _START_ to _END_ of _TOTAL_ entries",
+                  paginate: {
+                      next: "Next",
+                      previous: "Previous"
+                  }
+              }
+          });
     
-    //   });
+      });
             function viewImage(imageUrl) {
                 document.getElementById('modalImage').src = imageUrl;
                 $('#imageModal').modal('show');
@@ -356,10 +368,13 @@
                                             <div style="font-size:13px;font-weight:bold">${val.jumlah}</div>
                                         </div>
                                         
-                                        <div class="col-6">
+                                       <div class="col-6">
                                             <div style="font-size:13px;">Pengganti</div>
-                                            <div style="font-size:13px; font-weight:bold">${val.pengganti_name}</div>
+                                            <div style="font-size:13px; font-weight:bold">
+                                                ${val.pengganti_name ?? 'Tanpa Pengganti'}
+                                            </div>
                                         </div>
+
                                         <div class="col-6">
                                             <div style="font-size:13px; ">Keterangan</div>
                                             <div style="font-size:13px;font-weight:bold">${val.keterangan}</div>
@@ -377,8 +392,8 @@
                                 approve += `
                                         <div class="col-4">
                                             <div style="font-size:13px; font-weight:bold">${val.name}</div>
-                                            <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                            <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                                            <div style="font-size:13px;font-weight:bold">${val.unit}</div>
+                                             <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                                         </div>
                                     
                                 `;
@@ -435,7 +450,7 @@
                                                 <div class="col-4">
                                                     <div style="font-size:13px; font-weight:bold">${val.name}</div>
                                                     <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                                    <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                                                     <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                                                 </div>
                                             
                                         `;
@@ -498,7 +513,7 @@
                                         <div class="col-4">
                                             <div style="font-size:13px; font-weight:bold">${val.name}</div>
                                             <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                            <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                                             <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                                         </div>
                                     `;
                                 });
@@ -559,7 +574,7 @@
                                         <div class="col-4">
                                             <div style="font-size:13px; font-weight:bold">${val.name}</div>
                                             <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                            <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                                             <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                                         </div>
                                     `;
                                 });
@@ -596,6 +611,14 @@
                 height:'100%'
                 
             });
+            @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+    @endif
         }
 
             }

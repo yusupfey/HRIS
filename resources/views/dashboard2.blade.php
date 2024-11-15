@@ -1,6 +1,6 @@
 
 <x-main-layout>
-<div class="py-2 container">
+<div class="py-12">
     <div class="row">
         <div class="col-md-12">
             <div class="box p-4 border rounded-4 bg-white shadow-sm">
@@ -41,15 +41,14 @@
                             </div>
                          </div>
                              @endif
-                            <div class="d-grid gap-2 d-block text-center" style="margin-top:20px;">
-                        
-                                @if($data == null)
-                                @else
-                                <button class="btn  btn-primary" id="checkin" onclick="absen('checkin')" {{ !$checkin ? 'hidden' : '' }}>Masuk</button>
-                                <button class="btn  btn-danger " id="checkout" onclick="absen('checkout')"{{ !$checkout ? 'hidden' : '' }}>Pulang</button>   
-                               
+                             <div class="d-grid gap-2 d-block text-center" style="margin-top:20px;">
+                                @if($data !== null && !$noabsen)
+                                    <button class="btn btn-primary" id="checkin" onclick="absen('checkin')" {{ !$checkin ? 'hidden' : '' }}>Masuk</button>
+                                    <button class="btn btn-danger" id="checkout" onclick="absen('checkout')" {{ !$checkout ? 'hidden' : '' }}>Pulang</button>   
                                 @endif
                             </div>
+                            
+                            
                             <div class="d-flex justify-content-center ">
                                 <div class="m-1 text-center text-dark">
                                     <ul class="d-flex justify-content-center align-items-center nav nav-tabs nav-justified" style="border-radius: .25rem;">
@@ -230,24 +229,33 @@ crossorigin="anonymous"></script>
                         mode:type
                     },
                     success: function(res){
-                        if (type == 'checkin') {
-                            $('#masuk').text(res.response.data.split(' ')[1].slice(0, 5)); // Memilah string
-                            $('#checkin').hide();
+                        if(res.response.metadata.code === 400){
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Terimakasih!',
-                                text: 'Kehadiran Anda tercatat pada pukul ' + res.response.data.split(' ')[1],
-                                confirmButtonText: 'OK'
-                            });
-                        } else {
-                            $('#pulang').text(res.response.data.split(' ')[1].slice(0, 5)); 
-                            $('#checkout').hide(); 
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Terimakasih!',
-                                text: 'Jam pulang Anda tercatat pada pukul ' + res.response.data.split(' ')[1],
-                                confirmButtonText: 'OK'
-                            });
+                                    icon: 'warning',
+                                    title: 'Perhatian!',
+                                    text: res.response.metadata.message,
+                                    confirmButtonText: 'OK'
+                                });
+                        }else{
+                            if (type == 'checkin') {
+                                $('#masuk').text(res.response.data.split(' ')[1].slice(0, 5)); // Memilah string
+                                $('#checkin').hide();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Terimakasih!',
+                                    text: 'Kehadiran Anda tercatat pada pukul ' + res.response.data.split(' ')[1],
+                                    confirmButtonText: 'OK'
+                                });
+                            } else {
+                                $('#pulang').text(res.response.data.split(' ')[1].slice(0, 5)); 
+                                $('#checkout').hide(); 
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Terimakasih!',
+                                    text: 'Jam pulang Anda tercatat pada pukul ' + res.response.data.split(' ')[1],
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         }
 
                     }

@@ -173,7 +173,7 @@
                             <div class="col-4">
                                 <div style="font-size:13px; font-weight:bold">${val.name}</div>
                                 <div style="font-size:10px;font-weight:bold">${val.unit}</div>
-                                <div style="font-size:10px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : 'Telah disetujui ' + val.approve_date}</div>
+                                <div style="font-size:13px;font-weight:bold">${val.approve_date === null ? 'Belum disetujui' : val.approve === 1 ? 'Telah disetujui ' + val.approve_date : '<div class="badge bg-danger">Tidak disetujui</div>'}</div>
                             </div>
                     `;
                 });

@@ -33,58 +33,81 @@ class cutiController extends Controller
         // dd($cuti);
 
     return view('cuti.index', compact('cuti','user'));
+}
+public function getunit($getUnit, $arr = []){
+    $array = $arr;
+    $units = DB::table('units as u')
+    ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
+    ->select('e.name as nama_karyawan', 'u.*')
+    ->where('u.id', '=', $getUnit)
+    ->get();
+    if(count($units) > 0){
+        // dd('ada data');
+        foreach ($units as $key => $value) {
+            array_push($array, $value);
+            $return = true;
+        }
+    }else{
+       $return = false;
     }
+    if(!$return){
+        return $array;
+    }else{
+        return (new cutiController)->getunit($value->id_head_unit, $array);
+    }
+
+
+
+}
 public function getcuti()
 {
     $uuid = Auth::user()->uuid;  
-    $employees = Employee::where('uuid','=',Session::get('uuid'))->first(); 
-    $karyawan_pengganti = Employee::where('id_unit','=',$employees->id_unit)
-    ->where('uuid','!=',$employees->uuid)
-    ->get(); 
-    // dd($karyawan_pengganti);
-    // $approve = Approve::where('uuid_atasan')->get();
-    // $units = Unit::where('id', '>', 1)->get();
-    // $employees = Employee::where('id_unit','=',$employees->id_unit)
-    // ->where('uuid','!=',$employees->uuid)
-    // ->get(); 
-    $reference=DB::table('d_references')->where('reference_id',1)->get();
+    $employees = Employee::where('uuid', '=', Session::get('uuid'))->first(); 
 
-    // dd(vars: $reference);
+    $karyawan_pengganti = Employee::where('id_unit', '=', $employees->id_unit)
+        ->where('uuid', '!=', $employees->uuid)
+        ->get(); 
 
-    
-    $employees= DB::table('employees as e')
-    ->join('units as u', 'e.id_unit', '=', 'u.id')
-    ->select('e.id AS employee_id', 'e.uuid', 'u.id AS unit_id', 'u.name AS unit_name', 'u.kepala_unit', 'u.id_head_unit')
-    ->where('e.uuid', $uuid)
-    ->first();
-    // dd($employees);
+    $reference = DB::table('d_references')
+        ->where('reference_id', 1)
+        ->get();
+
+    $employees = DB::table('employees as e')
+        ->join('units as u', 'e.id_unit', '=', 'u.id')
+        ->select('e.id AS employee_id', 'e.uuid', 'u.id AS unit_id', 'u.name AS unit_name', 'u.kepala_unit', 'u.id_head_unit')
+        ->where('e.uuid', $uuid)
+        ->first();
+
     if ($employees) {
-        // dd($employees);
-        $units = DB::table('units as u')
-            ->join('employees as e', 'e.uuid', '=', 'u.kepala_unit')
-            ->select('e.name as nama_karyawan', 'u.*')
-            ->where('u.id', '<=', $employees->id_head_unit + 1)
-            ->where('u.id', '!=', 1)
-            ->get();
-            
-            // dd($units);
-        return view('cuti.ajukancuti', ['employees' => $karyawan_pengganti, 'units' => $units,'reference'=>$reference]);
+        $units = collect((new cutiController)->getunit($employees->unit_id))->where('id', '!=', 1);
+        // dd($units);
+        return view('cuti.ajukancuti', [
+            'employees' => $karyawan_pengganti,
+            'units' => $units,
+            'reference' => $reference
+        ]);
     } else {
         return redirect()->back()->with('error', 'Data karyawan tidak ditemukan.');
     }
 }
+
 public function store(Request $request){
     $request->validate([
         "jenis_cuti"=>"Required",
         "jumlah"=>"Required",
-        "karyawan_pengganti"=>"Required",
+        // "karyawan_pengganti"=>"nullable",
         "keterangan"=>"Required",
 
         ]);
         $request['approved_pengganti'] = null;
+    //  if ($request->has('karyawan_pengganti')) {
+    //         $request['karyawan_pengganti'] = $request->karyawan_pengganti;
+    //     }
         $request['status'] = 0;
         $request['tanggal'] = date('Y-m-d');
         $request['tanggal_cuti'] = $request->tanggal_cuti;
+        $request['karyawan_pengganti'] = $request->karyawan_pengganti;
+
 
         $uuid = Auth::user()->uuid;
 
@@ -164,7 +187,7 @@ public function update(Request $request, $id)
         'keterangan' => 'required',
         'jumlah' => 'required|integer',
         'tanggal' => 'required|date',
-        'karyawan_pengganti' => 'required|string',
+        'karyawan_pengganti' => 'nullable',
         // 'tanggal_cuti' => 'required|array', 
         // 'tanggal_cuti.*' => 'required|date',
     ]);
@@ -202,6 +225,10 @@ public function hapus($cuti)
 
         return redirect('/cuti')
             ->with('success', 'Pengajuan berhasil di Cancel');
+    }
+    $cuti = Cuti::where('uuid_karyawan', '<', Carbon::now()->subDays(1))->get();
+    foreach ($cuti as $post) {
+        $post->delete();
     }
 }
 

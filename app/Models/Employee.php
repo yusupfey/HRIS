@@ -12,7 +12,7 @@ class Employee extends Model
     protected $table = 'employees';
 
     protected $fillable = [
-        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date','uuid','no_telp'
+        'name', 'DOB', 'tempat_lahir', 'alamat', 'jenis_kelamin', 'inactive_date','uuid','no_telp','id_unit'
     ];
 
     // protected static function boot()
